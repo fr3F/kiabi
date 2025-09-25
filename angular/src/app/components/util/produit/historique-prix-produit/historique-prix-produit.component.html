@@ -1,0 +1,44 @@
+<div class="card" *ngIf="data">
+    <div class="card-body">
+        <h3>Historiques prix de vente</h3>
+        <p class="text-center mt-4 mb-4" *ngIf="!data.length">Aucun historique</p>
+        <table class="table table-bordered  table-sm" *ngIf="data.length">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Date</th>
+                    <th>Utilisateur</th>
+                    <th>Ancien prix</th>
+                    <th>Nouveau prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of data">
+                    <td>
+                        <span class="me-2">{{item.historique.createdAt | date: 'dd-MM-yyyy HH:mm'}}</span>
+                        <span *ngIf="item.historique.magasin" class="badge bg-info">
+                            Tarif magasin {{item.historique.magasin.nommagasin}}
+                        </span>
+                        <span *ngIf="!item.historique.magasin" class="badge bg-success">
+                            Prix principal
+                        </span>
+                    </td>
+                    <td>
+                        <span *ngIf="item.historique.user">
+                            {{item.historique.user.nom}} 
+                            {{item.historique.user.prenom}}
+                        </span>
+                    </td>
+                    <td class="text-right">
+                        <p>{{item.oldPrixHT | appcurrency}} HT</p>
+                        <p *ngIf="!item.historique.magasin">{{item.oldPrixTTC | appcurrency}} TTC</p>
+                    </td>
+                    <td class="text-right">
+                        <p>{{item.newPrixHT | appcurrency}} HT</p>
+                        <p  *ngIf="!item.historique.magasin">{{item.newPrixTTC | appcurrency}} TTC</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <ngx-loading [show]="loading"></ngx-loading>
+</div>

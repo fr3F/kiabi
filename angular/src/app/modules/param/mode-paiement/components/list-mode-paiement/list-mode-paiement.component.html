@@ -1,0 +1,72 @@
+<!-- <p>liste-service-mode works!</p> -->
+
+
+<div class="col-sm-12 mt-1 mb-1 text-right" *ngIf="acces.ajouter">
+    <button class="btn btn-success btn-sm" (click)="create(modalForm)">Nouveau</button>
+</div>
+
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucun élément</p>
+</div>
+<div *ngIf="list&&list.length!=0" class="table-responsive">
+    <table class="table table-centered table-nowrap table-sm table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th scope="col" class="align-middle" >Désignation</th>
+                <th scope="col" class="align-middle" >Type</th>
+                <th scope="col" class="align-middle" >Code journal</th>
+                <th scope="col" class="align-middle" >N° règlement (sage)</th>
+                <th scope="col" class="align-middle" >Type de financement</th>
+                <th scope="col" class="align-middle" >Date modification</th>
+                <th scope="col" class="align-middle" *ngIf="showAction()">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody class=" align-middle">
+            <tr *ngFor="let item of list | paginate : {
+                itemsPerPage: pageSize,
+                currentPage: page,
+                totalItems: count
+                };
+            let i = index"
+            >
+                <td>{{item.designation}}</td>
+                <td>{{item.type?premiereLettreMajuscule(item.type): '' }}</td>
+                <td>{{item.codejournal}}</td>
+                <td>{{item.noreglement}}</td>
+                <td>{{item.financingType}}</td>
+                <td>{{item.dateModification | date: 'dd-MM-yyyy HH:mm'}}</td>
+                <td *ngIf="showAction()" class="text-center">
+                    <button class="btn btn-sm btn-outline-warning me-1" ngbTooltip="Modifier"
+                        (click)="modify(modalForm, item)" *ngIf="acces.modifier"
+                    >
+                        <i class="fa fa-pencil-alt"></i>
+                    </button>
+
+                    <button mat-button class="btn btn-sm btn-outline-danger me-1" ngbTooltip="Supprimer"
+                        *ngIf="acces.supprimer" (click)="delete(i)"
+                    >
+                        <i class="fa fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <ngx-loading [show]="loading"></ngx-loading>
+</div>
+
+
+
+
+
+<ng-template #modalForm role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0" *ngIf="!itemSelected.id">Ajouter</h5>
+        <h5 class="modal-title mt-0"  *ngIf="itemSelected.id">Modifier</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-form-mode-paiement [data]="itemSelected" (onValidate)="changeItem()"></app-form-mode-paiement>
+    </div>
+</ng-template>

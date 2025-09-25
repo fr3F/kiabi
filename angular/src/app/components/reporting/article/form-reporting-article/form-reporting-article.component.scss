@@ -1,0 +1,38 @@
+/* Global Styles */
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 1.5rem;
+}
+
+/* Boutons d'action */
+.btn-info {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+    border-color: #117a8b;
+}
+
+.btn-dark {
+    background-color: #343a40;
+    border-color: #343a40;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn-dark:hover {
+    background-color: #23272b;
+    border-color: #1d2124;
+}
+
+
+.text-right {
+    text-align: right;
+}
+
+.font-weight-bold {
+    font-weight: 700;
+}

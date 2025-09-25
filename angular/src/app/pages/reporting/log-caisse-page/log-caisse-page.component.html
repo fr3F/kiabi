@@ -1,0 +1,19 @@
+
+<div class="container-fluid">
+    <app-page-title title="Consultation logs caisse">
+    </app-page-title>
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <app-form-log-caisse (change)="refresh($event)"></app-form-log-caisse>
+        </div>
+        <div class="col-md-12" *ngIf="data">
+            <app-detail-log-caisse [type]="message" [data]="data" ></app-detail-log-caisse>
+        </div>
+    </div>
+</div>
+
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>

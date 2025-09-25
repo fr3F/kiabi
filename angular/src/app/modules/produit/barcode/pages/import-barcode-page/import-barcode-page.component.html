@@ -1,0 +1,33 @@
+
+<div class="container-fluid">
+    <!-- start page title -->
+    <app-page-title title="Code barre">
+    </app-page-title>
+    <div class="card">
+      <div class="card-body pt-4 pb-4">
+        <div class="row">
+          <div class="col-md-6 mx-auto text-center mt-4 mb-4">
+            <app-form-import-barcode (onImport)="setBarcodes($event)">
+            </app-form-import-barcode>
+          </div>
+
+          <div class="col-md-10 mx-auto" *ngIf="barcodes">
+            
+            <div class="text-right">
+              <app-print-barcode [barcodes]="barcodes"></app-print-barcode>
+            </div>
+
+            <app-list-barcode-import [barcodes]="barcodes">
+            </app-list-barcode-import>
+            
+          </div>
+        </div>
+      </div>
+    </div>          
+</div>
+
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+  <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>

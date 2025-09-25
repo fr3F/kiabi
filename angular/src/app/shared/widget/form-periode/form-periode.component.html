@@ -1,0 +1,15 @@
+<div class="ms-auto" *ngIf="type!='select'">
+    <ul class="nav nav-pills periodes">
+        <li class="nav-item" *ngFor="let item of PERIODES; let i = index">
+            <a class="nav-link" (click)="change(i)"  [ngClass]="{'active': selectedIndex == i}">
+                {{item.label}}
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="input-group input-group-sm" *ngIf="type=='select'">
+    <label class="input-group-text">Période</label>
+    <select class="form-select form-select-sm" (change)="change($event.target.value)" [(ngModel)]="selectedIndex">
+        <option *ngFor="let item of PERIODES_REVERSED; let i = index" [value]="PERIODES.length - i -1">{{item.label}}</option>
+    </select>
+</div>

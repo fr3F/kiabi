@@ -1,0 +1,56 @@
+
+<div class="container-fluid">
+    <!-- start page title -->
+    <app-page-title [title]="title">
+    </app-page-title>
+    <div class="row">
+        <div class="col-12 mx-auto card">
+            <div class="row card-body">
+                <!-- Search -->
+                <div class="search-box me-2 mb-2">
+                    <div class="position-relative">
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Rechercher"
+                        [(ngModel)]="motSearch"
+                        (ngModelChange)="search()"
+                    />
+                    <i
+                        class="bx bx-search-alt search-icon"
+                        type="button"
+                        (click)="search()"
+                    ></i>
+                    </div>
+                </div>
+
+                <!-- end col-->
+                <div class="col-sm-12 col-md-5 mt-2">
+                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                        {{ count }} éléments trouvés
+                    </div>
+                </div>
+
+
+                <app-list-carte-vip [acces]="acces" [list]="list" [page]="page" [count]="count" [pageSize]="pageSize" (onChangeItem)="refreshData()"></app-list-carte-vip>
+
+                <div *ngIf="list&&list.length" class="row justify-content-md-between align-items-md-center mt-2">
+                    <!-- Pagination -->
+                    <div class="col-sm-12 col-md-5">
+                    <div class="text-md-right float-md-end pagination-rounded">
+                        <pagination-controls
+                        previousLabel=""
+                        nextLabel=""
+                        [responsive]="true"
+                        (pageChange)="handlePageChange($event)"
+                        screenReaderPaginationLabel="Pagination"
+                        screenReaderPageLabel="page"
+                        ></pagination-controls>
+                    </div>
+                    </div>
+                    <!-- End Pagination -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

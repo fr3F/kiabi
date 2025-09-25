@@ -1,0 +1,87 @@
+<div class="card" *ngIf="data">
+    <div class="card-body">
+        <h3>Codes barres</h3>
+        <div class="search-box me-2 mb-2">
+            <div class="position-relative">
+            <input
+                type="text"
+                class="form-control"
+                placeholder="Rechercher par code barre ou gamme"
+                [(ngModel)]="searchTxt"
+            />
+            <i
+                class="bx bx-search-alt search-icon"
+                type="button"
+            ></i>
+            </div>
+        </div>
+        <div class="mb-1 text-right" *ngIf="acces">
+            <button class="btn btn-sm btn-success" (click)="openCreate(modal)">Ajouter</button>
+        </div>
+        <p class="text-center mt-4 mb-4" *ngIf="!listShowed.length">Aucun code barre</p>
+        <div  class="table-responsive" style="max-height: 195px;">
+            <table class="table table-sm" *ngIf="listShowed.length">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Code barre</th>
+                        <th>Gamme</th>
+                        <th  *ngIf="showAction()"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of listShowed" class="align-middle">
+                        <td>{{item.barcode}}
+                            <img *ngIf="item.gifi" src="assets/images/gifi-mini.png" alt="" >
+                            <span class="badge bg-info" *ngIf="item.conditionnement > 1 ">
+                                {{item.conditionnement | number}}
+                            </span>
+                        </td>
+                        <td><span *ngIf="item.gammeObj">{{item.gammeObj.EG_Enumere}}</span></td>
+                        <td class="text-center" *ngIf="showAction()">
+                            <app-print-barcode [barcode]="item" *ngIf="accesPrint">
+                            </app-print-barcode>
+                            
+                            <button  class="btn btn-sm btn-outline-warning m-1" ngbTooltip="Modifier"
+                                (click)="openUpdate(modalUpdate, item)" *ngIf="acces && !item.gifi"
+                            >
+                                <i class="fa fa-pencil-alt"></i>
+                            </button>
+    
+                            <button mat-button class="btn btn-sm btn-outline-danger m-1" ngbTooltip="Supprimer"
+                                (click)="delete(item, item.gifi)" *ngIf="acces"
+                            >
+                                <i class="fa fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <ngx-loading [show]="loading"></ngx-loading>
+</div>
+
+<ng-template #modal role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Nouvel code barre</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-form-barcode (onValidate)="onCreate($event)" [code]="code"></app-form-barcode>
+    </div>
+</ng-template>
+
+
+
+<ng-template #modalUpdate role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Modification code barre</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-form-barcode (onValidate)="onCreate($event)" [code]="code" 
+            [barcode]="selectedItem"
+        >
+        </app-form-barcode>
+    </div>
+</ng-template>

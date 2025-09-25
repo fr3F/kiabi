@@ -1,0 +1,42 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-nowrap">
+        <thead class="table-dark">
+            <tr>
+                <th>Caisse</th>
+                <th>Date</th>
+                <th>Caissier</th>
+                <th>Numéro ticket</th>
+                <th>Code</th>
+                <th>Désignation</th>
+                <th>Gamme</th>
+                <th>Qté</th>
+                <th>Prix</th>
+                <th>Remise</th>
+                <th>TVA</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of itemTickets">
+                <td>{{item.ticket.nocaisse}}</td>
+                <td>{{item.ticket.datecreation | date: 'dd/MM/yyyy à HH:mm'}}</td>
+                <td>{{item.ticket.encaissement.caissier.nom}} {{item.ticket.encaissement.caissier.prenom}}</td>
+                <td>{{item.ticket.numticket}}</td>
+                <td>{{item.code}}</td>
+                <td>{{item.designation}}</td>
+                <td>{{item.gamme}}</td>
+                <td class="text-right">{{item.quantite | number}}</td>
+                <td class="text-right">{{item.prixdevente | appcurrency}}</td>
+                <td class="text-right">
+                    <span *ngIf="item.remise!=null">{{item.remise | number}} %</span>
+                </td>
+                <td class="text-right">{{item.tauxtva | number}} %</td>
+                <td class="text-right">{{item.prixtotal | appcurrency}}</td>
+            </tr>
+            <tr>
+                <th colspan="11">Total</th>
+                <th class="text-right">{{total | appcurrency}}</th>
+            </tr>
+        </tbody>
+    </table>
+</div>

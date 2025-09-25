@@ -1,0 +1,27 @@
+<button  class="btn btn-sm btn-outline-dark m-1" ngbTooltip="Imprimer"
+    (click)="openModal(modal)"
+>
+    <i class="fa fa-barcode"></i>
+</button>
+
+
+
+<ng-template #modal role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Impression code barre</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-2">
+            <label>Nombre</label>
+            <input class="form-control form-control-sm text-right" [(ngModel)]="nombre"
+                type="number"
+            />
+        </div>
+        <div class="mb-2 text-center">
+            <button class="btn btn-sm btn-dark" (click)="print()">Imprimer</button>
+        </div>
+    </div>
+</ng-template>
+
+

@@ -1,0 +1,75 @@
+<button class="btn btn-sm btn-outline-dark"
+    ngbTooltip="Loaylty action"
+    *ngIf="showButton()" (click)="openModal(modal)"
+>
+    <i class="fa fa-bars"></i>
+</button>
+
+
+<ng-template #modal role="document" let-modal>
+  <div class="modal-header">
+      <h5 class="modal-title mt-0">Loyalty actions</h5>
+      <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <p class="font-size-16">{{clientVip.nom}} {{clientVip.prenom}} - {{clientVip.numClient}}</p>
+    <div class="row">
+      <div class="col-md-3">
+        <ul ngbNav #verticalNav="ngbNav" [activeId]="1" class="nav-pills flex-column">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink class="mb-2">Ticket recovery</a>
+            <ng-template ngbNavContent>
+              <app-ticket-recovery [clientVip]="clientVip" (refreshClient)="refresh()">
+              </app-ticket-recovery>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink class="mb-2">Anniversary points</a>
+            <ng-template ngbNavContent>
+              <app-anniversary-points [clientVip]="clientVip" (refreshClient)="refresh()">
+              </app-anniversary-points>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="3">
+            <a ngbNavLink class="mb-2">Birth points</a>
+            <ng-template ngbNavContent>
+              <app-birth-points [clientVip]="clientVip" (refreshClient)="refresh()">
+              </app-birth-points>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="4">
+            <a ngbNavLink class="mb-2">Welcome pack</a>
+            <ng-template ngbNavContent>
+              <app-welcome-pack [clientVip]="clientVip" (refreshClient)="refresh()">
+              </app-welcome-pack>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="5">
+            <a ngbNavLink class="mb-2">Marketing operation</a>
+            <ng-template ngbNavContent>
+              <app-marketing-operation [clientVip]="clientVip" (refreshClient)="refresh()">
+              </app-marketing-operation>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="6">
+            <a ngbNavLink class="mb-2">Card transfert</a>
+            <ng-template ngbNavContent>
+              <app-card-transfert [clientVip]="clientVip" (refreshClient)="refresh()">
+              </app-card-transfert>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="7">
+            <a ngbNavLink class="mb-2">Card blocking</a>
+            <ng-template ngbNavContent>
+              <app-card-blocking [clientVip]="clientVip" (refreshClient)="refresh()">
+              </app-card-blocking>
+            </ng-template>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-9">
+        <div [ngbNavOutlet]="verticalNav"></div>
+      </div>
+    </div>
+  </div>
+</ng-template>

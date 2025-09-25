@@ -1,0 +1,38 @@
+<div class="container">
+    <!-- Section de recherche -->
+    <div class="search-section mb-3">
+        <label class="d-block mb-3 font-weight-bold"><strong>Rechercher par</strong></label>
+        <div class="btn-group d-flex" role="group">
+            <button class="btn btn-outline-primary flex-fill" [ngClass]="!isBarcode ? 'active' : ''" (click)="setIsBarcode(false)">
+                Référence
+            </button>
+            <button class="btn btn-outline-primary flex-fill" [ngClass]="isBarcode ? 'active' : ''" (click)="setIsBarcode(true)">
+                Code barre
+            </button>
+        </div>
+    </div>
+
+    <!-- Section pour télécharger le modèle -->
+    <div class="mb-4 text-right">
+        <a class="btn btn-info btn-sm" [href]="urlModele">
+            <i class="fa fa-download"></i> Télécharger modèle Excel
+        </a>
+    </div>
+
+    <!-- Section pour importer le fichier -->
+    <div class="mb-4">
+        <label class="d-block mb-3 font-weight-bold"><strong>Importer fichier Excel</strong></label>
+        <input class="form-control form-control-sm" type="file" [(ngModel)]="filename" (change)="importerExcel($event)" accept=".xlsx, .xls, .csv"/>
+    </div>
+
+    <!-- Section pour exporter et valider -->
+    <div class="text-right" *ngIf="canExport || canValidate()">
+        <hr>
+        <button class="btn btn-dark mx-2" *ngIf="canExport" (click)="export()">
+            <i class="fa fa-download"></i> Exporter
+        </button>
+        <button class="btn btn-success mx-2" *ngIf="canValidate()" (click)="validate()">
+            <i class="fa fa-check"></i> Valider
+        </button>
+    </div>
+</div>

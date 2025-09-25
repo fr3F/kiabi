@@ -1,0 +1,43 @@
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucun article trouvé</p>
+</div>
+
+<div *ngIf="list&&list.length!=0" class="table-responsive">
+    <div class="text-right">
+        <select class="form-control form-control-sm me-2" [(ngModel)]="filter" (change)="changeList()" 
+            style="width: 150px; display: inline;">
+            <option value="">Tous</option>
+            <option value="1">Sans stock magasin</option>
+            <option value="2">Avec stock magasin</option>
+        </select>
+        <button class="btn btn-sm btn-success" (click)="export()">
+            Exporter tous
+            <i class="fa fa-file-excel"></i>
+        </button>
+    </div>
+    <p>{{listShowed.length | number}} article(s)  trouvé(s)</p>
+    <table *ngIf="listShowed.length" class="table table-centered table-nowrap table-sm table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col" class="align-middle" >Code</th>
+                <th scope="col" class="align-middle" >Désignation</th>
+                <th scope="col" class="align-middle" >Gamme</th>
+                <th scope="col" class="align-middle" >Stock magasin</th>
+                <th scope="col" class="align-middle" >Autres stocks</th>
+            </tr>
+        </thead>
+        <tbody class=" align-middle">
+            <tr *ngFor="let item of listShowed" [ngClass]="{'table-danger': !item.stock}">
+                <td>{{item.code}}</td>
+                <td>{{item.designation}}</td>
+                <td>{{item.gamme}}</td>
+                <td class="text-right">{{item.stock | number}}</td>
+                <td >
+                   <app-stock-autre-depots [stocks]="item.stockDepots"></app-stock-autre-depots>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+  
+ 

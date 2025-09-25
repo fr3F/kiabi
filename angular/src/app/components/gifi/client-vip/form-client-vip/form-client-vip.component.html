@@ -1,0 +1,228 @@
+<form [formGroup]="formGroup" (ngSubmit)="valider()">
+    <div class="row">
+        <div class="col-md-5 mx-auto">
+            <div class="mt-2" *ngIf="data.codeClient">
+                <label class="control-label mt-0">
+                    Code client
+                </label>
+                <input class="form-control form-control-sm" [value]="data.codeClient" *ngIf="data.codeClient" disabled>
+            </div>
+
+            <div class="mt-2" *ngIf="data.numClient">
+                <label class="control-label mt-0">
+                    N° carte
+                </label>
+                <input class="form-control form-control-sm" [value]="data.numClient" *ngIf="data.numClient" disabled>
+            </div>
+
+            <div class="mt-2" *ngIf="data.storeCode">
+                <label class="control-label mt-0">
+                    Store code
+                </label>
+                <input class="form-control form-control-sm" [value]="data.storeCode" disabled>
+            </div>
+
+            <div class="mt-2">
+                <label class="control-label mt-0">
+                    Nom
+                </label>
+                <input class="form-control form-control-sm" formControlName="data.nom" [(ngModel)]="data.nom"
+                     [ngClass]="{'is-invalid': isInvalid('nom')}" *ngIf="!data.id"/>
+                <input class="form-control form-control-sm" [value]="data.nom" *ngIf="data.id" disabled>
+                <div *ngIf="!data.id && isInvalid('nom')" class="invalid-feedback">
+                    <span>Veuillez renseigner le nom du client</span>
+                </div>
+            </div>
+
+            <div class="mt-2">
+                <label class="control-label mt-0">
+                    Prénom
+                </label>
+                <input class="form-control form-control-sm" formControlName="data.prenom" [(ngModel)]="data.prenom"
+                     [ngClass]="{'is-invalid': isInvalid('prenom')}" *ngIf="!data.id"/>
+                <input class="form-control form-control-sm" [value]="data.prenom" *ngIf="data.id" disabled>
+                <div *ngIf="!data.id && isInvalid('prenom')" class="invalid-feedback">
+                    <span>Veuillez renseigner le prénom du client</span>
+                </div>
+            </div>
+
+            <div class="mt-2">
+                <label class="control-label mt-0">
+                    Adresse
+                </label>
+                <input class="form-control form-control-sm" formControlName="data.adresse" [(ngModel)]="data.adresse"
+                     [ngClass]="{'is-invalid': isInvalid('adresse')}" *ngIf="!data.id"/>
+                <input class="form-control form-control-sm" [value]="data.adresse" *ngIf="data.id" disabled>
+                <div *ngIf="!data.id && isInvalid('adresse')" class="invalid-feedback">
+                    <span>Veuillez renseigner l'adresse du client</span>
+                </div>
+            </div>
+
+            <!-- <div class="mt-2">
+                <label class="control-label mt-0">
+                    Code
+                </label>
+                <input class="form-control form-control-sm" formControlName="data.code" [(ngModel)]="data.code"
+                     [ngClass]="{'is-invalid': isInvalid('code')}" *ngIf="!data.id"/>
+                <input class="form-control form-control-sm" [value]="data.code" *ngIf="data.id" disabled>
+                <div *ngIf="!data.id && isInvalid('code')" class="invalid-feedback">
+                    <span>Veuillez renseigner le code</span>
+                </div>
+            </div> -->
+
+            <div class="mt-2">
+                <label class="control-label mt-0">
+                    Ville
+                </label>
+                <input class="form-control form-control-sm" formControlName="data.ville" [(ngModel)]="data.ville"
+                     [ngClass]="{'is-invalid': isInvalid('ville')}" *ngIf="!data.id"/>
+                <input class="form-control form-control-sm" [value]="data.ville" *ngIf="data.id" disabled>
+                <div *ngIf="!data.id && isInvalid('ville')" class="invalid-feedback">
+                    <span>Veuillez renseigner la ville</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-5 mx-auto">
+
+            <div class="mt-2">
+                <label class="control-label mt-0">
+                    Téléphone
+                </label>
+                <input mask="00 00 000 00" class="form-control form-control-sm" formControlName="data.telephone" [(ngModel)]="data.telephone"
+                     [ngClass]="{'is-invalid': isInvalid('telephone')}" *ngIf="!data.id"/>
+                <input class="form-control form-control-sm" [value]="data.telephone | mask :'00 00 000 00'" *ngIf="data.id" disabled>
+                <div *ngIf="!data.id && isInvalid('telephone')" class="invalid-feedback">
+                    <span>Veuillez renseigner la téléphone</span>
+                </div>
+            </div>
+
+            <div class="mt-2">
+                <label class="control-label mt-0">
+                    Titre
+                </label>
+                <select class="form-control form-control-sm" formControlName="data.titre" [(ngModel)]="data.titre"
+                    [ngClass]="{'is-invalid': isInvalid('titre')}" *ngIf="!data.id"
+                >
+                    <option>Madame</option>
+                    <option>Monsieur</option>
+                    <option>Mademoiselle</option>
+                </select>
+                <select class="form-control form-control-sm" *ngIf="data.id" disabled>
+                    <option checked>{{data.titre}}</option>
+                </select>
+                <div *ngIf="!data.id && isInvalid('titre')" class="invalid-feedback">
+                    <span>Veuillez renseigner le titre</span>
+                </div>
+            </div>
+<!--
+            <div class="mt-2">
+                <label class="control-label mt-0">
+                    Adresse2
+                </label>
+                <input class="form-control form-control-sm" formControlName="data.adresse2" [(ngModel)]="data.adresse2"
+                     [ngClass]="{'is-invalid': isInvalid('adresse2')}" *ngIf="!data.id"/>
+                <input class="form-control form-control-sm" [value]="data.adresse2" *ngIf="data.id" disabled>
+
+                <div *ngIf="!data.id && isInvalid('adresse2')" class="invalid-feedback">
+                    <span>Veuillez renseigner l'adresse 2 du client</span>
+                </div>
+            </div> -->
+
+            <div class="mt-2">
+                <label class="control-label mt-0">
+                    Email
+                </label>
+                <input class="form-control form-control-sm" formControlName="data.email" [(ngModel)]="data.email"
+                     [ngClass]="{'is-invalid': isInvalid('email')}" *ngIf="!data.id"/>
+                <input class="form-control form-control-sm" [value]="data.email" *ngIf="data.id" disabled>
+
+                <div *ngIf="!data.id && isInvalid('email')" class="invalid-feedback">
+                    <span>Veuillez renseigner un email valide</span>
+                </div>
+            </div>
+
+            <div class="mt-2" *ngIf="data.id">
+                <label class="control-label mt-0">
+                    Date de création
+                </label>
+                <input class="form-control form-control-sm" [value]="data.dateCreation"
+                    type="date" disabled="true" />
+                <div *ngIf="!data.id && isInvalid('dateCreation')" class="invalid-feedback">
+                    <span>Veuillez renseigner la date de création</span>
+                </div>
+            </div>
+<!--
+            <div class="mt-2">
+                <label class="control-label mt-0">
+                    Portable
+                </label>
+                <input mask="000 00 000 00" class="form-control form-control-sm" formControlName="data.portable" [(ngModel)]="data.portable"
+                     [ngClass]="{'is-invalid': isInvalid('portable')}" *ngIf="!data.id"/>
+                <input class="form-control form-control-sm" [value]="data.portable | mask: '000 00 000 00'" *ngIf="data.id" disabled>
+
+                <div *ngIf="!data.id && isInvalid('portable')" class="invalid-feedback">
+                    <span>Veuillez renseigner le portable</span>
+                </div>
+            </div> -->
+
+            <div class="mt-2">
+                <label class="control-label mt-0">
+                    Date d'anniversaire
+                </label>
+                <input class="form-control form-control-sm" [(ngModel)]="data.dateAnniversaire" formControlName="data.dateAnniversaire"
+                    type="date" [ngClass]="{'is-invalid': isInvalid('dateAnniversaire')}" *ngIf="!data.id"/>
+                <input type="date" class="form-control form-control-sm" [value]="data.dateAnniversaire" *ngIf="data.id" disabled>
+
+            </div>
+
+            <div class="form-check mt-2">
+                <input class="form-check-input" type="checkbox" id="optin-sms-kiabi"
+                    formControlName="data.optinSmsKiabi" [(ngModel)]="data.optinSmsKiabi"
+                >
+                <label class="form-check-label" for="optin-sms-kiabi" >
+                    J'accepte de recevoir des SMS de la part de Kiabi.
+                </label>
+            </div>
+
+            <div class="form-check mt-2">
+                <input class="form-check-input" type="checkbox" id="optin-sms-partner"
+                    formControlName="data.optinSmsPartner" [(ngModel)]="data.optinSmsPartner"
+                />
+                <label class="form-check-label" for="optin-sms-partner" >
+                    J'accepte de recevoir des SMS de la part du partenaire de Kiabi.
+                </label>
+            </div>
+
+            <div class="form-check mt-2">
+                <input class="form-check-input" type="checkbox" id="optin-email-kiabi"
+                    formControlName="data.optinEmailKiabi" [(ngModel)]="data.optinEmailKiabi"
+                />
+                <label class="form-check-label" for="optin-email-kiabi"
+                >
+                    J'accepte de recevoir des emails de la part de Kiabi.
+                </label>
+            </div>
+
+            <div class="form-check mt-2">
+                <input class="form-check-input" type="checkbox" id="optin-email-partner"
+                    formControlName="data.optinEmailPartner" [(ngModel)]="data.optinEmailPartner"
+                />
+                <label class="form-check-label" for="optin-email-partner" >
+                    J'accepte de recevoir des emails de la part du partenaire de Kiabi.
+                </label>
+            </div>
+
+
+        </div>
+        <div class="col-12">
+            <div class="mt-4" style="text-align: center;">
+                <button class="btn mx-auto btn-success">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+

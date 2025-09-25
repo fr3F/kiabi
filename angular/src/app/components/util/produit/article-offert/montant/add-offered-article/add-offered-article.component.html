@@ -1,0 +1,47 @@
+<form [formGroup]="formGroup" (ngSubmit)="validate()">
+   
+    
+    <div  class="mt-2">
+        <label>Article offert</label>
+        <div style="margin-top: -20px;">
+            <app-autocomplete (change)="setCode($event)"
+                title="Code barre" [url]="urlSearch" [selectOnly]="true" [replace]="true"
+                ngClass="form-control-sm" placeholder="Rechercher par désignation ou code"
+            >
+            </app-autocomplete>
+        </div>
+    </div>
+    
+    <div class="mt-2">
+        <label>Quantité offert</label>
+        <input type="number" class="form-control form-control-sm" [(ngModel)]="data.quantiteOffert" formControlName="data.quantiteOffert"
+            [ngClass]="{'is-invalid': isInvalid('quantiteOffert')}" 
+        >
+        <div class="invalid-feedback" *ngIf="isInvalid('quantiteOffert')">
+            Veuillez renseigne une quantité valide
+        </div>
+    </div>  
+
+
+    <div class="mt-2"  *ngIf="gammes&&gammes.length">
+        <label>Gamme</label>
+        <select class="form-control form-control-sm" [(ngModel)]="data.gamme" formControlName="data.gamme"
+            [ngClass]="{'is-invalid': isInvalidGamme()}"  (change)="setGamme()"
+        >
+            <option *ngFor="let item of gammes" [value]="item.EG_Enumere">{{item.EG_Enumere}}</option>
+        </select>
+        <div class="invalid-feedback" *ngIf="isInvalidGamme()">
+            Veuillez séléctionner une gamme
+        </div>
+    </div>
+    
+    <div class="mt-2 text-center">
+        <button class="btn btn-primary btn-sm" type="submit">Ajouter</button>
+    </div>
+</form>
+
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>

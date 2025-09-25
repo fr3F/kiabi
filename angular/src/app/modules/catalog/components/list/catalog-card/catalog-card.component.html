@@ -1,0 +1,35 @@
+<div class="card">
+    <div class="card-body">
+        <p>
+            <span class="designation">{{catalog.detailedProductDescription}}</span>
+            <span class="collection">{{catalog.collectionDescription}}</span>
+        </p>
+        <p>{{catalog.productTypeDescription}}</p>
+        <p>{{catalog.sizeDescription}}</p>
+        <p>
+            {{catalog.color}} -
+            {{catalog.colorDescription}} -
+            {{catalog.colorBasicDescription}}
+        </p>
+        <p>{{catalog.countryOriginCode}}</p>
+        <p>{{catalog.eanCode}}</p>
+        <div class="text-right">
+            <button class="btn btn-sm btn-info" style="font-size: 6pt;"
+                (click)="openModal(modal)"
+            >
+                <i class="fa fa-eye"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #modal role="document" let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Details</h5>
+      <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-detail-catalog [catalog]="catalog"></app-detail-catalog>
+    </div>
+</ng-template>

@@ -1,0 +1,41 @@
+
+        <h4 class="text-center" *ngIf="!(!data.itemARegulariser.length&&data.exist)">
+            Les éléments à régulariser
+        </h4>
+        <p class="text-center" *ngIf="!data.itemARegulariser.length&&!data.exist" style="margin: 30px 0;">
+            Aucun encaissement pour cette date
+        </p>
+
+        <div class="table-responsive" *ngIf="data.itemARegulariser.length">
+            <div class="table-responsive mt-2" *ngFor="let depot of data.itemARegulariser">
+                <h5><b>Dépôt: </b> {{depot.depot}}</h5>
+                <table class="table table-sm table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Code article</th>
+                            <th>Désignation</th>
+                            <th>Gamme</th>
+                            <th>Quantité</th>
+                            <th>Quantité stock SAGE</th>
+                            <th>Ecart</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of depot.items; let i = index;">
+                            <td>{{item.code}}</td>
+                            <td>{{item.designation}}</td>
+                            <td>{{item.gamme}}</td>
+                            <td class="text-right">
+                                {{item.quantite | number}}
+                            </td>
+                            <td class="text-right">
+                                {{item.quantiteStock | number}}
+                            </td>
+                            <td class="text-right">
+                                {{item.ecart | number}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>    
+            </div>
+        </div>

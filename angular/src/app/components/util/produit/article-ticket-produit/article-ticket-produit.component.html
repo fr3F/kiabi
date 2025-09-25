@@ -1,0 +1,59 @@
+<div class="card" *ngIf="data">
+    <div class="card-body">
+        <h3>Ventes</h3>
+
+        <div class="mt-2 table-responsive">
+            <p *ngIf="!data.length" class="text-center" style="margin: 30px 0;">
+                Aucun article ticket trouvé
+            </p>
+            <p *ngIf="data.length">{{data.length | number }} Article(s) ticket(s) trouvé(s)</p>
+            <table class="table table-sm table-bordered table-nowrap" *ngIf="data.length">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Facture</th>
+                        <th>N° Ticket</th>
+                        <th>Date</th>
+                        <th>Client</th>
+                        <th>N° Caisse</th>
+                        <th>Caissier</th>
+                        <th>Variant</th>
+                        <th>Qté</th>
+                        <th>PU HT</th>
+                        <th>Remise</th>
+                        <th>TVA</th>
+                        <th>Magasin</th>
+                        <th>Dépôt</th>
+                        <th>Prix total HT</th>
+                        <th>Prix total TTC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of data">
+                        <td>{{item.ticket.numeroFacture}}</td>
+                        <td>{{item.ticket.numticket}}</td>
+                        <td>{{item.ticket.datecreation | date: 'dd-MM-yyyy HH:mm'}}</td>
+                        <td>{{item.ticket.codeclient}}</td>
+                        <td>{{item.ticket.nocaisse}}</td>
+                        <td>{{item.ticket.namecaissier}}</td>
+                        <td>{{item.gamme}}</td>
+                        <td class="text-right">{{item.quantite | number}}</td>
+                        <td class="text-right">{{item.puHT | appcurrency}}</td>
+                        <td class="text-right">
+                            <span *ngIf="item.remise!=null">{{item.remise | number}} %</span>
+                        </td>
+                        <td class="text-right">
+                            {{item.tauxtva | number}} %
+                        </td>
+                        <td>{{item.ticket.magasin}}</td>
+                        <td>{{item.ticket.depot}}</td>
+
+                        <td class="text-right">{{item.prixTotalHT | appcurrency}}</td>
+                        <td class="text-right">{{item.prixTotalTTC | appcurrency}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <ngx-loading [show]="loading"></ngx-loading>
+
+</div>

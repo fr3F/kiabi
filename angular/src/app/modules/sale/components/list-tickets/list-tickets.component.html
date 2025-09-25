@@ -1,0 +1,40 @@
+<h2 class="text-center">Les tickets</h2>
+
+<p class="text-center" style="margin: 30px 0;" *ngIf="!tickets.length">
+    Aucun ticket
+</p>
+
+<div class="table-responsive" *ngIf="tickets&&tickets.length" style="max-height: 550px;">
+    <table class="table table-bordered table-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Caisse</th>
+                <th>Store code</th>
+                <th>N° ticket</th>
+                <th>Heure</th>
+                <th>Montant HT</th>
+                <th>Montant TTC</th>
+                <th>Montant remise</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle">
+            <tr *ngFor="let item of tickets">
+                <td>{{item.nocaisse}}</td>
+                <td>{{item.storeCode}}</td>
+                <td>{{item.numticket}}</td>
+                <td class="text-center">{{item.datecreation | date: 'HH:mm'}}</td>
+                <td class="text-right">{{item.montantht | appcurrency}}</td>
+                <td class="text-right">{{item.montanttotal | appcurrency}}</td>
+                <td class="text-right">{{item.montantremise | appcurrency}}</td>
+                <!-- <td class="text-right">{{item.montantht | number :'.2-2'}} {{item.currency}} Ar</td> -->
+                <td class="text-center">
+                    <app-detail-ticket-btn [idTicket]="item.idticket">
+                    </app-detail-ticket-btn>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+

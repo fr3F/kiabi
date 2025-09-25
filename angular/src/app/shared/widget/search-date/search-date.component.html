@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-12">
+        {{titre}}
+    </div>
+    <div class="col-sm-6">
+        <div class="search-box me-2 mb-2">
+            <div class="position-relative">
+              <input
+                type="date"
+                class="form-control form-control-sm"
+                placeholder=""
+                [(ngModel)]="dateDebut"
+                (ngModelChange)="search()"
+              />
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="search-box me-2 mb-2">
+            <div class="position-relative">
+              <input
+                type="date"
+                class="form-control  form-control-sm"
+                placeholder=""
+                [(ngModel)]="dateFin"
+                (ngModelChange)="search()"
+              />
+            </div>
+        </div>
+    </div>
+</div>

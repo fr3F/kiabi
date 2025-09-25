@@ -1,0 +1,51 @@
+
+<h4 class="text-center mt-4">
+    Resumé du jour
+</h4>
+<div class="text-center mt-2 mb-2" *ngIf="showButton">
+    <button class="btn btn-primary me-2" (click)="exporterSage()">Exporter fichiers vers SAGE</button>
+    <button class="btn btn-success me-2" (click)="sendMailSage()">Envoyer les fichiers par email</button>
+    <button class="btn btn-dark" (click)="initStock()">Update stock</button>
+</div>
+<div class="table-responsive mt-2" *ngIf="data">
+    <table class="table table-sm table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Magasin</th>
+                <th>Minicentrale</th>
+                <th>Client</th>
+                <th>Prix total</th>
+                <th>Nombre ticket</th>
+                <th>Nombre référence article</th>
+                <th>Qté vendu</th>
+                <th *ngIf="acces.detailTicket"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of data; let i = index;">
+                <td>{{item.magasin}}</td>
+                <td>{{item.minicentrale}}</td>
+                <td>{{item.codeclient}}</td>
+                <td class="text-right">
+                    {{item.montanttotal | appcurrency}}
+                </td>
+                <td class="text-right">
+                    {{item.nbTicket | number}}
+                </td>
+                <td class="text-right">
+                    {{item.nbReferenceArticle | number}}
+                </td>
+                <td class="text-right">
+                    {{item.qteVendu | number}}
+                </td>
+                <td *ngIf="acces.detailTicket" class="text-center">
+                    <button class="btn btn-sm btn-info" routerLink="/cloture/detail-ticket/{{item.magasin}}/{{date}}/{{item.codeclient}}">
+                        <i class="fa fa-eye"></i>
+                    </button>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>    
+</div>
+

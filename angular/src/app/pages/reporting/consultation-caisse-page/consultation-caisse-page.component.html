@@ -1,0 +1,24 @@
+
+<div class="container-fluid">
+    <app-page-title title="Consultation caisse">
+    </app-page-title>
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <app-form-consultation-caisse
+                (onSearch)="refreshList($event)"
+            >
+            </app-form-consultation-caisse>
+        </div>
+
+        <div class="col-12 mt-2" *ngIf="list">
+            <app-list-article-ticket-caisse [listInitial]="list" [caisse]="caisse"
+                [debut]="debut" [fin]="fin" [magasin]="magasin" [client]="client">
+            </app-list-article-ticket-caisse>
+        </div>
+    </div>
+</div>
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p>
+</ngx-spinner>

@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-xl-6 mx-auto">
+        <div class="card overflow-hidden">
+            <div class="bg-primary bg-soft">
+                <div class="row">
+                    <div class="col-7">
+                        <div class="text-primary p-3">
+                           
+                        </div>
+                    </div>
+                    <div class="col-5 align-self-end">
+                        <img src="assets/images/profile-img.png" alt="" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body pt-0">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="avatar-md"  style="text-align: center!important;">
+                            <!-- <div class="col-md-4"></div> -->
+                            <!-- <div class="col-md-5 mx-auto avatar-md"> -->
+                                <img src="assets/images/user.png" alt="" class="img-thumbnai rounded-circle">
+                            <!-- </div> -->
+                            <!-- <div class="col-md-4"></div> -->
+
+                        </div>
+                        <h5 class="font-size-15">{{user.nom}}</h5>
+                        <h5 class="font-size-13">Prénom: {{user.prenom}}</h5>
+                        <p class="text-muted mb-0">Email: {{user.email}}</p>
+                        <p class="text-muted mt-2">Rôle: {{user.role.nom}}</p>
+                    </div>
+
+                    <div class="col-sm-7" style="border-left: 0.5px solid #CCC; padding-left: 35px; padding-bottom: 45px;">
+                        <div class="pt-4">
+
+                            <div class="mt-4">
+                                <a [routerLink]="['/user/profil-edit/1']" routerLinkActive="router-link-active"  class="btn btn-primary">Modifier mon profil<i
+                                        class="fa fa-pencil-alt ms-1"></i></a>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <a [routerLink]="['/user/profil-edit-password/1']" class="btn btn-success">Modifier mon mot de passe<i
+                                        class="fa fa-lock ms-1"></i></a>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <a (click)="resetPassword()" class="btn btn-danger">Réinitialiser mon mot de passe<i
+                                        class="fa fa-unlock ms-1"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

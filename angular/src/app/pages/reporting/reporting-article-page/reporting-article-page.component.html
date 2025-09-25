@@ -1,0 +1,27 @@
+
+<div class="container-fluid">
+    <app-page-title title="Reporting articles">
+    </app-page-title>
+    
+    <div class="mx-auto card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5 mx-auto">
+                    <app-form-reporting-article (onChange)="setList($event)"></app-form-reporting-article>
+                </div>
+                <div class="col-md-12 mx-auto mt-3" *ngIf="list">
+                    <app-list-reporting-article [list]="list"
+                        [isBarcode]="isBarcode"
+                    >
+                    </app-list-reporting-article>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>

@@ -1,0 +1,22 @@
+<div class="card">
+    <div class="card-body">
+        <app-search-date titre="Période" (onChange)="changeDate($event)"></app-search-date>
+
+        <div class="row mb-2" *ngIf="magasins">
+            <div class="col-12">
+                <label>Magasin</label>
+                <select class="form-control form-control-sm" (change)="change()" [(ngModel)]="idMagasin">
+                    <option value="" *ngIf="isAll()">Tous</option>
+                    <option *ngFor="let item of magasins" [value]="item.id">
+                        {{item.nommagasin}}
+                    </option>
+                </select>
+            </div>
+            
+            <div class="col-12 mt-3 text-right" *ngIf="dateDebut && dateFin && (idMagasin || isAll())">
+                <button class="btn btn-primary" (click)="change()">Afficher</button>
+            </div>
+        </div>
+
+    </div>
+</div>

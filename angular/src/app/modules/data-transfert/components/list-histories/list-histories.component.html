@@ -1,0 +1,44 @@
+<!-- <p>liste-service-mode works!</p> -->
+
+
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucun historique</p>
+</div>
+<div *ngIf="list&&list.length!=0" class="table-responsive">
+    <table class="table table-centered table-nowrap table-sm table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th scope="col" class="align-middle" >Date</th>
+                <th scope="col" class="align-middle" >Répertoire</th>
+                <th scope="col" class="align-middle" >Désignation</th>
+                <th scope="col" class="align-middle" >Fichier</th>
+                <th scope="col" class="align-middle" >Type</th>
+                <th scope="col" class="align-middle" >Statut</th>
+            </tr>
+        </thead>
+        <tbody class=" align-middle">
+            <tr *ngFor="let item of list | paginate : {
+                itemsPerPage: pageSize,
+                currentPage: page,
+                totalItems: count
+                };
+            let i = index"
+            >
+                <td>{{item.createdAt | date: 'dd-MM-yyyy HH:mm:ss'}}</td>
+                <td>{{item.folder}}</td>
+                <td>{{item.designation}}</td>
+                <td>{{item.file}}</td>
+                <td>{{item.type}}</td>
+                <td class="text-center">
+                    <i class="far fa-check-circle text-success" *ngIf="item.status == allStatus.ok">
+                    </i>
+                    <i class="far fa-times-circle text-danger" *ngIf="item.status == allStatus.ko">
+                    </i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <ngx-loading [show]="loading"></ngx-loading>
+</div>
+
+

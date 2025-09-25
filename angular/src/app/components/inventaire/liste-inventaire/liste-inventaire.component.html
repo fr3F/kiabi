@@ -1,0 +1,80 @@
+<!-- inventaire-list.component.html -->
+<div class="inventaire-container">
+  <h2>Liste des Inventaires</h2>
+
+  <div *ngIf="loading">Chargement...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <!-- Tableau inventaires -->
+  <table *ngIf="inventaires.length > 0" border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Date Début</th>
+        <th>Date Fin</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let inv of inventaires">
+        <td>{{ inv.idinventaire }}</td>
+        <td>{{ inv.datedebut | date:'short' }}</td>
+        <td>{{ inv.datefin ? (inv.datefin | date:'short') : '-' }}</td>
+        <td>{{ inv.status }}</td>
+        <td>
+          <button (click)="viewDetails(inv.idinventaire)">Voir détails</button>
+          <button (click)="createSnapshot(inv.idinventaire)">Créer Snapshot</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Section détails inventaire -->
+  <div *ngIf="selectedInventaireDetails.length > 0" class="details-container">
+    <h3>Détails de l’inventaire sélectionné</h3>
+
+    <!-- Bouton Export Excel : uniquement si la liste n'est pas vide -->
+    <button class="btn btn-success mb-2" (click)="exportExcelDetails()" >
+      <i class="bi bi-file-earmark-excel"></i> Exporter Excel
+    </button>
+
+    <!-- Tableau détails -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm align-middle text-center">
+        <thead class="table-light">
+          <tr>
+            <th>EAN</th>
+            <th>Color</th>
+            <th>Size</th>
+            <th>StyleCode</th>
+            <th>Designation</th>
+            <th>Date Snapshot</th>
+            <th>Stock</th>
+            <th>Count</th>
+            <th>Date Modif</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let det of selectedInventaireDetails">
+            <td>{{ det.eanCode }}</td>
+            <td>{{ det.color }}</td>
+            <td>{{ det.size }}</td>
+            <td>{{ det.styleCode }}</td>
+            <td>{{ det.designation }}</td>
+            <td>{{ det.datesnapshot | date:'short' }}</td>
+            <td>{{ det.stock }}</td>
+            <td>{{ det.count ?? '-' }}</td>
+            <td>{{ det.datemodif ? (det.datemodif | date:'short') : '-' }}</td>
+          </tr>
+
+          <!-- Message si la liste est vide -->
+          <tr *ngIf="selectedInventaireDetails.length === 0">
+            <td colspan="9" class="text-center text-muted">Aucun détail disponible</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

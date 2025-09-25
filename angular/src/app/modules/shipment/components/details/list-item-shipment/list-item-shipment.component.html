@@ -1,0 +1,32 @@
+<div class="table-responsive" *ngIf="list.length">
+    <table class="table table-sm table-bordered table-nowrap">
+        <thead class="table-dark">
+            <tr>
+                <th>Item code</th>
+                <th>EAN code</th>
+                <th>Expected qty</th>
+                <th>Received qty</th>
+                <th>Purchase price</th>
+                <th>Tarif code</th>
+                <th>Country origin</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of list; let i = index;" >
+                <td>{{item.itemCode}}</td>
+                <td>{{item.eanCode}}</td>
+                <td class="text-right">{{item.expectedQty}}</td>
+                <td class="text-right">{{item.receivedQty}}</td>
+                <td class="text-right">{{item.purchasePrice | currency: item.purchasePriceCurrencyCode }}</td>
+                <td>
+                    <ul>
+                        <li *ngFor="let tarif of getTarifs(item)">
+                            {{tarif}}
+                        </li>
+                    </ul>
+                </td>
+                <td>{{item.countryOriginCode}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

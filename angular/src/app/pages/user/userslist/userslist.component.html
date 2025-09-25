@@ -1,0 +1,87 @@
+<!-- <p>productlist works!</p> -->
+<div class="container-fluid">
+  <app-page-title
+    [title]="title"
+  ></app-page-title>
+
+  <div class="row" *ngIf="fonctionnalites">
+    <div class="col-md-12 col-lg-12 mx-auto">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-sm-12 col-md-3">
+              <div class="dataTables_length" id="tickets-table_length">
+                <label class="d-inline-flex align-items-center"
+                  >Voir
+                  <select
+                    (change)="handlePageSizeChange($event)"
+                    class="custom-select custom-select-sm form-control form-control-sm mx-2"
+                  >
+                    <option *ngFor="let size of pageSizes" [ngValue]="size">
+                      {{ size }}
+                    </option>
+                  </select>
+                  entrées</label
+                >
+              </div>
+            </div>
+
+            <!-- Search -->
+            <div class="col-sm-12 col-md-6 mx-auto">
+              <div class="search-box me-2 mb-2">
+                <div class="position-relative">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Rechercher un utilisateur"
+                    [(ngModel)]="motSearch"
+                    (ngModelChange)="search()"
+                  />
+                  <i
+                    class="bx bx-search-alt search-icon"
+                    type="button"
+                    (click)="search()"
+                  ></i>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="fonctionnalites&&isVisible('ajouter')" class="col-md-3">
+              <div class="text-sm-end">
+                <button type="button" routerLink="/user/user-add" routerLinkActive="router-link-active"  class="btn btn-success btn-rounded mb-2 mr-2">
+                  <i class="mdi mdi-plus me-1"></i> Nouvel utilisateur
+                </button>
+              </div>
+            </div>
+            <!-- end col-->
+            <div class="col-sm-12 col-md-5">
+              <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                {{ count }} utilisateurs trouvés
+              </div>
+            </div>
+
+          </div>
+
+          <app-list [fonctionnalites]="fonctionnalites" [acces]="acces" [isVisible]="isVisible" [users]="users" [page]="page" [count]="count" [pageSize]="pageSize"></app-list>
+
+          <div class="row justify-content-md-between align-items-md-center mt-2">
+            <!-- Pagination -->
+            <div class="col-sm-12 col-md-5">
+              <div class="text-md-right float-md-end pagination-rounded">
+                <pagination-controls
+                  previousLabel=""
+                  nextLabel=""
+                  [responsive]="true"
+                  (pageChange)="handlePageChange($event)"
+                  screenReaderPaginationLabel="Pagination"
+                  screenReaderPageLabel="page"
+                ></pagination-controls>
+              </div>
+            </div>
+            <!-- End Pagination -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

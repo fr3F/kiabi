@@ -1,0 +1,48 @@
+<div class="card" *ngIf="data">
+    <div class="card-body">
+        <h3>Articles offerts</h3>
+        <div class="mb-1 text-right" *ngIf="acces">
+            <button class="btn btn-sm btn-success" (click)="openCreate(modal)">Ajouter</button>
+        </div>
+        <p class="text-center mt-4 mb-4" *ngIf="!data.length">Aucun article offert</p>
+        <div  class="table-responsive" style="max-height: 350px;">
+            <table class="table table-sm table-bordered" *ngIf="data.length">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Code</th>
+                        <th>Désignation</th>
+                        <th>Gamme</th>
+                        <th>Validité</th>
+                        <th>Magasin</th>
+                        <th>Quantité offert</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of data; let i = index" s>
+                        <td>{{item.code}}</td>
+                        <td>{{item.produit.fulldesignation}}</td>
+                        <td>{{item.gamme}}</td>
+                        <td>{{item.debut | date: 'dd-MM-yyyy HH:mm'}} à {{item.fin | date: 'dd-MM-yyyy HH:mm'}}</td>
+                        <td>{{item.magasin}}</td>
+                        <td class="text-right">{{item.quantiteOffert}}</td>
+                        <td style="width: 50px; text-align: center;">
+                            <i class="text-danger fa fa-trash" (click)="deleteArticleOffert(i)"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <ngx-loading [show]="loading"></ngx-loading>
+</div>
+
+<ng-template #modal role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Nouvel article offert(1 achat)</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-form-article-offert (onValidate)="onCreate($event)" [code]="code"></app-form-article-offert>
+    </div>
+</ng-template>

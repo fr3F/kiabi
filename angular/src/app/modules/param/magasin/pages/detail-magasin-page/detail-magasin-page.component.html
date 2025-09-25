@@ -1,0 +1,55 @@
+
+<div class="container-fluid">
+    <!-- start page title -->
+    <app-page-title title="Détail du magasin {{data? data.nom: ''}}">
+    </app-page-title>
+    <div class="row">
+        <div class="col-12 mx-auto card">
+            <div class="row card-body" *ngIf="data">
+                <div class="row">
+                    <div class="col-10 mx-auto">
+                        <app-info-magasin [data]="data"></app-info-magasin>
+                    </div>
+                </div>
+
+                <div class="row mt-2" *ngIf="acces.caisse">
+                    <h4 class="text-center" style="font-weight: bold;">Les caisses</h4>
+                    <div class="col-md-12 mx-auto text-right" *ngIf="acces.ajouterCaisse || acces.syncAllCaisse">
+                        <button class="btn btn-sm btn-success" (click)="showAddCaisse(modal)" *ngIf="acces.ajouterCaisse">
+                            Nouvelle caisse
+                        </button>
+                    </div>
+                    <div class="col-md-12 mx-auto">
+                        <app-list-caisse [list]="data.caisses"  [magasin]="data" [acces]="acces" (onModify)="modifier($event, modal)"></app-list-caisse>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-4">
+                    <app-list-param-reglements [list]="data.paramreglements" [acces]="acces"></app-list-param-reglements>
+                </div>
+                <div class="col-md-6">
+                    <app-list-monnaie-magasin [monnaies]="data.monnaies" [devise]="data.devise">
+                    </app-list-monnaie-magasin>
+                </div>
+                <div class="col-md-6">
+                    <app-list-horaire-ouvrable [horaireouvrable]="data.horaireouvrable">
+                    </app-list-horaire-ouvrable>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #modal role="document" let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0" *ngIf="indice == -1">Nouvelle caisse</h5>
+      <h5 class="modal-title mt-0" *ngIf="indice != -1">Modifier la caisse</h5>
+      <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body text-center">
+        <app-form-caisse [magasin]="data" [indice]="indice" [data]="selectedCaisse" [modalRef]="modalRef"></app-form-caisse>
+    </div>
+</ng-template>
+

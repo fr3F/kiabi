@@ -1,0 +1,140 @@
+<div class="container-fluid py-3">
+
+  <!-- Titre -->
+  <div class="row mb-3">
+    <div class="col-12 text-center text-md-start">
+      <h3>Liste des Inventaires</h3>
+    </div>
+  </div>
+
+  <!-- Liste Inventaires -->
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+
+      <!-- Bouton créer -->
+      <div class="mb-3 text-center">
+        <button class="btn btn-success" (click)="openCreateModal()">
+          <i class="bi bi-plus-circle"></i> Créer Inventaire
+        </button>
+      </div>
+
+
+      <!-- Message d'erreur -->
+      <div *ngIf="error" class="alert alert-danger py-1 small text-center">{{ error }}</div>
+
+      <!-- Tableau -->
+      <div class="table-responsive shadow-sm rounded bg-white p-2">
+        <table *ngIf="inventaires.length > 0"
+          class="table table-striped table-bordered mb-0 text-center align-middle table-sm">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Début</th>
+              <th>Fin</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let inv of inventaires" [ngClass]="{'table-primary': inv.idinventaire === selectedInventaireId}"
+              style="cursor: pointer;">
+
+              <td class="text-center">{{ inv.idinventaire }}</td>
+              <td class="text-center">{{ inv.datedebut | date:'shortDate' }}</td>
+              <td class="text-center">{{ inv.datefin ? (inv.datefin | date:'shortDate') : '-' }}</td>
+              <td class="text-center">{{ inv.status }}</td>
+
+              <td class="text-center">
+                <!-- Bouton Voir -->
+                <a class="btn btn-sm btn-info me-1 mb-1" [routerLink]="['/inventaire/detail', inv.idinventaire]"
+                  routerLinkActive="active" data-bs-toggle="tooltip" data-bs-placement="top" title="Voir les détails">
+                  <i class="bi bi-eye"></i>
+                </a>
+
+                <!-- Bouton Modifier -->
+                <button class="btn btn-sm btn-primary me-1 mb-1"
+                  (click)="updateInventaire(inv); $event.stopPropagation()" data-bs-toggle="tooltip"
+                  data-bs-placement="top" title="Modifier l’inventaire">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+
+                <!-- Bouton Supprimer -->
+                <button *ngIf="inv.status !== 'En cours'" 
+                        class="btn btn-sm btn-danger mb-1" 
+                        (click)="deleteInventaire(inv); $event.stopPropagation()"
+                        data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer l’inventaire">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+
+            </tr>
+          </tbody>
+
+        </table>
+
+        <div *ngIf="inventaires.length === 0 && !loading" class="alert alert-warning text-center mb-0">
+          Aucun inventaire trouvé
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal Update -->
+  <ng-template #updateModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Modifier Inventaire</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="selectedInventaireForm">
+        <div class="mb-2">
+          <label>Date début</label>
+          <input type="date" class="form-control" formControlName="datedebut">
+        </div>
+        <div class="mb-2">
+          <label>Date fin</label>
+          <input type="date" class="form-control" formControlName="datefin">
+        </div>
+        <div class="mb-2">
+          <label>Status</label>
+          <input type="text" class="form-control" formControlName="status">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
+      <button type="button" class="btn btn-primary" (click)="saveUpdate(); modal.close()">Enregistrer</button>
+    </div>
+  </ng-template>
+
+  <!-- Modal Create -->
+  <ng-template #createModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Créer Inventaire</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="createInventaireForm">
+        <div class="mb-2">
+          <label>Date début</label>
+          <input type="date" class="form-control" formControlName="datedebut">
+        </div>
+        <div class="mb-2">
+          <label>Date fin</label>
+          <input type="date" class="form-control" formControlName="datefin">
+        </div>
+        <div class="mb-2">
+          <label>Status</label>
+          <input type="text" class="form-control" formControlName="status">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
+      <button type="button" class="btn btn-primary" (click)="saveCreate(); modal.close()">Créer</button>
+    </div>
+  </ng-template>
+
+</div>

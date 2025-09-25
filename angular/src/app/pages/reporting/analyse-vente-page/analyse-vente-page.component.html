@@ -1,0 +1,38 @@
+
+<div class="container-fluid">
+    <app-page-title title="Analyse des ventes">
+    </app-page-title>
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <app-form-analyse-vente (onChange)="change($event)"></app-form-analyse-vente>
+        </div>
+        <div class="col-md-12 card mx-auto" *ngIf="data">
+            <div class="card-body">
+                <app-list-analyse-vente [acces]="acces" [list]="data" [page]="page" [count]="count" [pageSize]="pageSize"></app-list-analyse-vente>
+
+                <div *ngIf="data&&data.length" class="row justify-content-md-between align-items-md-center mt-2">
+                    <!-- Pagination -->
+                    <div class="col-sm-12 col-md-5">
+                        <div class="text-md-right float-md-end pagination-rounded">
+                            <pagination-controls
+                            previousLabel=""
+                            nextLabel=""
+                            [responsive]="true"
+                            (pageChange)="handlePageChange($event)"
+                            screenReaderPaginationLabel="Pagination"
+                            screenReaderPageLabel="page"
+                            ></pagination-controls>
+                        </div>
+                    </div>
+                    <!-- End Pagination -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>

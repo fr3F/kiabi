@@ -1,0 +1,12 @@
+.container {
+    width: 100%!important;
+    height: auto!important; /* Pas de hauteur fixe */
+    overflow: auto!important; /* Permet le défilement si le contenu déborde */
+  }
+  
+  virtual-scroller {
+    display: block!important; /* S'assurer qu'il est en mode bloc */
+    width: 100%!important;
+    height: 100%!important; /* Utilisation de 100% de la hauteur du parent */
+  }
+  

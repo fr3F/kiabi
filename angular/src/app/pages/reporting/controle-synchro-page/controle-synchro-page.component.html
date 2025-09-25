@@ -1,0 +1,31 @@
+
+<div class="container-fluid">
+    <!-- start page title -->
+    <app-page-title title="Contrôle synchronisation">
+    </app-page-title>
+    <div class="row">
+        <div class="mx-auto" style="max-width: 400px;">
+            <div class="card">
+                <div class="card-body row" >
+                    <div class="mt-2">
+                        <label>Séléctionner le magasin</label>
+                        <select class="form-control form-control-sm" [(ngModel)]="idMagasin"
+                            (change)="refreshData()"
+                        >
+                            <option *ngFor="let magasin of magasins" [value]="magasin.id">{{magasin.nommagasin}}</option>
+                        </select>
+                    </div>
+                </div>    
+            </div>        
+        </div>
+        <div class="mt-2" *ngIf="data">
+            <app-control-synchro (refresh)="refreshData()" [acces]="acces"
+             [magasin]="data.magasin" [tableSynchros]="data.tableSynchros"></app-control-synchro>
+        </div>
+    </div>
+</div>
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>

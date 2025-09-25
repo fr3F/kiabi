@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-body">
+        <div class="mx-auto mt-2 mb-2" style="max-width: 200px;">
+            <label for="date">Date</label>
+            <input type="date" class="form-control"  name="date" [(ngModel)]="date" (change)="changeDate()">
+        </div>
+
+        <div class="text-center mt-4 mb-4" *ngIf="dataGrouped">
+            <button  type="button" class="btn me-3 mt-2 mb-2" (click)="changeMessage(item.message)" *ngFor="let item of dataGrouped"
+                [ngClass]="{'btn-primary': item.message == message, 'btn-secondary': item.message != message}"
+            > 
+                {{item.message}} 
+                <span class="badge bg-warning ms-1">{{item.nombre | number}}</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<div class="card">
+    <div class="card-body">
+        <h5 *ngIf="magasin">{{data.nommagasin}}</h5>
+        <h5 *ngIf="!magasin">{{data.nocaisse}}</h5>
+        <table class="table table-sm table-striped table-bordered">
+            <tbody>
+                <tr>
+                    <th></th>
+                    <th *ngIf="data.dataCaisse">Locale</th>
+                    <th>Backup</th>
+                    <th>Centrale</th>
+                </tr>
+                <tr>
+                    <th>Nombre ticket</th>
+                    <td  *ngIf="data.dataCaisse">{{data.nbTicketCaisse | number}}</td>
+                    <td>{{data.nbTicketDb | number}}</td>
+                    <td>
+                        {{data.nbTicket | number}}
+                        <i *ngIf="isDifferent('nbTicket')" class="text-danger fa fa-exclamation-triangle"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Nombre référence</th>
+                    <td  *ngIf="data.dataCaisse">{{data.nbReferenceCaisse | number}}</td>
+                    <td>{{data.nbReferenceDb | number}}</td>
+                    <td>
+                        {{data.nbReference | number}}
+                        <i *ngIf="isDifferent('nbReference')" class="text-danger fa fa-exclamation-triangle"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Qté vendue</th>
+                    <td *ngIf="data.dataCaisse">{{data.qteVendueCaisse | number}}</td>
+                    <td>{{data.qteVendueDb | number}}</td>
+                    <td>
+                        {{data.qteVendue | number}}
+                        <i *ngIf="isDifferent('qteVendue')" class="text-danger fa fa-exclamation-triangle"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Montant total HT</th>
+                    <td *ngIf="data.dataCaisse">
+                        {{data.montantHTCaisse | appcurrency}}
+                    </td>
+                    <td>
+                        {{data.montantHTDb | appcurrency}}
+                    </td>
+                    <td>
+                        {{data.montantHT | appcurrency}}
+                        <i *ngIf="isDifferent('montantHT')" class="text-danger fa fa-exclamation-triangle"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Montant total TTC</th>
+                    <td *ngIf="data.dataCaisse">
+                        {{data.montantTotalCaisse | appcurrency}}
+                    </td>
+                    <td>
+                        {{data.montantTotalDb | appcurrency}}
+                    </td>
+                    <td>
+                        {{data.montantTotal | appcurrency}}
+                        <i *ngIf="isDifferent('montantTotal')" class="text-danger fa fa-exclamation-triangle"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mt-2 text-right" *ngIf="acces&&acces.details&&magasin">
+            <button class="btn btn-sm btn-info" (click)="openModal(modal)">Détails</button>
+        </div>
+        <div class="table-responsive mt-2" *ngIf="reglements">
+            <app-list-reglement [reglements]="reglements" [total]="totalReglement"></app-list-reglement>
+        </div>
+    </div>
+</div>
+
+
+
+
+<ng-template #modal role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Détails contrôle {{data.nommagasin}}</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-control-caisse [date]="date" [idMagasin]="data.id"></app-control-caisse>
+    </div>
+</ng-template>

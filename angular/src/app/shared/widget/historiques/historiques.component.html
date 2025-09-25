@@ -1,0 +1,70 @@
+<div class="card">
+    <div class="card-body" *ngIf="historiques">
+        <h2 class="font-size-15 mb-4"><b>Historiques</b></h2>
+
+        <p class="text-center mt-4 mb-4" *ngIf="!historiques.length">
+            Aucune historique
+        </p>
+
+        <ul class="verti-timeline list-unstyled">
+            <li class="event-list" *ngFor="let item of historiques; let active = first"
+                [ngClass]="{'active': active}"
+            >
+                <div class="event-timeline-dot">
+                    <i class="bx bx-right-arrow-circle font-size-18"></i>
+                </div>
+                <div class="media">
+                    <div class="mr-3">
+
+                        <h5 class="font-size-14">
+                            <span class="font-size-10">{{item.createdAt | date: 'dd-MM-yyyy HH:mm'}}</span>
+                            <i class="bx bx-right-arrow-alt font-size-16 text-primary align-middle ms-2"></i>
+                        </h5>
+                    </div>
+                    <div class="media-body font-size-11">
+                        <div>
+                            {{item.description}}
+                            <span *ngIf="item.user"> par {{item.user.nom}} {{item.user.prenom}}</span>
+                            <!-- <img *ngIf="item.user" [src]="getPhoto(item.user)" ngbTooltip="{{item.user.nom}} {{item.user.prenom}}"
+                            class="rounded-circle avatar-xs"/> -->
+
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+
+            <ng-container #name *ngIf="all">
+                <li class="event-list" *ngFor="let item of historiques2;"
+                >
+                    <div class="event-timeline-dot">
+                        <i class="bx bx-right-arrow-circle font-size-18"></i>
+                    </div>
+                    <div class="media">
+                        <div class="mr-3">
+
+                            <h5 class="font-size-14">
+                                <span class="font-size-10">{{item.createdAt | date: 'dd-MM-yyyy HH:mm'}}</span>
+                                <i class="bx bx-right-arrow-alt font-size-16 text-primary align-middle ms-2"></i>
+                            </h5>
+                        </div>
+                        <div class="media-body font-size-11">
+                            <div>
+                                {{item.description}}
+                                <span *ngIf="item.user"> par {{item.user.nom}} {{item.user.prenom}}</span>
+                                <!-- <img *ngIf="item.user" [src]="getPhoto(item.user)" ngbTooltip="{{item.user.nom}} {{item.user.prenom}}"
+                                class="rounded-circle avatar-xs"/> -->
+
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ng-container>
+        </ul>
+
+    </div>
+    <div class="card-footer text-center" *ngIf="historiques2 && historiques2.length">
+        <a (click)="all = true" *ngIf="!all">Voir plus</a>
+        <a (click)="all = false" *ngIf="all">Voir moins</a>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="row mx-auto" style="padding: 0;">
+    <label style="padding: 0;">Monnaies</label>
+    <div class="col-4" style="padding: 0;">
+        <label>Libellé</label>
+        <input type="number" [(ngModel)]="monnaie" class="form-control text-right"/>
+    </div>
+    <div class="col-2 text-center" style="padding: 0; margin-top: 8px;" *ngIf="paramsMonnaies">
+        <label></label>
+        <select class="form-control" [(ngModel)]="libelle">
+            <option *ngFor="let item of paramsMonnaies" [value]="item.libelle">
+                {{item.libelle}}
+            </option>
+        </select>
+    </div>
+    <div class="col-4" style="padding: 0;">
+        <label>Valeur</label>
+        <input type="number" [(ngModel)]="valeur" class="form-control text-right"/>
+    </div>
+    <div class="col-2 text-right" style="padding: 0;">
+        <button class="btn btn-primary" (click)="addMonnaie()" style="margin-top: 27px;" type="button">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>                    
+    <div class="col-12 mt-2" style="padding: 0;">
+        <table class="table table-sm">
+            <tr *ngFor="let item of monnaies.monnaie; let i = index">
+                <td>{{item.montant | number}} {{item.lib}}</td>
+                <td style="width: 50px; text-align: center;">
+                    <i class="text-danger fa fa-trash" (click)="deleteMonnaie(i)"></i>
+                </td>
+            </tr>
+        </table>    
+    </div>
+</div>

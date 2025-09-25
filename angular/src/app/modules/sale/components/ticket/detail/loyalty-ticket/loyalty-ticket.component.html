@@ -1,0 +1,25 @@
+<div *ngIf="loyalty">
+    <h5>
+        Loyalty
+    </h5>
+    <div class="table-responsive mt-2">
+        <table class="table table-sm table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Loyalty card number</th>
+                    <th>Scored pointes</th>
+                    <th>Fidelity discount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{loyalty.loyaltyCardNumber}}</td>
+                    <td class="text-right">
+                        {{loyalty.scoredPoints | number}}
+                    </td>
+                    <td>{{loyalty.fidelityDiscount}}</td>
+                </tr>
+            </tbody>
+        </table>    
+    </div>
+</div>

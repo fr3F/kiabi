@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Hello world!</title>
+    </head>
+    <body>
+        <h1>Liste des articles commandés</h1>
+        {{#each this}}
+        <ul>
+            <li>Code: {{dataValues.code}}</li>
+            <li>Designation: {{dataValues.designation}}</li>
+            <li>Catégorie: {{dataValues.categorieproduit}}</li>
+            <li>Prix unitaire: {{dataValues.prixunitaire}}</li>
+            <br />
+        </ul>
+        {{/each}}
+    </body>
+</html>

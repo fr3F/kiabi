@@ -1,0 +1,51 @@
+
+<h5>
+    Ticket
+</h5>
+<div class="table-responsive">
+    <table class="table table-sm">
+        <tbody>
+            <tr>
+                <th>Numéro</th>
+                <td>{{ticket.numticket}}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ticket.datecreation | date: 'dd-MM-yyyy HH:mm'}}</td>
+            </tr>
+            <tr>
+                <th>Magasin</th>
+                <td>{{ticket.magasin}}</td>
+            </tr>  
+            <tr>
+                <th>Store code</th>
+                <td>{{ticket.storeCode}}</td>
+            </tr>
+            <tr>
+                <th>Caisse</th>
+                <td>{{ticket.nocaisse}}</td>
+            </tr>
+            <tr>
+                <th>Caissier</th>
+                <td>{{ticket.namecaissier}}</td>
+            </tr>
+            <tr>
+                <th>Montant HT</th>
+                <td>{{ticket.montantht | appcurrency}}</td>
+            </tr>
+            <tr>
+                <th>Montant TTC</th>
+                <td>{{ticket.montanttotal | appcurrency}}</td>
+            </tr>
+            <tr>
+                <th>Montant reçu</th>
+                <td>{{ticket.recu | appcurrency}}</td>
+            </tr>
+            <tr>
+                <th>Montant rendu</th>
+                <td>{{ticket.arendre | appcurrency}}</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>

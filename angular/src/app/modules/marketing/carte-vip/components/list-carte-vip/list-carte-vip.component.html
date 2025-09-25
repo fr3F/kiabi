@@ -1,0 +1,55 @@
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucun élément</p>
+</div>
+
+<div *ngIf="list&&list.length!=0" class="table-responsive">
+    <table class="table table-centered table-sm table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th scope="col" class="align-middle" >N° client</th>
+                <th scope="col" class="align-middle" >Nom</th>
+                <th scope="col" class="align-middle" >Adresse</th>
+                <th scope="col" class="align-middle" >Téléphone</th>
+                <th scope="col" class="align-middle" >E-mail</th>
+                <th scope="col" class="align-middle" >Point</th>
+                <th scope="col" class="align-middle" >Dernier achat</th>
+                <th scope="col" class="align-middle" ></th>
+            </tr>
+        </thead>
+        <tbody class=" align-middle">
+            <tr *ngFor="let item of list | paginate : {
+                itemsPerPage: pageSize,
+                currentPage: page,
+                totalItems: count
+                };
+            let i = index"
+            >
+                <td>{{item.numClient}}</td>
+                <td>{{item.nom}} {{item.prenom}}</td>
+                <td>{{item.adresse}}</td>
+                <td>{{item.telephone}}</td>
+                <td>{{item.email}}</td>
+                <td class="text-right">{{item.point | number}}</td>
+                <td>{{item.dernierAchat | date: 'dd-MM-yyyy HH:mm'}}</td>
+                <td class="text-center">
+                    <button class="btn btn-outline-info btn-sm"
+                        ngbTooltip="Historiques" 
+                        (click)="openHistoriques(modalConso, item)">
+                        <i class="fas fa-history"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<ng-template #modalConso role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Historiques des points</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-historique-conso [numClient]="selectedNumClient"></app-historique-conso>
+    </div>
+</ng-template>

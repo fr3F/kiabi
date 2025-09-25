@@ -1,0 +1,98 @@
+<!--
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucun article</p>
+</div>
+
+<div *ngIf="list&&list.length!=0" class="table-responsive">
+    <div *ngFor="let produit of list | paginate : {
+        itemsPerPage: pageSize,
+        currentPage: page,
+        totalItems: count
+        };
+    let i = index" class="produit-container"
+    >
+        <p class="produit">{{produit.code}} - {{produit.produit.fulldesignation}}
+            - {{produit.magasin}}
+            <button class="btn btn-info btn-sm btn-detail" routerLink="/produit/consultation/{{produit.code}}">
+                <i class="fa fa-eye"></i>
+            </button>
+        </p>
+        <table class="table table-sm table-bordered">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Code</th>
+                    <th>Désignation</th>
+                    <th>Gamme</th>
+                    <th>Validité</th>
+                    <th>Magasin</th>
+                    <th>Quantité offert</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of produit.articleOfferts; let i = index" [ngClass]="{'table-danger': item.expire}">
+                    <td>{{item.code}}</td>
+                    <td>{{item.produit.fulldesignation}}</td>
+                    <td>{{item.gamme}}</td>
+                    <td>{{item.debut | date: 'dd-MM-yyyy HH:mm'}} à {{item.fin | date: 'dd-MM-yyyy HH:mm'}}</td>
+                    <td>{{item.magasin}}</td>
+                    <td class="text-right">{{item.quantiteOffert}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <ngx-loading [show]="loading"></ngx-loading>
+</div>
+   -->
+
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucun article</p>
+</div>
+
+<div class="table-responsive mt-2" *ngIf="list&&list.length!=0" >
+    <table class="table table-centered table-sm table-bordered mb-0">
+        <thead class="table-dark">
+            <tr>
+                <th>Code</th>
+                <th>Désignation</th>
+                <th>Magasin</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let item of list | paginate : {
+                itemsPerPage: pageSize,
+                currentPage: page,
+                totalItems: count
+                };
+            let i = index">
+                <tr>
+                    <td>
+                        <span class="font-size-18 me-2" (click)="showDetail(item)">
+                            <i class="fa" [ngClass]="getClassDetail(item)"></i>
+                        </span>
+                        {{ item.codePrincipal }}
+                    </td>
+                    <td>
+                        <span *ngIf="item.produitPrincipal">
+                            {{ item.produitPrincipal.fulldesignation }}
+                        </span>
+                    </td>
+                    <td>{{item.magasin}}</td>
+                    <td class="text-center">
+                        <button class="btn btn-info btn-sm btn-detail" routerLink="/produit/consultation/{{item.codePrincipal}}">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+
+                <tr *ngIf="item.detail">
+                    <td colspan="4">
+                        <app-detail-article-offert [code]="item.codePrincipal"
+                            [magasin]="item.magasin"
+                        ></app-detail-article-offert>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>

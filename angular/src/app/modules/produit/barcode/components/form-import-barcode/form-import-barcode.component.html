@@ -1,0 +1,13 @@
+<div class="mb-2">
+    <label for="upload-file" class="btn btn-success m-1">
+        <i class="fa fa-upload"></i>
+        Importer les codes barres
+    </label>
+    <input type="file" accept=".csv,.xls,.xlsx" [(ngModel)]="filename"
+        (change)="addFile($event)" id="upload-file"/>    
+</div>
+<div class="mb-2">
+    <a class="btn btn-warning" [href]="urlModele">
+        <i class="fa fa-download"></i> Télécharger modèle Excel
+    </a>
+</div>

@@ -1,0 +1,25 @@
+
+<div class="container-fluid">
+    <app-page-title title="Consultation article caisse">
+    </app-page-title>
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <app-form-consultation-caisse-code (onSearch)="setParams($event)"
+            >
+            </app-form-consultation-caisse-code>
+        </div>
+
+        <div class="col-12 mt-2" *ngIf="code && magasin">
+            <app-list-article-ticket-caisse-code
+                [code]="code" [magasin]="magasin" [debut]="debut" [fin]="fin"
+            >
+            </app-list-article-ticket-caisse-code>
+        </div>
+    </div>
+</div>
+
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p>
+</ngx-spinner>

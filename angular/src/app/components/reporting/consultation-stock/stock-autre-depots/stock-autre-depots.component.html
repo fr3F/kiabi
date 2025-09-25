@@ -1,0 +1,10 @@
+<table class="table table-sm" *ngIf="stocks.length">
+    <tr class="table-light">
+        <th>Dépôt</th>
+        <th>Stock</th>
+    </tr>
+    <tr *ngFor="let item of stocks">
+        <td>{{item.depot}}</td>
+        <td class="text-right">{{item.quantite | number}}</td>
+    </tr>
+</table>

@@ -1,0 +1,99 @@
+<div class="conteneur">
+    <form [formGroup]="formGroup" (ngSubmit)="valider()">
+    
+       
+        <div class="mt-1">
+            <label class="control-label mt-0"> 
+                Numéro de la caisse
+            </label>
+            <input type="text" class="form-control" [(ngModel)]="data.nocaisse" formControlName="data.nocaisse" (change)="changeTest()"
+                [ngClass]="{'is-invalid': submit && form['data.nocaisse'].errors}"
+                />
+            <div *ngIf="submit && form['data.nocaisse'].errors" class="invalid-feedback">
+                <span>Veuillez renseigner le numéro de la caisse</span>
+            </div>
+        </div>  
+        
+        <div class="mt-1">
+            <label class="control-label mt-0"> 
+                Adresse IP
+            </label>
+            <input type="text" class="form-control" [(ngModel)]="data.adresseIp" formControlName="data.adresseIp"  (change)="changeTest()"
+                [ngClass]="{'is-invalid': submit && form['data.adresseIp'].errors}" placeholder="XXX.XXX.XXX.XXX"
+                />
+            <div *ngIf="submit && form['data.adresseIp'].errors" class="invalid-feedback">
+                <span>Veuillez renseigner un adresse IP valide</span>
+            </div>
+        </div>  
+        
+        <div class="mt-1">
+            <label class="control-label mt-0"> 
+                Port
+            </label>
+            <input type="text" class="form-control" [(ngModel)]="data.port" formControlName="data.port"  (change)="changeTest()"
+                [ngClass]="{'is-invalid': submit && form['data.port'].errors}"
+                />
+            <div *ngIf="submit && form['data.port'].errors" class="invalid-feedback">
+                <span>Veuillez renseigner un port valide</span>
+            </div>
+        </div>  
+       
+        <div class="mt-1">
+            <label class="control-label mt-0"> 
+                Nom de la base de données
+            </label>
+            <input type="text" class="form-control" [(ngModel)]="data.nomBdd" formControlName="data.nomBdd"  (change)="changeTest()"
+                [ngClass]="{'is-invalid': submit && form['data.nomBdd'].errors}"
+                />
+            <div *ngIf="submit && form['data.nomBdd'].errors" class="invalid-feedback">
+                <span>Veuillez renseigner le nom de la base de données</span>
+            </div>
+        </div>  
+               
+        <div class="mt-1">
+            <label class="control-label mt-0"> 
+                Utilisateur de la base de données
+            </label>
+            <input type="text" class="form-control" [(ngModel)]="data.usernameBdd" formControlName="data.usernameBdd" (change)="changeTest()"
+                [ngClass]="{'is-invalid': submit && form['data.usernameBdd'].errors}"
+                />
+            <div *ngIf="submit && form['data.usernameBdd'].errors" class="invalid-feedback">
+                <span>Veuillez renseigner l'utilisateur de la base de données</span>
+            </div>
+        </div>  
+              
+        <div class="mt-1">
+            <label class="control-label mt-0"> 
+                Mot de passe pour la base de données
+            </label>
+            <input type="text" class="form-control" [(ngModel)]="data.passwordBdd" formControlName="data.passwordBdd" (change)="changeTest()"
+                [ngClass]="{'is-invalid': submit && form['data.passwordBdd'].errors}"
+                />
+            <div *ngIf="submit && form['data.passwordBdd'].errors" class="invalid-feedback">
+                <span>Veuillez renseigner le mot de passe pour la base de données</span>
+            </div>
+        </div>  
+
+        <div class="mt-2 text-right">
+            <button class="btn btn-primary" type="button" (click)="tester()">Tester</button>
+            <p class="text-success mt-2" *ngIf="test">
+                <i class="fa fa-check-circle"></i> Connexion réussie
+            </p>
+            <p class="text-danger mt-2" *ngIf="errorTest">
+                <i class="fa fa-exclamation-circle"></i> Impossible de se connecter
+            </p>
+        </div>
+        <div class="mt-4" style="text-align: center;">
+            <button class="btn mx-auto btn-success">Enregistrer</button>
+        </div>
+        
+       
+
+    </form>
+</div>
+
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>

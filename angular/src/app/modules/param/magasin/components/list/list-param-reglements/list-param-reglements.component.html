@@ -1,0 +1,49 @@
+<h4 class="text-center" style="font-weight: bold;">Les modes de paiements</h4>
+<div class="table-responsive mt-2">
+    <table *ngIf="list&&list.length!=0" class="table table-centered table-nowrap table-sm table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th scope="col" class="align-middle" >Désignation</th>
+                <th scope="col" class="align-middle" >Type</th>
+                <th scope="col" class="align-middle" >Code journal</th>
+                <th scope="col" class="align-middle" >N° règlement</th>
+                <th scope="col" class="align-middle" >Type de financement</th>
+                <th scope="col" class="align-middle" >Date modification</th>
+                <th scope="col" class="align-middle" *ngIf="acces.modifierParam">Action</th>
+            </tr>
+        </thead>
+        <tbody class=" align-middle">
+            <tr *ngFor="let item of list; let i = index;"
+            >
+
+                <td>{{item.designation}}</td>
+                <td>{{item.type}}</td>
+                <td>{{item.codejournal}}</td>
+                <td>{{item.noreglement}}</td>
+                <td>{{item.financingType}}</td>
+                <td>{{item.dateModification | date: 'dd-MM-yyyy HH:mm'}}</td>
+                <td *ngIf="acces.modifierParam" class="text-center">
+                    <button mat-button class="btn btn-sm btn-outline-warning"
+                        (click)="openModal(i, modalForm)"
+                    >
+                        <i class="fa fa-pencil-alt"></i>
+                    </button>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<ng-template #modalForm role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Modifier mode de paiement</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-modify-param-reglement [data]="itemSelected" (onValidate)="changeItem()"></app-modify-param-reglement>
+    </div>
+</ng-template>

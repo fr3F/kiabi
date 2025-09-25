@@ -1,0 +1,95 @@
+<div class="row">
+    <div class="m-0 col-sm-6">
+        <img src="{{data.logoUrl}}" *ngIf="data.logoUrl" style="width: 150px">
+        <table class="table table-sm">
+            <tbody>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{data.nommagasin}}
+                    <img *ngIf="data.gifi" src="assets/images/gifi-mini.png" alt="" class="img-fluid">
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>Code</th>
+                    <td>{{data.code}}</td>
+                </tr>
+
+                <tr>
+                    <th>Identifiant</th>
+                    <td>{{data.identifiant}}</td>
+                </tr>
+                <tr>
+                    <th>Minicentrale</th>
+                    <td>{{data.minicentrale}}</td>
+                </tr>
+                <tr>
+                    <th>N° magasin</th>
+                    <td>{{data.nummagasin}}</td>
+                </tr>
+                <tr>
+                    <th>Dépôt stockage</th>
+                    <td>{{data.depotstockage}}</td>
+                </tr>
+                <tr>
+                    <th>Téléphone</th>
+                    <td>{{data.telephone}}</td>
+                </tr>
+                <tr>
+                    <th>Instagram</th>
+                    <td>{{data.instagram}}</td>
+                </tr>
+                <tr>
+                    <th>BRN</th>
+                    <td>{{data.brn}}</td>
+                </tr>
+                <tr>
+                    <th>VAT</th>
+                    <td>{{data.vat}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="m-0 col-sm-6">
+        <table class="table table-sm">
+            <tbody>
+                <tr>
+                    <th>Dépôt livraison</th>
+                    <td>{{data.depotlivraison}}</td>
+                </tr>
+                <tr>
+                    <th>Souche</th>
+                    <td>{{data.souche}}</td>
+                </tr>
+                <tr>
+                    <th>Dernier n° facture</th>
+                    <td>{{data.lastnumfact}}</td>
+                </tr>
+                <tr>
+                    <th>N° dépôt</th>
+                    <td>{{data.numdepot}}</td>
+                </tr>
+                <tr>
+                    <th>Dernier n° règlement</th>
+                    <td>{{data.lastnumreglement}}</td>
+                </tr>
+                <tr>
+                    <th>Dernier approvisionnement</th>
+                    <td>{{data.dateDernierAppro | date: 'EEEE, dd MMMM yyyy à HH:mm:ss'}}</td>
+                </tr>
+                <tr>
+                    <th>Site web</th>
+                    <td>{{data.siteweb}}</td>
+                </tr>
+                <tr>
+                    <th>Facebook</th>
+                    <td>{{data.facebook}}</td>
+                </tr>
+                <tr>
+                    <th>Devise</th>
+                    <td>{{data.devise}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

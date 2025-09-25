@@ -1,0 +1,59 @@
+<div class="card">
+    <div class="card-body table-responsive">
+        <table class="table table-sm table-bordered">
+            <thead class="table-dark align-middle">
+                <tr>
+                    <th>Heure</th>
+                    <th>Magasin</th>
+                    <th>N° caisse</th>
+                    <th>Responsable</th>
+                    <th>Caissier</th>
+                    <th *ngIf="!isEcartCloture()">Dépôt</th>
+                    <th *ngIf="!isEcartCloture()">Client</th>
+                    <th *ngIf="!isEcartCloture()">Ticket</th>
+                    <th *ngIf="isEcartCloture()">Ecart</th>
+                    <th *ngIf="afficheArticle">Article</th>
+                    <th *ngIf="afficheArticles">Articles</th>
+                    <th *ngIf="afficherMotif">Motif</th>
+                    <th *ngIf="afficherRemise">Remise</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of data">
+                    <td>{{item.timestamp | date: 'HH:mm:ss'}}</td>
+                    <td>{{item.meta.magasin}}</td>
+                    <td *ngIf="!isEcartCloture()">{{item.meta.numerocaisse}}</td>
+                    <td *ngIf="isEcartCloture()">{{item.meta.nocaisse}}</td>
+                    <td>{{item.meta.responsable}}</td>
+                    <td *ngIf="!isEcartCloture()">{{item.meta.nomcaissier}}</td>
+                    <td *ngIf="isEcartCloture()">{{item.meta.caissier}}</td>
+                    <td class="text-right" *ngIf="isEcartCloture()">{{item.meta.ecart | number: '.0-2'}}</td>
+
+                    <td *ngIf="!isEcartCloture()">{{item.meta.selectdepot? item.meta.selectdepot: item.meta.defaultdepot}}</td>
+                    <td *ngIf="!isEcartCloture()">{{item.meta.clientname}}</td>
+                    <td *ngIf="!isEcartCloture()">{{item.meta.numticket}}</td>
+                    <td *ngIf="afficheArticle">
+                        {{item.meta.article}}
+                        <p *ngIf="item.meta.gamme"><b>Gamme:</b> {{item.meta.gamme}}</p>
+                        <p *ngIf="item.meta.quantite"><b>Quantité:</b> {{item.meta.quantite | number}}</p>
+                    </td>
+                    <td *ngIf="afficheArticles">
+                        <ul>
+                            <li *ngFor="let article of item.meta.articles">
+                                {{article.designation}}
+                                <span *ngIf="article.gamme"> - {{article.gamme}}</span>
+                                (<b>Quantité:</b> {{article.quantite | number}})
+                            </li>
+                        </ul>
+                    </td>
+                    <td *ngIf="afficherMotif">
+                        {{item.meta.motif}}
+                    </td>
+                    <td *ngIf="afficherRemise" class="text-right">
+                        {{item.meta.tauxremise | number: '.2-2'}} %
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

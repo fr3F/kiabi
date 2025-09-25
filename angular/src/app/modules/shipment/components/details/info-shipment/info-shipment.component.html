@@ -1,0 +1,62 @@
+<table class="table table-sm">
+    <tbody>
+        <tr>
+            <th>Store code</th>
+            <td>
+                {{shipment.storeCode}}
+            </td>
+        </tr>
+        <tr>
+            <th>Invoice number</th>
+            <td>{{shipment.invoiceNumber}}</td>
+        </tr>
+        <tr>
+            <th>Packing list number</th>
+            <td>{{shipment.packingListNumber}}</td>
+        </tr>
+        <tr>
+            <th>Delivery form number</th>
+            <td>{{shipment.deliveryFormNumber}}</td>
+        </tr>
+        <tr>
+            <th>Shipment date</th>
+            <td>{{shipment.shipmentDate | date: 'dd-MM-yyyy HH:mm'}}</td>
+        </tr>
+        
+        <tr *ngIf="shipment.receiptDate">
+            <th>Receipt date</th>
+            <td>{{shipment.receiptDate | date: 'dd-MM-yyyy HH:mm'}}</td>
+        </tr>
+        
+        <tr *ngIf="shipment.destockingNumber">
+            <th>Destocking number</th>
+            <td>{{shipment.destockingNumber}}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>
+                <span class="badge" [ngClass]="getClassStatus()">
+                    {{shipment.statusLabel}}
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th>Created at</th>
+            <td>{{shipment.createdAt | date: 'dd-MM-yyyy HH:mm'}}</td>
+        </tr>
+        <tr>
+            <th>Updated at</th>
+            <td>{{shipment.updatedAt| date: 'dd-MM-yyyy HH:mm'}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="text-right">
+    <app-reception-shipment [acces]="acces"
+        [shipment]="shipment"
+    >
+    </app-reception-shipment>
+</div>
+
+
+

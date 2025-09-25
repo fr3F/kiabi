@@ -1,0 +1,21 @@
+<div class="filter-container">
+    <!-- Search -->
+    <div class="search-box mb-2">
+      <div class="position-relative">
+        <input
+          type="text"
+          class="form-control"
+          [placeholder]="placeholder"
+          [(ngModel)]="motSearch"
+          (ngModelChange)="search()"
+        />
+        <i
+          class="bx bx-search-alt search-icon"
+          type="button"
+          (click)="search()"
+        ></i>
+      </div>
+    </div>
+  
+
+  </div>

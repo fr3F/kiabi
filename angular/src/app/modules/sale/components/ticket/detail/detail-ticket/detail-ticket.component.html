@@ -1,0 +1,16 @@
+<div class="card-body row" *ngIf="ticket">
+    <div class="col-sm-5">
+        <app-info-ticket [ticket]="ticket">
+        </app-info-ticket>
+    </div>
+    <div class="col-sm-7">
+        <app-reglements-ticket  [list]="ticket.reglements">
+        </app-reglements-ticket>
+
+        <app-loyalty-ticket [loyalty]="ticket.loyalty">
+        </app-loyalty-ticket>
+    </div>
+    <div class="col-12 mt-3" >
+        <app-articles-ticket [list]="ticket.articles"></app-articles-ticket>
+    </div>
+</div>    

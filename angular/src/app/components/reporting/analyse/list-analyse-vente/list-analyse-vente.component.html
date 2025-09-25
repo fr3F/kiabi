@@ -1,0 +1,33 @@
+<!-- <p>liste-service-mode works!</p> -->
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucun magasin</p>
+</div>
+<div *ngIf="list&&list.length!=0" class="table-responsive">
+    <table class="table table-centered table-nowrap table-sm table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th scope="col" class="align-middle" >Référence</th>
+                <th scope="col" class="align-middle" >Désignation</th>
+                <th scope="col" class="align-middle" >Gamme</th>
+                <th scope="col" class="align-middle" >Variation</th>
+                <th scope="col" class="align-middle" >Stock SAGE</th>
+            </tr>
+        </thead>
+        <tbody class=" align-middle">
+            <tr *ngFor="let item of list | paginate : {
+                itemsPerPage: pageSize,
+                currentPage: page,
+                totalItems: count
+                };
+            let i = index" [ngClass]="{'text-danger': !item.stock}"
+            >
+                <td>{{item.reference}}</td>
+                <td>{{item.fulldesignation}}</td>
+                <td>{{item.gamme}}</td>
+                <td class="text-right">{{item.variation | number : '.2-2'}} %</td>
+                <td class="text-right">{{item.stock | number}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+  

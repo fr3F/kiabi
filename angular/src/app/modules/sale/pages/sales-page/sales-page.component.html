@@ -1,0 +1,34 @@
+
+<div class="container-fluid">
+    <!-- start page title -->
+    <app-page-title title="Sales">
+    </app-page-title>
+
+    <div class="row">
+        <div class="col-md-4 col-sm-6 mx-auto">
+            <app-form-sales (formChange)="formChange($event)">
+
+            </app-form-sales>
+        </div>
+        <div class="col-12 mt-1" *ngIf="tickets">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-1 text-right">
+                        <app-send-sales [dataForm]="dataForm"
+                            [acces]="acces" [nbTicket]="tickets.length"
+                        >
+                        </app-send-sales>
+                    </div>
+                    <app-list-tickets [tickets]="tickets">
+
+                    </app-list-tickets>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p>
+</ngx-spinner>

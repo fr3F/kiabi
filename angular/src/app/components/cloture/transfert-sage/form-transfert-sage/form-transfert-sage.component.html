@@ -1,0 +1,27 @@
+<div class="card">
+    <div class="card-body">
+        <div class="col-md-10 mx-auto">
+            <div class="mt-2">
+                <label>Date</label>
+                <input class="form-control" type="date" [(ngModel)]="date" (change)="change(false)"/>
+            </div>
+            <div class="mt-2">
+                <label>Paramétrage</label>
+                <select *ngIf="parametrages" class="form-control" type="date" [(ngModel)]="idParametrage" (change)="change(false)">
+                    <option [value]="parametrage.id" *ngFor="let parametrage of parametrages">
+                        {{parametrage.designation}}
+                    </option>
+                </select>
+            </div>
+            <ul *ngIf="paramSelected" class="mt-1">
+                <li *ngFor="let item of paramSelected.items">{{item.magasin.nommagasin}}</li>
+            </ul>
+            <div class="mt-2 mb-2 text-right">
+                <button (click)="change()" class="btn btn-info">
+                    <i class="fas fa-sync-alt"></i>
+                    Rafraîchir
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

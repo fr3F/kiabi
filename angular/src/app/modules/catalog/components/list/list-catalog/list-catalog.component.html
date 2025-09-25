@@ -1,0 +1,19 @@
+<!-- <p>liste-service-mode works!</p> -->
+
+
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucun catalogue</p>
+</div>
+<div *ngIf="list&&list.length!=0" class="table-responsive row">
+    <div class="col-md-4" *ngFor="let item of list | paginate : {
+        itemsPerPage: pageSize,
+        currentPage: page,
+        totalItems: count
+        };
+    let i = index"
+    >
+        <app-catalog-card [catalog]="item"></app-catalog-card>
+    </div>
+</div>
+
+

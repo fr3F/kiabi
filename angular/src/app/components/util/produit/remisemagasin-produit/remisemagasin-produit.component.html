@@ -1,0 +1,21 @@
+<div class="card" *ngIf="data">
+    <div class="card-body">
+        <h3>Remise magasins</h3>
+        <p class="text-center mt-4 mb-4" *ngIf="!data.length">Aucune remise magasin</p>
+        <table class="table table-bordered table-sm" *ngIf="data.length">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Magasin</th>
+                    <th>Remise</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of data">
+                    <td>{{item.CT_Num}}</td>
+                    <td class="text-right">{{item.AC_Remise | number: '.2-2'}} %</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <ngx-loading [show]="loading"></ngx-loading>
+</div>

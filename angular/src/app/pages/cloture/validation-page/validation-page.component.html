@@ -1,0 +1,16 @@
+
+<div class="container-fluid">
+    <!-- start page title -->
+    <app-page-title title="Validation clôture">
+    </app-page-title>
+    <div class="row">
+        <div class="col-md-5 mx-auto">
+            <app-form-validation (onChange)="change($event)"></app-form-validation>
+        </div>
+        <div class="col-md-11 mx-auto">
+            <app-list-encaissement-validation [acces]="acces" [list]="encaissements" *ngIf="encaissements">
+            </app-list-encaissement-validation>
+        </div>
+    </div>
+</div>
+

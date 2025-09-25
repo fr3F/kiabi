@@ -1,0 +1,28 @@
+<div class="row mx-auto" style="padding: 0;">
+    <label style="padding: 0;">Horaire ouvrable</label>
+    <div class="col-5" style="padding: 0;">
+        <label>Libellé</label>
+        <input type="text" [(ngModel)]="libelle" class="form-control"/>
+    </div>
+    <div class="col-5" style="padding: 0;">
+        <label>Valeur</label>
+        <input type="text" [(ngModel)]="valeur" class="form-control"/>
+    </div>
+    <div class="col-2 text-right" style="padding: 0;">
+        <button class="btn btn-primary" (click)="add()" style="margin-top: 27px;" type="button">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>                    
+    <div class="col-12 mt-2" style="padding: 0;">
+        <table class="table table-sm">
+            <tr *ngFor="let item of horaireouvrable.horaire; let i = index">
+                <td>{{item.libelle}}
+                    ({{item.valeur}})
+                </td>
+                <td style="width: 50px; text-align: center;">
+                    <i class="text-danger fa fa-trash" (click)="delete(i)"></i>
+                </td>
+            </tr>
+        </table>    
+    </div>
+</div>

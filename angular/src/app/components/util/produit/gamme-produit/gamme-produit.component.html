@@ -1,0 +1,11 @@
+<div class="card" *ngIf="data&&data.length">
+    <div class="card-body">
+        <h3>Gammes</h3>
+        <div  class="table-responsive" style="max-height: 250px;">
+            <ul>
+                <li *ngFor="let item of data">{{item.EG_Enumere}}</li>
+            </ul>
+        </div>
+    </div>
+    <ngx-loading [show]="loading"></ngx-loading>
+</div>

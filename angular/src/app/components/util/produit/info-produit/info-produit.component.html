@@ -1,0 +1,37 @@
+<div class="card">
+    <div class="card-body">
+        <h3>Informations générales</h3>
+        <table class="table table-sm">
+            <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td>{{produit.code}}</td>
+                </tr>
+                <tr>
+                    <th>Désignation</th>
+                    <td>{{produit.fulldesignation}}</td>
+                </tr>
+                <tr>
+                    <th>Prix de vente HT</th>
+                    <td>{{produit.prixhtprincipal | appcurrency}}</td>
+                </tr>
+                <tr>
+                    <th>Prix de vente TTC</th>
+                    <td>{{produit.prixttcprincipal | appcurrency}}</td>
+                </tr>
+                <tr>
+                    <th>Famille</th>
+                    <td>{{produit.famille}}</td>
+                </tr>
+                <tr>
+                    <th>Date modification</th>
+                    <td>{{produit.dateModification | date: 'dd-MM-yyyy à HH:mm:ss'}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mt-2 text-right" *ngIf="acces.siteWeb">
+            <!-- <app-site-web-btn [code]="produit.code">
+            </app-site-web-btn> -->
+        </div>
+    </div>
+</div>

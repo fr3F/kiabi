@@ -1,0 +1,63 @@
+
+
+<div class="mt-2"  *ngIf="gammes&&gammes.length">
+    <label>Gamme</label>
+    <select class="form-control form-control-sm" [(ngModel)]="barcode.gamme"
+        [ngClass]="{'is-invalid': erreurGamme()}"
+    >
+        <option *ngFor="let item of gammes" [value]="item.AG_No">{{item.EG_Enumere}}</option>
+    </select>
+    <div class="invalid-feedback" *ngIf="erreurGamme()">
+        Veuillez séléctionner une gamme
+    </div>
+</div>
+
+<div class="mt-2">
+    <label>Code barre</label>
+    <input type="text" class="form-control form-control-sm" 
+        [ngClass]="{'is-invalid': erreurBarcode()}" [(ngModel)]="barcode.barcode"
+        maxlength="13"
+    />
+
+    <div class="text-right mt-1">
+        <button class="btn btn-sm btn-warning" (click)="generateBarcode()">
+            Générer
+        </button>
+    </div>
+    
+    <div class="invalid-feedback" *ngIf="erreurBarcode()">
+        Veuillez renseigner le code barre(13 caractères maximum, numérique)
+    </div>
+</div> 
+
+<div class="row mt-2 mx-auto" style="padding: 10px 0;">
+    <label class="col-sm-6 col-form-label" style="padding: 0;">
+        Avec conditionnement
+    </label>
+    <div class="form-check form-switch form-switch-md col-sm-6" style="padding: 0;">
+        <input [(ngModel)]="barcode.isConditionne" class="form-check-input"
+            type="checkbox" id="SwitchCheckSizemd" style="float: right;"
+                (change)="changeIsConditionne()"
+            >
+    </div>
+</div>
+
+<div class="mt-2" *ngIf="barcode.isConditionne">
+    <label>Conditionnement</label>
+    <input type="number" class="form-control text-right form-control-sm" [(ngModel)]="barcode.conditionnement"
+        [ngClass]="{'is-invalid': erreurConditionnement()}"
+    />
+    <div class="invalid-feedback" *ngIf="erreurConditionnement()">
+        Veuillez renseigner un conditionnement superieur à 1
+    </div>
+</div> 
+
+<div class="mt-2 text-center">
+    <button class="btn btn-success" type="submit" (click)="validate()">
+        Enregistrer
+    </button>
+</div>
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>

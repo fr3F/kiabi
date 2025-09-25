@@ -1,0 +1,21 @@
+
+<div class="container-fluid">
+    <app-page-title title="Règlements">
+    </app-page-title>
+    <div class="row">
+        <div class="col-md-5 mx-auto">
+            <app-form-reporting-reglement (onChange)="change($event)"></app-form-reporting-reglement>
+        </div>
+        <div class="col-md-12 mx-auto" *ngIf="data">
+            <app-list-reglement-reporting [data]="data" [magasin]="magasin"
+            (exporter)="exporter()">
+            </app-list-reglement-reporting>
+        </div>
+    </div>
+</div>
+
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>

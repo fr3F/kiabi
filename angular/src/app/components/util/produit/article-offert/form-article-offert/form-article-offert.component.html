@@ -1,0 +1,77 @@
+<form [formGroup]="formGroup" (ngSubmit)="validate()">
+    <div class="mt-2">
+        <label>Magasin</label>
+        <select class="form-control form-control-sm" [(ngModel)]="data.magasins" *ngIf="magasins" formControlName="data.magasins"
+            [ngClass]="{'is-invalid': isInvalid('magasins')}" multiple="true"
+        >
+            <option *ngFor="let item of magasins" [value]="item.nommagasin">{{item.nommagasin}}</option>
+        </select>
+        <div class="invalid-feedback" *ngIf="isInvalid('magasins')">
+            Veuillez séléctionner un magasin
+        </div>
+    </div>  
+
+    <div  class="mt-2">
+        <label>Article offert</label>
+        <div style="margin-top: -20px;">
+            <app-autocomplete (change)="setCode($event)"
+                title="Code barre" [url]="urlSearch" [selectOnly]="true" [replace]="true"
+                ngClass="form-control-sm" placeholder="Rechercher par désignation ou code"
+            >
+            </app-autocomplete>
+        </div>
+    </div>
+    
+    <div class="mt-2"  *ngIf="gammes&&gammes.length">
+        <label>Gamme</label>
+        <select class="form-control form-control-sm" [(ngModel)]="data.gamme" formControlName="data.gamme"
+            [ngClass]="{'is-invalid': isInvalidGamme()}"  (change)="setGamme()"
+        >
+            <option *ngFor="let item of gammes" [value]="item.EG_Enumere">{{item.EG_Enumere}}</option>
+        </select>
+        <div class="invalid-feedback" *ngIf="isInvalidGamme()">
+            Veuillez séléctionner une gamme
+        </div>
+    </div>
+    
+    <div class="mt-2">
+        <label>Quantité offert</label>
+        <input type="number" class="form-control form-control-sm" [(ngModel)]="data.quantiteOffert" formControlName="data.quantiteOffert"
+            [ngClass]="{'is-invalid': isInvalid('quantiteOffert')}" 
+        >
+        <div class="invalid-feedback" *ngIf="isInvalid('quantiteOffert')">
+            Veuillez renseigne une quantité valide
+        </div>
+    </div>  
+
+    <div class="mt-2">
+        <label>Date de début</label>
+        <input type="datetime-local" class="form-control form-control-sm" [(ngModel)]="data.debut" formControlName="data.debut"
+            [ngClass]="{'is-invalid': isInvalid('debut')}" 
+        >
+        <div class="invalid-feedback" *ngIf="isInvalid('debut')">
+            Veuillez renseigne la date de début
+        </div>
+    </div>  
+
+    
+    <div class="mt-2">
+        <label>Date de fin</label>
+        <input type="datetime-local" class="form-control form-control-sm" [(ngModel)]="data.fin" formControlName="data.fin"
+            [ngClass]="{'is-invalid': isInvalid('fin')}" 
+        >
+        <div class="invalid-feedback" *ngIf="isInvalid('fin')">
+            Veuillez renseigne la date de fin
+        </div>
+    </div>  
+
+    <div class="mt-2 text-center">
+        <button class="btn btn-success" type="submit">Enregistrer</button>
+    </div>
+</form>
+
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>

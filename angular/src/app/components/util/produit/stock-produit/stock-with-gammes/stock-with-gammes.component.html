@@ -1,0 +1,18 @@
+
+<div  class="table-responsive" *ngFor="let depot of depots">
+    <h4 class="font-size-14">{{depot}}</h4>
+    <table class="table table-bordered table-sm">
+        <thead [ngClass]="tableClass">
+            <tr>
+                <th>Gamme</th>
+                <th>Quantité</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of getStocksDepot(depot)">
+                <td>{{item.gamme}}</td>
+                <td class="text-center">{{item.quantite | number}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>        

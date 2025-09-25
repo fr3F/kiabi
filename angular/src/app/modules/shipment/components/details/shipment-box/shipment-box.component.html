@@ -1,0 +1,18 @@
+<div class="box-container">
+    <h3>
+        <i class="fas fa-box-open"></i>
+        {{ box.boxNumber }}
+        <span class="badge bg-info">
+            {{ box.nbReceivedItems | number}}
+            /
+            {{ box.nbItems | number}}    
+        </span>
+        <button (click)="toggleItem()" class="toggle-button">
+            <i class="fas" [ngClass]="{'fa-angle-up': itemShowed, 'fa-angle-down': !itemShowed}"></i>
+        </button>        
+    </h3>
+    <div [@toggleAnimation]="itemShowed ? 'open' : 'closed'">
+        <h3>Cartons: </h3>
+        <app-shipment-carton *ngFor="let carton of box.cartons" [carton]="carton"></app-shipment-carton>
+    </div>
+</div>

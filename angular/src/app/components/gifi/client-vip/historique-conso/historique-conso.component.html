@@ -1,0 +1,36 @@
+<!-- <h2 class="text-center">Historiques de consommation</h2> -->
+
+<div class="table-responsive" *ngIf="historiques">
+    <p class="text-center mt-4 mb-4" *ngIf="!historiques.length">
+        Aucun historique
+    </p>
+
+    <table class="table table-sm table-bordered table-striped"
+        *ngIf="historiques.length"
+    >   
+        <thead class="table-dark">
+            <tr>
+                <th>Ticket</th>
+                <th>Magasin</th>
+                <th>Caisse</th>
+                <th>Solde</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of historiques" class="align-middle">
+                <td>{{item.numticket}}</td>
+                <td>{{item.magasin}}</td>
+                <td>{{item.nocaisse}}</td>
+                <td class="text-right">
+                    <span class="me-2">{{item.pointApres | number : '.2-2'}} pts</span>
+                    <span class="badge" [ngClass]="getClassEcart(item)">
+                        {{getSignEcart(item)}} {{getEcart(item) | number}}
+                    </span>
+                </td>
+                <td>{{item.createdAt | date: 'dd-MM-yyyy HH:mm'}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

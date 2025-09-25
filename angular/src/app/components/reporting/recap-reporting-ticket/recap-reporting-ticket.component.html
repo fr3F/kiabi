@@ -1,0 +1,28 @@
+<table class="table table-sm table-striped table-bordered">
+    <tbody>
+        <tr>
+            <th>Nombre ticket</th>
+            <td>{{data.nbTicket | number}}</td>
+        </tr>
+        <tr>
+            <th>Nombre référence</th>
+            <td>{{data.nbArticle | number}}</td>
+        </tr>
+        <tr>
+            <th>Qté vendue</th>
+            <td>{{data.quantite | number}}</td>
+        </tr>
+        <tr>
+            <th>Montant total HT</th>
+            <td>
+                {{data.montantHT | appcurrency}}
+            </td>
+        </tr>
+        <tr>
+            <th>Montant total TTC</th>
+            <td>
+                {{data.montantTTC | appcurrency}}
+            </td>
+        </tr>
+    </tbody>
+</table>

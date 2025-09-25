@@ -1,0 +1,16 @@
+
+<div class="container-fluid">
+    <!-- start page title -->
+    <app-page-title [title]="titre">
+    </app-page-title>
+    <div class="row">
+        <div class="col-md-6 col-lg-6 mx-auto">
+          <div class="card">
+            <div class="card-body">
+                <h4>{{titre}}</h4>
+                <app-form [monProfil]="monProfil!=null" [user]="user"></app-form>
+            </div>
+          </div>
+        </div>
+    </div>          
+</div>

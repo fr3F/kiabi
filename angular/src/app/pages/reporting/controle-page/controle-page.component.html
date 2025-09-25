@@ -1,0 +1,22 @@
+
+<div class="container-fluid">
+    <!-- start page title -->
+    <app-page-title title="Contrôle caisse/base centrale">
+    </app-page-title>
+    <div class="row">
+        <div class="col-md-5 mx-auto">
+            <app-form-control-caisse (onChange)="change($event)"></app-form-control-caisse>
+        </div>
+        <div class="col-md-12 row mx-auto" *ngIf="data">
+            <div class="col-md-6" *ngFor="let item of data">
+                <app-control-magasin [acces]="acces" [date]="date" [data]="item"></app-control-magasin>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>

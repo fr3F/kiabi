@@ -1,0 +1,24 @@
+<div class="card" *ngIf="data">
+    <div class="card-body">
+        <h3>Barèmes</h3>
+        <p class="text-center mt-4 mb-4" *ngIf="!data.length">Aucune barème</p>
+        <table class="table table-bordered  table-sm" *ngIf="data.length">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th>Valeur</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of data">
+                    <td>{{item.TF_Debut | date: 'dd-MM-yyyy'}}</td>
+                    <td>
+                        <span *ngIf="">{{item.TF_Fin | date: 'dd-MM-yyyy'}}</span></td>
+                    <td class="text-right">{{item.valeur | number: '.2-2'}} %</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <ngx-loading [show]="loading"></ngx-loading>
+</div>

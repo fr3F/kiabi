@@ -1,0 +1,27 @@
+<div class="card">
+    <div class="card-body">
+        <h4>Ventes {{magasin}}, caisse n° {{caisse.nocaisse}} du {{debut | date: 'dd-MM-yyyy'}} <span *ngIf="fin!=debut">au {{fin | date: 'dd-MM-yyyy'}}</span></h4>
+        <div class="text-right mb-2" *ngIf="list.length">
+            <button class="btn btn-success" (click)="exporter()">
+                Exporter en excel <i class="fa fa-file-excel"></i>
+            </button>
+        </div>
+        <div class="search-box me-2 mb-2">
+            <div class="position-relative">
+            <input
+                type="text"
+                class="form-control"
+                placeholder="Rechercher par code ou désignation"
+                [(ngModel)]="motSearch"
+                (ngModelChange)="search()"
+            />
+            <i
+                class="bx bx-search-alt search-icon"
+                type="button"
+                (click)="search()"
+            ></i>
+            </div>
+        </div>
+        <app-table-article-ticket-caisse [list]="list"></app-table-article-ticket-caisse>
+    </div>
+</div>

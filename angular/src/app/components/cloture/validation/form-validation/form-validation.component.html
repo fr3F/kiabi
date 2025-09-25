@@ -1,0 +1,19 @@
+<div class="card">
+    <div class="card-body">
+        <div class="col-md-10 mx-auto">
+            <div class="mt-2">
+                <label>Date</label>
+                <input class="form-control" type="date" [(ngModel)]="date" (change)="change()"/>
+            </div>
+            <div class="mt-2 mb-4" *ngIf="magasins">
+                <label>Magasin</label>
+                <select class="form-control" (change)="change()" [(ngModel)]="idMagasin">
+                    <option value="">Tous</option>
+                    <option *ngFor="let item of magasins" [value]="item.id">
+                        {{item.nommagasin}}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

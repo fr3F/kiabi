@@ -1,0 +1,64 @@
+<!-- <p>liste-service-mode works!</p> -->
+
+
+<div class="col-sm-12 mt-1 mb-1 text-right" >
+    <button class="btn btn-success btn-sm" (click)="create(modalForm)">Nouveau</button>
+</div>
+
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucun paramétrage</p>
+</div>
+<div *ngIf="list&&list.length!=0" class="table-responsive">
+    <table class="table table-centered table-nowrap table-sm table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th scope="col" class="align-middle" >Désignation</th>
+                <th scope="col" class="align-middle" >Magasins</th>
+                <th scope="col" class="align-middle">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody class=" align-middle">
+            <tr *ngFor="let item of list; let i = index">
+                <td>{{item.designation}}</td>
+                <td>
+                    <ul>
+                        <li *ngFor="let it of item.items">
+                            {{it.magasin.nommagasin}}
+                        </li>
+                    </ul>
+                </td>
+                <td class="text-center">
+                    
+                    <button class="btn btn-sm btn-outline-warning me-1" ngbTooltip="Modifier"
+                        (click)="modify(modalForm, item)"
+                    >
+                        <i class="fa fa-pencil-alt"></i>
+                    </button>
+
+                    <button mat-button class="btn btn-sm btn-outline-danger me-1" ngbTooltip="Supprimer"
+                        (click)="delete(i)"
+                    >
+                        <i class="fa fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+  
+
+
+
+
+<ng-template #modalForm role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0" *ngIf="!itemSelected.id">Ajouter</h5>
+        <h5 class="modal-title mt-0"  *ngIf="itemSelected.id">Modifier</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-form-parametrage [data]="itemSelected" (onValidate)="changeItem()"></app-form-parametrage>
+    </div>
+</ng-template>

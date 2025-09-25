@@ -1,0 +1,347 @@
+<div class="conteneur">
+    <form [formGroup]="formGroup" (ngSubmit)="valider()">
+        <div class="row mb-1">
+            <div class="col-md-5 mx-auto">
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Nom
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.nommagasin" formControlName="data.nommagasin"
+                        [ngClass]="{'is-invalid': submit && form['data.nommagasin'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.nommagasin'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le nom du magasin</span>
+                    </div>
+                </div>
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Minicentrale
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.minicentrale" formControlName="data.minicentrale"
+                        [ngClass]="{'is-invalid': submit && form['data.minicentrale'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.minicentrale'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le champ "Minicentrale"</span>
+                    </div>
+                </div>
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Dépôt stockage
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.depotstockage" formControlName="data.depotstockage"
+                        [ngClass]="{'is-invalid': submit && form['data.depotstockage'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.depotstockage'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le dépôt stockage</span>
+                    </div>
+                </div>
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Souche
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.souche" formControlName="data.souche"
+                        [ngClass]="{'is-invalid': submit && form['data.souche'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.souche'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner une souche valide</span>
+                    </div>
+                </div>
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Numéro dépôt
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.numdepot" formControlName="data.numdepot"
+                        [ngClass]="{'is-invalid': submit && form['data.numdepot'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.numdepot'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner un numéro dépôt valide</span>
+                    </div>
+                </div>
+
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Identifiant
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.identifiant" formControlName="data.identifiant"
+                        [ngClass]="{'is-invalid': submit && form['data.identifiant'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.identifiant'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le dépôt par défaut</span>
+                    </div>
+                </div>
+
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Nom de la base de données
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.nomBase" formControlName="data.nomBase"
+                        [ngClass]="{'is-invalid': submit && form['data.nomBase'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.nomBase'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le nom de la base de données</span>
+                    </div>
+                </div>
+
+                <div class="mt-2 mx-auto" >
+                    <label style="padding: 0;">Dernier approvisionnement</label>
+                    <input [(ngModel)]="data.dateDernierAppro" formControlName="data.dateDernierAppro"
+                        class="form-control" type="datetime-local">
+                </div>
+
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Facebook
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.facebook" formControlName="data.facebook"
+                        [ngClass]="{'is-invalid': submit && form['data.facebook'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.facebook'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le lien facebook</span>
+                    </div>
+                </div>
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Site web
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.siteweb" formControlName="data.siteweb"
+                        [ngClass]="{'is-invalid': submit && form['data.siteweb'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.siteweb'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner un lien site web valide</span>
+                    </div>
+                </div>
+
+                <!-- <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Horaire ouvrable
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.horaireouvrable" formControlName="data.horaireouvrable"
+                        [ngClass]="{'is-invalid': submit && form['data.horaireouvrable'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.horaireouvrable'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner l'horaire pour jour ouvrable</span>
+                    </div>
+                </div>      -->
+
+
+
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        VAT
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.vat" formControlName="data.vat"
+                        [ngClass]="{'is-invalid': submit && form['data.vat'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.vat'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le champ "VAT"</span>
+                    </div>
+                </div>
+
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Devise
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.devise" formControlName="data.devise"
+                        [ngClass]="{'is-invalid': submit && form['data.devise'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.devise'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner la dévise du magasin</span>
+                    </div>
+                </div>
+
+
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Image de fond
+                    </label>
+                    <input type="file" class="form-control form-control-sm" (change)="uploadFile($event)" formControlName="image" [(ngModel)]="image" accept=".png,.jpg,.jpeg">
+                    <div class="mt-2 text-center" *ngIf="data.logoUrl || data.logoFile || data.logoUrlLocal">
+                        <img id="img" style="max-width: 100px;" [src]="data.logoUrlLocal" *ngIf="data.logoUrlLocal">
+                        <img id="img" style="max-width: 100px;" src="{{data.logoUrl}}" *ngIf="data.logoUrl">
+                        <p class="text-center mt-2 mb-2">
+                            <i class="fa fa-trash text-danger" style="cursor: pointer;" (click)="deleteImage()"></i>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-2 mx-auto">
+                    <app-form-monnaie [monnaies]="data.monnaies"></app-form-monnaie>
+                </div>
+
+            </div>
+            <div class="col-md-5 mx-auto">
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Code
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.code" formControlName="data.code"
+                        [ngClass]="{'is-invalid': submit && form['data.code'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.code'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le code du magasin</span>
+                    </div>
+                </div>
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Numéro magasin
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.nummagasin" formControlName="data.nummagasin"
+                        [ngClass]="{'is-invalid': submit && form['data.nummagasin'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.nummagasin'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le numéro magasin</span>
+                    </div>
+                </div>
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Dépôt livraison
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.depotlivraison" formControlName="data.depotlivraison"
+                        [ngClass]="{'is-invalid': submit && form['data.depotlivraison'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.depotlivraison'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le dépôt livraison</span>
+                    </div>
+                </div>
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Dernier numéro facture
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.lastnumfact" formControlName="data.lastnumfact"
+                        [ngClass]="{'is-invalid': submit && form['data.lastnumfact'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.lastnumfact'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le dernier numéro facture</span>
+                    </div>
+                </div>
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Dernier numéro règlement
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.lastnumreglement" formControlName="data.lastnumreglement"
+                        [ngClass]="{'is-invalid': submit && form['data.lastnumreglement'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.lastnumreglement'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le dernier numéro règlement</span>
+                    </div>
+                </div>
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Téléphone
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.telephone" formControlName="data.telephone"
+                        [ngClass]="{'is-invalid': submit && form['data.telephone'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.telephone'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le numéro téléphone</span>
+                    </div>
+                </div>
+
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Horaire weekend
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.horaireweek" formControlName="data.horaireweek"
+                        [ngClass]="{'is-invalid': submit && form['data.horaireweek'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.horaireweek'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner l'horaire pour weekend</span>
+                    </div>
+                </div>
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Nombre de chiffres numéro facture
+                    </label>
+                    <input type="number" min="1" max="11" class="form-control" [(ngModel)]="data.nbChiffreNumFacture" formControlName="data.nbChiffreNumFacture"
+                        [ngClass]="{'is-invalid': submit && form['data.nbChiffreNumFacture'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.nbChiffreNumFacture'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner un nombre entre 1 et 11</span>
+                    </div>
+                </div>
+
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Store code
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.storeCode" formControlName="data.storeCode"
+                        [ngClass]="{'is-invalid': submit && form['data.storeCode'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.storeCode'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le store code</span>
+                    </div>
+                </div>
+
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        BRN
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.brn" formControlName="data.brn"
+                        [ngClass]="{'is-invalid': submit && form['data.brn'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.brn'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le champ "BRN"</span>
+                    </div>
+                </div>
+
+                <div class="mt-2 mx-auto">
+                    <label class="control-label mt-0">
+                        Instagram
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="data.instagram" formControlName="data.instagram"
+                        [ngClass]="{'is-invalid': submit && form['data.instagram'].errors}"
+                        />
+                    <div *ngIf="submit && form['data.instagram'].errors" class="invalid-feedback">
+                        <span>Veuillez renseigner le champ "Instagram"</span>
+                    </div>
+                </div>
+
+                <div class="row mt-2 mx-auto" style="padding: 10px 0;">
+                    <label class="col-sm-3 col-form-label" style="padding: 0;">
+                        Magasin GIFI
+                    </label>
+                    <div class="form-check form-switch form-switch-md col-sm-9" style="padding: 0;">
+                        <input [(ngModel)]="data.gifi" formControlName="data.gifi" class="form-check-input"
+                            type="checkbox" id="SwitchCheckSizemd" style="float: right;">
+                    </div>
+                </div>
+
+                <div class="row mt-2 mx-auto" style="padding: 0;" *ngIf="depots">
+                    <label style="padding: 0;">Dépôts</label>
+                    <div class="col-10" style="padding: 0;">
+                        <select formControlName="idDepot" [(ngModel)]="idDepot" class="form-control">
+                            <option *ngFor="let item of depots" [value]="item.iddepot">{{item.nomdepot}}</option>
+                        </select>
+                    </div>
+                    <div class="col-2 text-right" style="padding: 0;">
+                        <button class="btn btn-primary" (click)="addDepot()" type="button" [disabled]="!canAddDepot()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="col-12 mt-2" style="padding: 0;">
+                        <table class="table table-sm">
+                            <tr *ngFor="let item of data.depots; let i = index">
+                                <td>{{item.nomdepot}}</td>
+                                <td style="width: 50px; text-align: center;">
+                                    <i class="text-danger fa fa-trash" (click)="deleteDepot(i)"></i>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mt-2 mx-auto">
+                    <app-form-horaire-ouvrable [horaireouvrable]="data.horaireouvrable"></app-form-horaire-ouvrable>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="mt-4" style="text-align: center;">
+            <button class="btn mx-auto btn-success">Enregistrer</button>
+        </div>
+
+
+
+    </form>
+</div>

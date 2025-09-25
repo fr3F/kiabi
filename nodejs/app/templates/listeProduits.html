@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Hello world!</title>
+        <link rel="stylesheet" href="http://localhost:8080/bootstrap/css/bootstrap.min.css">
+    </head>
+    <style>
+        /* table{
+            width: 100%;
+        } */
+        td{
+            font-size: 8pt;
+        }
+        .number{
+            text-align: right;
+        }
+        .img{
+            max-width: 40px;
+            max-height: 60px;
+            margin: auto;
+            display: block;        }
+        td{
+            vertical-align: middle;
+        }
+        th{
+            font-size: 10pt;
+        }
+        table, tr, td { page-break-inside: avoid; }
+        .table{
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .image{
+            width: 90px!important;
+            max-height: 60px;
+        }
+        .code{
+            width: 71px!important;
+        }
+        .designation{
+            width: 166px!important;
+        }
+        .oldPrice{
+            width: 80px!important;
+        }
+        .gamme{
+            width: 83px!important;
+        }
+        .newPrice{
+            width: 80px!important;
+        }
+        .stock{
+            width: 46px!important;
+        }
+        
+        .categorie{
+            width: 100px!important;
+        }
+        table{
+            width: 716px!important;
+        }
+        td{
+            word-break:break-all!important;
+        }
+        .ligne, .ligne tr, .ligne tr td{
+            margin-top: -1px;
+        }
+    </style>
+    <body>
+        <div style="text-align: left;"><img src="http://localhost:8080/logoOld.png" class="mb-3"/></div>
+        <h1 class="mb-3">Liste des produits ({{this.length}})</h1>
+        <table class="table table-sm table-bordered">
+            <tr>
+                <th  class="image"></th>
+                <th class="code">Code</th>
+                <th class="designation">Designation</th>
+                <th class="gamme">Gamme</th>
+                <th class="oldPrice">Ancien prix</th>
+                <th class="newPrice">Prix actuel</th>
+                <th class="stock">Stock</th>
+                <!-- <th>Gamme</th> -->
+                <th class="categorie">Catégorie</th>
+            </tr>
+        </table>
+        {{#each this}}
+        <!-- <> -->
+        <table class="table table-sm table-bordered ligne">
+            <tr>
+                <td class="image"><img class="img" src="{{this.image}}"/></td>
+                <td class="code">{{this.code}}</td>
+                <td class="designation">{{this.designation}}</td>
+                <td class="gamme">
+                    <p style="margin-bottom: 2px; font-weight: 700;">{{gamme.name}}</p>
+                    <ul style="margin-left: 0; padding-left: 15px;">
+                        {{#each gamme.valeurs}}
+                        <li style="margin-left: 0;  padding-left: 2px;">{{value}}</li>
+                        {{/each}}
+                    </ul>
+                </td>
+                <td class="number oldPrice">{{this.oldprice}} Ar</td>
+                <td class="number newPrice">{{this.newprice}} Ar</td>
+                <td class="number stock">{{this.stock}}</td>
+                <!-- <td></td> -->
+                <td class="categorie">{{this.categoryName}}</td>
+            </tr>
+        </table>
+        <!-- </> -->
+        {{/each}}
+
+    </body>
+</html>

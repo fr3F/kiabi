@@ -1,0 +1,28 @@
+<div class="card" *ngIf="hierrarchies" style="z-index: 2;">
+    <div class="card-body">
+        <h2 class="font-size-15 mb-0">Filtre</h2>
+        <div class="table-responsive">
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding 
+                  [ngClass]="{'active-node': isActive(node.hierrarchy)}"
+                  (matTreeNodeToggle)="onNodeToggle(node)">
+                  <span class="node" (click)="changeSelected(node)">
+                    {{node.name}}
+                  </span>
+                </mat-tree-node>
+              
+                <!-- Tree node template for expandable nodes -->
+                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding
+                  [ngClass]="{'active-node': isActive(node.hierrarchy)}"
+                  (matTreeNodeToggle)="onNodeToggle(node)">
+                  <mat-icon class="mat-icon-rtl-mirror btn-outline-light" matTreeNodeToggle>
+                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                  </mat-icon>
+                  <span class="node" (click)="changeSelected(node)">
+                    {{node.name}}
+                  </span>
+                </mat-tree-node>
+              </mat-tree>              
+        </div>
+    </div>
+</div>

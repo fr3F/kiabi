@@ -1,0 +1,27 @@
+<div class="card">
+    <div class="card-body">
+
+        <div  *ngIf="magasins" class="mb-2">
+            <label>Magasin</label>
+            <select class="form-control form-control-sm" (change)="changeMagasin()" [(ngModel)]="idMagasin">
+                <option *ngFor="let item of magasins" [value]="item.id">
+                    {{item.nommagasin}}
+                </option>
+            </select>
+        </div>
+
+        <app-search-date titre="Période" (onChange)="changeDate($event)"></app-search-date>
+
+        <div class="mt-2">
+            <label>Saisir le code</label>
+
+            <app-autocomplete [model]="code" [selectOnly]="true" (change)="changeCode($event)"
+                url="/devis/util/search-produits" [ngClass]="'form-control-sm'"
+            ></app-autocomplete>
+        </div>
+
+        <div class="mt-4 text-right" *ngIf="fin&&debut&&magasin&&code">
+            <button class="btn btn-primary" (click)="rechercher()">Afficher</button>
+        </div>
+  </div>
+</div>

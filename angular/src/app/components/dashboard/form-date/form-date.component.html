@@ -1,0 +1,25 @@
+<div class="col-md-6 search  row mx-auto db-block">
+  
+
+    <div class="col-md-6">
+        <label>Date de début</label>
+        <input
+            type="date"
+            class="form-control"
+            [(ngModel)]="dateDebut"
+            (ngModelChange)="search()"
+        />
+        <!-- </div> -->
+    </div>
+
+    <div class="col-md-6">
+        <label>Date de fin</label>
+        <input
+            type="date"
+            class="form-control"
+            [(ngModel)]="dateFin"
+            (ngModelChange)="search()"
+        />
+        <!-- </div> -->
+    </div>
+</div>

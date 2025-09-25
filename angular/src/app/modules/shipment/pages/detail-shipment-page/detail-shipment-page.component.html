@@ -1,0 +1,35 @@
+
+<div class="container-fluid">
+    <!-- start page title -->
+    <app-page-title title="Shipment detail">
+    </app-page-title>
+    <div class="card" *ngIf="data">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 mx-auto mt-4 mb-2">
+                    <app-info-shipment [shipment]="data"
+                        [acces]="acces"
+                    >
+                    </app-info-shipment>
+                </div>
+
+                <div class="col-12 mt-0 mb-3">
+                    <h2 class="font-size-16">
+                        <b>Box:</b>
+                    </h2>
+                    <app-shipment-box 
+                        *ngFor="let box of data.boxs"
+                        [box]="box"
+                    >
+                    </app-shipment-box>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>
+  

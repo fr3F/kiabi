@@ -1,0 +1,21 @@
+<div class="card">
+    <div class="card-body row" *ngIf="magasins" >
+        <div class="mt-2">
+            <label>Séléctionner le magasin 
+            </label>
+            <select class="form-control form-control-sm" [(ngModel)]="data.idMagasin"
+            >
+                <option *ngFor="let magasin of magasins" [value]="magasin.id">{{magasin.nommagasin}}</option>
+            </select>
+        </div>
+        <div class="mt-2">
+            <label>Date </label>
+            <input class="form-control form-control-sm" type="date" [(ngModel)]="data.date">
+        </div>
+        <div class="mt-2 text-right">
+            <button class="btn btn-primary" (click)="validate()">
+                Afficher
+            </button>
+        </div>
+    </div>    
+</div>        

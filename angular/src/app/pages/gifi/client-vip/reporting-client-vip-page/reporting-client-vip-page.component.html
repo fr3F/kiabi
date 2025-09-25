@@ -1,0 +1,24 @@
+
+<div class="container-fluid">
+    <app-page-title title="Reporting Client VIP">
+    </app-page-title>
+</div>
+<div class="row">
+    <div class="col-12 mx-auto card">
+        <div class="row card-body">
+            <div class="col-md-5 mt-2 mx-auto">
+                <app-search-date titre="Date" (onChange)="changeDate($event)"
+                    [dateDebut]="debut" [dateFin]="fin"
+                >                
+                </app-search-date>
+            </div>
+
+            <div class="mt-2 col-12" *ngIf="data">
+                <app-reporting-client-vip 
+                    [debut]="debut" [fin]="fin" [list]="data"
+                >
+                </app-reporting-client-vip>
+            </div>
+        </div>
+    </div>
+</div>

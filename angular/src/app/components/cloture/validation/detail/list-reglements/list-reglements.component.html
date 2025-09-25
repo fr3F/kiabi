@@ -1,0 +1,27 @@
+
+<h5>Règlements</h5>
+<div class="mb-1 text-right" *ngIf="acces.imprimerReglements">
+    <app-imprimer-reglement [encaissement]="encaissement"></app-imprimer-reglement>
+</div>
+<table class="table table-sm table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Type</th>
+            <th>Montant</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of encaissement.reglements">
+            <td>{{item.modepaiement}}</td>
+            <td class="text-right">{{item.montant | appcurrency}}</td>
+        </tr>
+        <tr>
+            <th>Total</th>
+            <th  class="text-right">{{totalReglement | appcurrency}}</th>
+        </tr>
+    </tbody>
+</table>
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>

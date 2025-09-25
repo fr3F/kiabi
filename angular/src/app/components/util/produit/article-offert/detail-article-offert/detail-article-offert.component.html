@@ -1,0 +1,23 @@
+<table class="table table-sm table-bordered" *ngIf="list$">
+    <thead class="table-secondary">
+        <tr>
+            <th>Code</th>
+            <th>Désignation</th>
+            <th>Gamme</th>
+            <th>Validité</th>
+            <th>Quantité offert</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of list$ | async;
+            let i = index"
+            [ngClass]="{'table-danger': expire(item)}"
+        >
+            <td>{{item.code}}</td>
+            <td>{{item.produit.fulldesignation}}</td>
+            <td>{{item.gamme}}</td>
+            <td>{{item.debut | date: 'dd-MM-yyyy HH:mm'}} à {{item.fin | date: 'dd-MM-yyyy HH:mm'}}</td>
+            <td class="text-right">{{item.quantiteOffert}}</td>
+        </tr>
+    </tbody>
+</table>

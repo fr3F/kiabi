@@ -1,0 +1,10 @@
+<div class="card">
+    <div class="card-body">
+        <h5>Désignation: {{data.produit.fulldesignation}}</h5>
+
+        <app-list-ventes-article *ngIf="data.produit" [code]="data.produit.code"
+            [idMagasin]="data.idMagasin"
+        >
+        </app-list-ventes-article>
+    </div>
+</div>

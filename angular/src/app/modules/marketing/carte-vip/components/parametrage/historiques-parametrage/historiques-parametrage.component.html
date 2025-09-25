@@ -1,0 +1,43 @@
+<div class="table-responsive mt-2" *ngIf="historiques">
+    <h2 class="font-size-18 text-center">Historiques</h2>
+
+    <p class="text-center mt-4 mb-4" *ngIf="!historiques.length">
+        Aucun historique
+    </p>
+
+    <table class="table table-sm table-bordered" 
+        *ngIf="historiques.length">
+        <thead class="table-dark">
+            <tr>
+                <th>Date</th>
+                <th>Montant</th>
+                <th>Type</th>
+                <th>Utilisateur</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let item of historiques">
+                <td>{{item.createdAt | date : 'dd-MM-yyyy HH:mm'}}</td>
+                <td *ngIf="item.type != POINT_MIN">
+                    {{item.montantAvant | number }} 
+                    ->
+                    {{item.montantApres | number }}
+                </td>
+                <td *ngIf="item.type == POINT_MIN">
+                    {{item.montantAvant | number : '.2-2'}} pts 
+                    ->
+                    {{item.montantApres | number : '.2-2'}} pts
+                </td>
+                <td>{{item.type}}</td>
+                <td>
+                    <span *ngIf="item.user">
+                        {{item.user.nom}}
+                        {{item.user.prenom}}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>

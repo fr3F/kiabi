@@ -1,0 +1,26 @@
+
+<div class="container-fluid">
+    <!-- start page title -->
+    <app-page-title title="Détail ticket du magasin {{magasin}} du {{date | date: 'dd-MM-yyyy'}} ({{client}})">
+    </app-page-title>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-right mb-1 mt-1">
+                        <button class="btn btn-success" *ngIf="acces.exporter" (click)="exporterExcel()">
+                            Exporter en excel <i class="fa fa-file-excel"></i>
+                        </button>
+                    </div>
+                    <app-detail-ticket-magasin [itemTickets]="itemTickets" *ngIf="itemTickets"></app-detail-ticket-magasin>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p>
+</ngx-spinner>

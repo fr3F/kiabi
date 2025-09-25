@@ -1,0 +1,102 @@
+<!-- <p>liste-service-mode works!</p> -->
+
+
+<div class="col-sm-12 mt-1 mb-1 text-right">
+    <app-send-client-kiabi [acces]="acces"></app-send-client-kiabi>
+
+    <button class="btn btn-warning m-1 btn-sm"
+        *ngIf="acces.reporting" routerLink="/gifi/client-vip/reporting"
+    >
+        Reporting
+    </button>
+    <button class="btn btn-primary m-1 btn-sm"  *ngIf="acces.ajouter" routerLink="/carte-fidelite/ajouter">Nouveau</button>
+
+    <label *ngIf="acces.ajouter" for="upload-file" class="btn btn-info m-1 btn-sm">Importer excel</label>
+    <input *ngIf="acces.ajouter" type="file" accept=".csv,.xls,.xlsx" [(ngModel)]="filename" class="form-control form-control-sm"
+        (change)="addFile($event)" id="upload-file"/>
+
+    <button class="btn btn-success m-1 btn-sm" *ngIf="acces.exporter" (click)="export()">
+        Exporter <i class="fa fa-file-excel"></i>
+    </button>
+</div>
+
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucun élément trouvé</p>
+</div>
+
+<div *ngIf="list&&list.length!=0" class="table-responsive">
+    <table class="table table-centered table-nowrap table-sm table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th scope="col" class="align-middle" >N° Carte</th>
+                <th scope="col" class="align-middle" >Code client</th>
+                <th scope="col" class="align-middle" >Nom</th>
+                <th scope="col" class="align-middle" >Prénom</th>
+                <th scope="col" class="align-middle" >Adresse</th>
+                <!-- <th scope="col" class="align-middle" >Code</th> -->
+                <th scope="col" class="align-middle" >Ville</th>
+                <th scope="col" class="align-middle" >Téléphone</th>
+                <th scope="col" class="align-middle" >Titre</th>
+                <!-- <th scope="col" class="align-middle" >Adresse2</th> -->
+                <th scope="col" class="align-middle" >Email</th>
+                <th scope="col" class="align-middle" >Date de création</th>
+                <!-- <th scope="col" class="align-middle" >Portable</th> -->
+                <th scope="col" class="align-middle" >Date d'anniversaire</th>
+                <th scope="col" class="align-middle" *ngIf="showAction()">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody class=" align-middle">
+            <tr *ngFor="let item of list | paginate : {
+                itemsPerPage: pageSize,
+                currentPage: page,
+                totalItems: count
+                };
+            let i = index"
+            >
+                <td>{{item.numClient}}
+                    <button class="btn btn-sm btn-outline-warning me-1" ngbTooltip="Modifier"
+                            *ngIf="acces.modifier" routerLink="/carte-fidelite/modifier/{{item.id}}"
+                    >
+                        <i class="fa fa-pencil-alt"></i>
+                    </button>
+                    <app-carte-vip-modal [clientVip]="item" [acces]="acces"></app-carte-vip-modal>
+                </td>
+                <td>{{item.codeClient}}</td>
+                <td>{{item.nom}}</td>
+                <td>{{item.prenom}}</td>
+                <td>{{item.adresse}}</td>
+                <!-- <td>{{item.code}}</td> -->
+                <td>{{item.ville}}</td>
+                <td>{{item.telephone | mask :'00 00 000 00'}}</td>
+                <td>{{item.titre}}</td>
+                <!-- <td>{{item.adresse2}}</td> -->
+                <td>{{item.email}}</td>
+                <td>{{item.dateCreation | date: 'dd-MM-yyyy'}}</td>
+                <!-- <td>{{item.portable | mask :'000 00 000 00'}}</td> -->
+                <td>{{item.dateAnniversaire | date: 'dd-MM-yyyy'}}</td>
+                <td *ngIf="showAction()" class="text-center">
+                    <button class="btn btn-sm btn-outline-warning me-1" ngbTooltip="Modifier"
+                         *ngIf="acces.modifier" routerLink="/carte-fidelite/modifier/{{item.id}}"
+                    >
+                        <i class="fa fa-pencil-alt"></i>
+                    </button>
+
+                    <button mat-button class="btn btn-sm btn-outline-danger me-1" ngbTooltip="Supprimer"
+                        *ngIf="acces.supprimer" (click)="delete(i)"
+                    >
+                        <i class="fa fa-trash-alt"></i>
+                    </button>
+
+                    <app-activer-carte [clientVip]="item" [acces]="acces">
+                    </app-activer-carte>
+
+                    <app-loyact-action [clientVip]="item" [acces]="acces" (refreshClient)="changeItem()">
+                    </app-loyact-action>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <ngx-loading [show]="loading"></ngx-loading>
+</div>

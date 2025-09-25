@@ -1,0 +1,59 @@
+<div class="card">
+    <div class="card-body">
+        <h4 class="text-center">
+            Les encaissements à valider
+        </h4>
+        <p class="text-center" *ngIf="!list.length" style="margin: 30px 0;">
+            Aucun encaissement
+        </p>
+        <div class="table-responsive" *ngIf="list.length">
+            <table class="table table-sm table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>N° caisse</th>
+                        <th>Magasin</th>
+                        <th>Caissier</th>
+                        <th>Fond de caisse</th>
+                        <th>Contenu caisse</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of list; let i = index;">
+                        <td>{{item.nocaisse}}</td>
+                        <td>{{item.magasin}}</td>
+                        <td>{{item.caissier.nom}} {{item.caissier.prenom}}</td>
+                        <td class="text-right">
+                            {{item.fonddecaisse | appcurrency}}
+                        </td>
+                        <td class="text-right">
+                            {{item.contenucaisse | appcurrency}}
+                        </td>
+                        <td class="text-center">
+                            <app-imprimer-reglement *ngIf="acces.imprimerReglements" [encaissement]="item" ngClass="me-2">
+                            </app-imprimer-reglement>
+                            <button class="btn btn-success btn-sm me-2" (click)="openModal(i, modalForm)">Valider</button>
+                            <button class="btn btn-danger btn-sm" *ngIf="acces.supprimerEncaissement" (click)="delete(i)">
+                                Supprimer
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #modalForm role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Validation clôture</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-form-validation-encaissement [acces]="acces"  [id]="itemSelected.idencaissement"
+            (onValidate)="validate()"
+        >
+        </app-form-validation-encaissement>
+    </div>
+</ng-template>

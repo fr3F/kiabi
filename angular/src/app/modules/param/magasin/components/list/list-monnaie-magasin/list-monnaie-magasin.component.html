@@ -1,0 +1,19 @@
+<h4 style="font-weight: bold;">Monnaies</h4>
+
+<p class="text-center" style="margin: 30px 0;" *ngIf="!monnaies || !monnaies.monnaie.length">
+    Aucune monnaie configurée
+</p>
+
+
+<div class="table-responsive mt-2">
+    <table *ngIf="monnaies&&monnaies.monnaie.length!=0" class="table table-centered table-nowrap table-sm table-bordered">
+        <tbody>
+            <tr *ngFor="let item of monnaies.monnaie; let i = index;"
+            >
+                <td class="text-right">
+                    {{item.montant | number}} {{item.lib}}
+                </td>             
+            </tr>
+        </tbody>
+    </table>
+</div>

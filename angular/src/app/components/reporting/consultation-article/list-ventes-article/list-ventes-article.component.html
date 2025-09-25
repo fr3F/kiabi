@@ -1,0 +1,80 @@
+
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucune vente</p>
+</div>
+<div *ngIf="list&&list.length!=0" class="table-responsive">
+    <div class="col-sm-12 col-md-5 mt-2">
+        <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+            {{ count | number }} ventes trouvées
+        </div>
+    </div>
+    <table class="table table-centered table-nowrap table-sm table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Facture</th>
+                <th>N° Ticket</th>
+                <th>Date</th>
+                <th>Client</th>
+                <th>N° Caisse</th>
+                <th>Caissier</th>
+                <th>Variant</th>
+                <th>Qté</th>
+                <th>PU HT</th>
+                <th>Remise</th>
+                <th>TVA</th>
+                <th>Magasin</th>
+                <th>Dépôt</th>
+                <th>Prix total HT</th>
+                <th>Prix total TTC</th>
+            </tr>
+        </thead>
+        <tbody class=" align-middle">
+            <tr *ngFor="let item of list | paginate : {
+                itemsPerPage: pageSize,
+                currentPage: page,
+                totalItems: count
+                };
+            let i = index"
+            >
+                <td>{{item.numeroFacture}}</td>
+                <td>{{item.numticket}}</td>
+                <td>{{item.datecreation | date: 'dd-MM-yyyy HH:mm'}}</td>
+                <td>{{item.codeclient}}</td>
+                <td>{{item.nocaisse}}</td>
+                <td>{{item.namecaissier}}</td>
+                <td>{{item.gamme}}</td>
+                <td class="text-right">{{item.quantite | number}}</td>
+                <td class="text-right">{{item.puHT | appcurrency}}</td>
+                <td class="text-right">
+                    <span *ngIf="item.remise!=null">{{item.remise | number}} %</span>
+                </td>
+                <td class="text-right">
+                    {{item.tauxtva | number}} %
+                </td>
+                <td>{{item.magasin}}</td>
+                <td>{{item.depot}}</td>
+
+                <td class="text-right">{{item.prixTotalHT | appcurrency}}</td>
+                <td class="text-right">{{item.prixTotalTTC | appcurrency}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div *ngIf="list&&list.length" class="row justify-content-md-between align-items-md-center mt-2">
+    <!-- Pagination -->
+    <div class="col-sm-12 col-md-5">
+    <div class="text-md-right float-md-end pagination-rounded">
+        <pagination-controls
+        previousLabel=""
+        nextLabel=""
+        [responsive]="true"
+        (pageChange)="handlePageChange($event)"
+        screenReaderPaginationLabel="Pagination"
+        screenReaderPageLabel="page"
+        ></pagination-controls>
+    </div>
+    </div>
+    <!-- End Pagination -->
+</div>

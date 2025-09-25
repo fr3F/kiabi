@@ -1,0 +1,59 @@
+
+        <!-- end col-->
+        <div class="col-sm-12 col-md-5 mt-2">
+            <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                {{ list.length }} éléments trouvés
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <p class="text-center" style="margin: 30px 0px;" *ngIf="!list.length">Aucun élément trouvé</p>
+            <table class="table table-sm table-bordered table-nowrap" *ngIf="list.length">
+                <thead class="table-dark">
+                    <tr>
+                        <!-- <th>Facture</th> -->
+                        <th *ngIf="specificCode">N° caisse</th>
+                        <th>N° Ticket</th>
+                        <th>Date</th>
+                        <th>Heure</th>
+                        <th>Client</th>
+                        <th *ngIf="!specificCode">Code Article</th>
+                        <th  *ngIf="!specificCode">Désignation</th>
+                        <th>Variant</th>
+                        <th>Qté</th>
+                        <th>PU HT</th>
+                        <th>Remise</th>
+                        <th>TVA</th>
+                        <th *ngIf="!specificCode">Magasin</th>
+                        <th>Dépôt</th>
+                        <th>Prix total HT</th>
+                        <th>Prix total TTC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of list">
+                        <!-- <td>{{item.numeroFacture}}</td> -->
+                        <td *ngIf="specificCode">{{item.nocaisse}}</td>
+                        <td>{{item.numticket}}</td>
+                        <td>{{item.datecreation | date: 'dd-MM-yyyy'}}</td>
+                        <td>{{item.datecreation | date: 'HH:mm:ss'}}</td>
+                        <td>{{item.codeclient}}</td>
+                        <td *ngIf="!specificCode">{{item.code}}</td>
+                        <td *ngIf="!specificCode">{{item.designation}}</td>
+                        <td>{{item.gamme}}</td>
+                        <td class="text-right">{{item.quantite | number}}</td>
+                        <td class="text-right">{{item.puHT | appcurrency}}</td>
+                        <td class="text-right">
+                            <span *ngIf="item.remise!=null">{{item.remise | number}} %</span>
+                        </td>
+                        <td class="text-right">
+                            {{item.tauxtva | number}} %
+                        </td>
+                        <td *ngIf="!specificCode">{{item.magasin}}</td>
+                        <td>{{item.depot}}</td>
+                        <td class="text-right">{{item.prixTotalHT | appcurrency}}</td>
+                        <td class="text-right">{{item.prixTotalTTC | appcurrency}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>

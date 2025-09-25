@@ -1,0 +1,61 @@
+<button class="btn btn-sm btn-info" *ngIf="clientVip.dateActivation"
+    (click)="openModal(modal)" ngbTooltip="Carte de fidelité"
+>
+    <i class="fas fa-id-card"></i>    
+</button>
+
+
+
+<ng-template #modal role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Carte de fidelité</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body text-center">
+        <p>{{clientVip.nom}} {{clientVip.prenom}}</p>
+        <p class="mt-4 font-size-14">
+            <strong>Points: </strong>
+            <br /> 
+            <span style="font-size: 30pt;">
+                <strong>{{clientVip.point | number}}</strong>
+            </span>
+        </p>
+        <p class="mb-4 font-size-12" *ngIf="clientVip.dernierAchat">
+            <strong>Dernier achat: </strong>  
+            <br/>
+            {{clientVip.dernierAchat | date: 'dd-MM-yyyy à HH:mm'}}
+        </p>
+
+        <div class="text-right mt-2">
+            <button class="btn btn-outline-warning btn-sm m-1" *ngIf="canRegularize()" (click)="openModalRegul(modalRegul)">
+                Régulariser
+            </button>
+
+            <button class="btn btn-outline-info btn-sm m-1" (click)="openModalConso(modalConso)">
+                Historiques
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #modalConso role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Historiques des points</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-historique-conso [numClient]="clientVip.numClient"></app-historique-conso>
+    </div>
+</ng-template>
+
+
+<ng-template #modalRegul role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Régulariser points</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-list-ticket-to-regularize [clientVip]="clientVip"></app-list-ticket-to-regularize>
+    </div>
+</ng-template>

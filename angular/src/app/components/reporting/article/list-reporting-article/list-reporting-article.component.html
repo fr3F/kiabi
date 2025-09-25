@@ -1,0 +1,79 @@
+
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucun article trouvé</p>
+</div>
+
+<div *ngIf="list&&list.length!=0" class="table-responsive">
+    <table class="table table-centered table-sm table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col" class="align-middle" *ngIf="isBarcode">Code barre</th>
+                <th scope="col" class="align-middle" >Code</th>
+                <th scope="col" class="align-middle" >Désignation</th>
+                <!-- <th scope="col" class="align-middle" >Classe</th>
+                <th scope="col" class="align-middle" >Sous-classe</th>
+                <th scope="col" class="align-middle" >Famille</th>
+                <th scope="col" class="align-middle" >Catégorie</th>
+                <th scope="col" class="align-middle" >Univers</th>
+                <th scope="col" class="align-middle" >Gamme</th> -->
+                <th scope="col" class="align-middle" >Groupe de marchandise</th>
+                <th scope="col" class="align-middle" >Commercial</th>
+                <th scope="col" class="align-middle" >Stocks</th>
+                <th scope="col" class="align-middle" >Prix de vente</th>
+                <th scope="col" class="align-middle" >Code barres</th>
+                <!-- <th scope="col" class="align-middle" ></th> -->
+            </tr>
+        </thead>
+        <tbody class=" align-middle">
+            <tr *ngFor="let item of list "
+                [ngClass]="{'table-danger': withError(item)}"
+            >
+                <td *ngIf="isBarcode">{{item.barcode}}</td>
+                <td>{{item.code}}</td>
+                <td>{{item.designation}}</td>
+                <td>
+                    <ul>
+                        <li *ngIf="item.classe">{{item.classe}}</li>
+                        <li *ngIf="item.sousClasse" class="li2">{{item.sousClasse}}</li>
+                        <li *ngIf="item.famille" class="li3">{{item.famille}}</li>
+                    </ul>
+                </td>
+                
+                <td>
+                    <ul>
+                        <li *ngIf="item.classe">{{item.categorie}}</li>
+                        <li *ngIf="item.univers" class="li2">{{item.univers}}</li>
+                        <li *ngIf="item.gamme" class="li3">{{item.gamme}}</li>
+                    </ul>
+                </td>
+                <!-- <td>{{item.classe}}</td>
+                <td>{{item.sousClasse}}</td>
+                <td>{{item.famille}}</td>
+                <td>{{item.categorie}}</td>
+                <td>{{item.univers}}</td>
+                <td>{{item.gamme}}</td> -->
+                <td>
+                    <ul>
+                        <li *ngFor="let stock of item.stocks">
+                            {{stock.depot}} : {{stock.quantite | number}}
+                            <span *ngIf="stock.gamme">({{stock.gamme}})</span>
+                        </li>
+                    </ul>
+                </td>
+                <td class="text-right">
+                    <p *ngIf="item.designation">{{item.prixhtprincipal | appcurrency}} HT</p>
+                    <p *ngIf="item.designation">{{item.prixttcprincipal | appcurrency}} TTC</p>
+                </td>
+                <td>
+                    <app-list-barcode [list]="item.barcodes"></app-list-barcode>
+                </td>
+                <!-- <td class="text-center">
+                    <button class="btn btn-info btn-sm btn-detail" routerLink="/produit/consultation/{{item.code}}">
+                        <i class="fa fa-eye"></i>
+                    </button>
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+</div>
+  

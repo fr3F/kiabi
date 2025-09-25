@@ -1,0 +1,5 @@
+<div class="row mx-auto" *ngIf="data">
+    <div class="col-md-6" *ngFor="let item of data">
+        <app-control-magasin [magasin]="false" [data]="item"></app-control-magasin>
+    </div>
+</div>

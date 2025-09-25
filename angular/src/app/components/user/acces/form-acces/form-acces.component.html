@@ -1,0 +1,53 @@
+<div class="needs-validation">
+    <div class="row">
+      <div class="col-sm-10 mx-auto db-block">
+        <div class="mb-3">
+            <label class="control-label card-title">Role</label>
+            <select class="form-control" (change)="changeRole($event)">
+                <option *ngFor="let role of roles" value="{{role.id}}">{{role.nom}}</option>
+            </select>
+        </div>
+        <h5 class="control-label card-title">Menus</h5>
+        <div class="row">
+            <div class="mb-3 col-md-4 card ml-3" *ngFor="let menu of menus; let i = index">
+                <div class="card-header">
+                    <div class="form-check">
+                        <input (click)="changeCheck(menu, [])" class="form-check-input" id="menu{{menu.id}}" type="checkbox" [checked]="menu.checked"/>
+                        <label class="form-check-label" for="menu{{menu.id}}">{{menu.label}}</label>
+                    </div>
+                </div>                       
+                
+                <div class="card-body">
+                    <div class="mb-3 form-check mt-2" *ngFor="let subMenu of menu.subItems; let j = index">
+                        <input (click)="changeCheck(subMenu, [i])" class="form-check-input" id="submenu{{subMenu.id}}" type="checkbox" [checked]="subMenu.checked"/>
+                        <label class="form-check-label" for="submenu{{subMenu.id}}">{{subMenu.label}}</label>
+
+                        <div class="mb-3 form-check mt-2" *ngFor="let subMenu2 of subMenu.subItems">
+                            <input (click)="changeCheck(subMenu2, [i, j])" value="1" class="form-check-input" id="submenu2{{subMenu2.id}}" type="checkbox" [checked]="subMenu2.checked"/>
+                            <label class="form-check-label" for="submenu2{{subMenu2.id}}">{{subMenu2.label}}</label>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h5 class="control-label card-title">Fonctionnalités</h5>
+        <div class="row">
+            <div class="mb-3 col-md-4 form-check mt-2  card" *ngFor="let module of modules">
+                <div class="card-header">
+                    <h6 style="font-weight:bold">{{module.nom}}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3 form-check mt-2" *ngFor="let f of module.fonctionnalites">
+                        <input (click)="changeCheckFonctionnalite(f)"class="form-check-input" id="fonct{{f.id}}" type="checkbox" [checked]="f.checked"/>
+                        <label class="form-check-label" for="fonct{{f.id}}">{{f.nom}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center!important;" >
+            <a class="btn btn-success btn-lg" (click)="valider()"><i class="fa fa-check"></i> Valider</a>
+        </div>
+      </div>
+    </div>
+</div>

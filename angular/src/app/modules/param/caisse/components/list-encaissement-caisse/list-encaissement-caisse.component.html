@@ -1,0 +1,37 @@
+<div class="mt-1 mb-4 mx-auto" style="width: 200px;">
+    <label>Date</label>
+    <input type="date" [(ngModel)]="date" class="form-control form-control-sm" (change)="refreshEncaissement()">
+</div>
+<p class="text-center" style="margin: 30px 0px;" *ngIf="list&&!list.length">
+    Aucun encaissement
+</p>
+<table *ngIf="list&&list.length" class="table table-sm table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Date</th>
+            <th>Statut</th>
+            <th>Fond de caisse</th>
+            <th>Contenu caisse</th>
+            <th>Nombre tickets</th>
+            <th>Montant total</th>
+            <th *ngIf="acces.chargerEncaissement"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of list">
+            <td>{{item.createdAt | date: 'dd-MM-yyyy HH:mm'}}</td>
+            <td class="text-center">{{item.statut}}</td>
+            <td class="text-right">{{item.fonddecaisse | appcurrency}}</td>
+            <td class="text-right">{{item.contenucaisse | appcurrency}}</td>
+            <td class="text-right">{{item.nbTicket | number }}</td>
+            <td class="text-right">{{item.montantTotal | appcurrency}}</td>
+            <td  class="text-center" *ngIf="acces.chargerEncaissement">
+                <button class="btn btn-sm btn-success" *ngIf="item.statut == 'Clos'&&!item.montantTicketCentral"
+                    (click)="chargerEncaissement(item.idencaissement)"
+                >
+                    Charger
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,24 @@
+<h6>Règlements</h6>
+<p class="text-center" style="margin: 10px 0;" *ngIf="!reglements.length">Aucun règlement</p>
+<table class="table table-sm table-bordered" *ngIf="reglements.length">
+    <thead class="table-dark">
+        <tr>
+            <th>Mode de paiement</th>
+            <th>Montant</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of reglements; let i = index;">
+            <td>{{item.modepaiement}}</td>
+            <td class="text-right">
+                {{item.montantreglement | appcurrency}}
+            </td>
+        </tr>
+        <tr>
+            <th>Total</th>
+            <th class="text-right">
+                {{total | appcurrency}}
+            </th>
+        </tr>
+    </tbody>
+</table>    

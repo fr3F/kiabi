@@ -1,0 +1,74 @@
+<form class="needs-validation" [formGroup]="formGroup" (ngSubmit)="valider()">
+    <div class="row">
+      <div class="col-sm-10 mx-auto db-block">
+        <!-- <div class="mb-3">
+            <label class="control-label card-title">Nom d'utilisateur</label>
+            <input maxlength="50" type="text" class="form-control" [(ngModel)]="user.username" formControlName="user.username"
+                [ngClass]="{'is-invalid': submit && form['user.username'].errors}"
+              />
+            <div *ngIf="submit && form['user.username'].errors" class="invalid-feedback">
+              <span *ngIf="form['user.username'].errors.required">Veuillez remplir le champ "Nom d'utilisateur"</span>
+            </div>
+        </div> -->
+        
+        <div class="mb-3">
+            <label class="control-label card-title">Nom</label>
+            <input maxlength="50" type="text" class="form-control" [(ngModel)]="user.nom" formControlName="user.nom"
+                [ngClass]="{'is-invalid': submit && form['user.nom'].errors}"
+              />
+            <div *ngIf="submit && form['user.nom'].errors" class="invalid-feedback">
+              <span *ngIf="form['user.nom'].errors.required">Veuillez remplir le champ "Nom"</span>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label class="control-label card-title">Prénom</label>
+            <input maxlength="50" type="text" class="form-control" [(ngModel)]="user.prenom" formControlName="user.prenom"
+                [ngClass]="{'is-invalid': submit && form['user.prenom'].errors}"
+              />
+            <div *ngIf="submit && form['user.prenom'].errors" class="invalid-feedback">
+              <span *ngIf="form['user.prenom'].errors.required">Veuillez remplir le champ "Prénom"</span>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label class="control-label card-title">Email</label>
+            <input maxlength="50" type="email" class="form-control" [(ngModel)]="user.email" formControlName="user.email"
+                [ngClass]="{'is-invalid': submit && form['user.email'].errors}"
+              />
+            <div *ngIf="submit && form['user.email'].errors" class="invalid-feedback">
+              <span *ngIf="form['user.email'].errors.required">Veuillez remplir le champ "Email"</span>
+              <span *ngIf="form['user.email'].errors.email">Vérifiez bien le champ "Email"</span>
+            </div>
+        </div>
+        
+        <div class="mb-3" *ngIf="!monProfil">
+            <label class="control-label card-title">Role</label>
+            <select class="form-control" [(ngModel)]="user.idRole" formControlName="user.idRole"
+                [ngClass]="{'is-invalid': submit && form['user.idRole'].errors}"
+            >
+                <option *ngFor="let role of roles" value="{{role.id}}">{{role.nom}}</option>
+            </select>
+            <div *ngIf="submit && form['user.idRole'].errors" class="invalid-feedback">
+              <span *ngIf="form['user.idRole'].errors.required">Veuillez sélectionner un "Role"</span>
+            </div>
+        </div>
+       
+        
+        <div class="mb-3">
+          <label class="control-label card-title">Store code</label>
+          <input maxlength="50" type="text" class="form-control" [(ngModel)]="user.storeCode" formControlName="user.storeCode"
+              [ngClass]="{'is-invalid': submit && form['user.storeCode'].errors}"
+            />
+          <div *ngIf="submit && form['user.storeCode'].errors" class="invalid-feedback">
+            <span *ngIf="form['user.storeCode'].errors.required">Veuillez remplir le champ "Store code"</span>
+            <span *ngIf="form['user.storeCode'].errors.maxLength">Le champ "Store code" ne doit pas dépasser de 3 caractères</span>
+          </div>
+      </div>
+               
+        <div class="row" id="btn">
+            <button class="btn btn-success col-md-4 mx-auto">Enregistrer</button>
+        </div>
+      </div>
+    </div>
+</form>

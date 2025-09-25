@@ -1,0 +1,26 @@
+<div class="card">
+    <div class="card-body">
+        <app-search-date titre="Période" (onChange)="changeDate($event)"></app-search-date>
+
+        <div class="row mb-2" *ngIf="magasins">
+            <div class="col-12">
+                <label>Magasin</label>
+                <select class="form-control form-control-sm" (change)="change()" [(ngModel)]="idMagasin">
+                    <option value="" *ngIf="afficherTous()">Tous</option>
+                    <option *ngFor="let item of magasins" [value]="item.id">
+                        {{item.nommagasin}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <label>Client (code)</label>
+                <app-autocomplete (change)="changeClient($event)" ngClass="form-control-sm" url="/reportings/search-clients">
+
+                </app-autocomplete>
+            </div>
+        </div>
+    </div>
+</div>

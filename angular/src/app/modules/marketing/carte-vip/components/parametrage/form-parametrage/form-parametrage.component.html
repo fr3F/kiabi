@@ -1,0 +1,70 @@
+<form [formGroup]="formGroup" (ngSubmit)="valider()">
+
+    <div class="mt-2">
+        <label class="control-label mt-0"> 
+            Montant équivalent à un point pour le gain
+        </label>
+        <input type="number" class="form-control text-right form-control-sm" 
+            formControlName="data.equivalenceAjout" [(ngModel)]="data.equivalenceAjout"
+            [ngClass]="{'is-invalid': isInvalid('equivalenceAjout')}"/>
+        <div *ngIf="isInvalid('equivalenceAjout')" class="invalid-feedback">
+            <span>Veuillez renseigner l'équivalence pour le gain</span>
+        </div>
+    </div>
+
+    <div class="mt-2">
+        <label class="control-label mt-0"> 
+            Montant équivalent à un point pour la consommation
+        </label>
+        <input type="number" class="form-control text-right form-control-sm" 
+            formControlName="data.equivalenceConso" [(ngModel)]="data.equivalenceConso"
+            [ngClass]="{'is-invalid': isInvalid('equivalenceConso')}"/>
+        <div *ngIf="isInvalid('equivalenceAjout')" class="invalid-feedback">
+            <span>Veuillez renseigner l'équivalence pour la consommation</span>
+        </div>
+    </div>
+
+    
+    <div class="mt-2">
+        <label class="control-label mt-0"> 
+            Point minimum pour consommer
+        </label>
+        <input type="number" class="form-control text-right form-control-sm" 
+            formControlName="data.pointMinimum" [(ngModel)]="data.pointMinimum"
+            [ngClass]="{'is-invalid': isInvalid('pointMinimum')}"/>
+        <div *ngIf="isInvalid('pointMinimum')" class="invalid-feedback">
+            <span>Veuillez renseigner le point minimum pour consommer</span>
+        </div>
+    </div>
+
+    <div class="mt-2">
+        <label class="control-label mt-0"> 
+            Type    
+        </label>
+        <select class="form-control form-control-sm" 
+            formControlName="data.type" [(ngModel)]="data.type"
+            [ngClass]="{'is-invalid': isInvalid('type')}">
+            <option [value]="1">Montant</option>
+            <option [value]="2">Pourcentage</option>
+        </select>
+        <div *ngIf="isInvalid('type')" class="invalid-feedback">
+            <span>Veuillez renseigner le taux discount</span>
+        </div>
+    </div>
+
+    <div class="mt-2">
+        <label class="control-label mt-0"> 
+            Taux discount
+        </label>
+        <input type="number" class="form-control text-right form-control-sm" 
+            formControlName="data.tauxDiscount" [(ngModel)]="data.tauxDiscount"
+            [ngClass]="{'is-invalid': isInvalid('tauxDiscount')}"/>
+        <div *ngIf="isInvalid('tauxDiscount')" class="invalid-feedback">
+            <span>Veuillez renseigner le taux discount</span>
+        </div>
+    </div>
+
+    <div class="mt-2 text-center">
+        <button class="btn btn-success">Enregistrer</button>
+    </div>
+</form>

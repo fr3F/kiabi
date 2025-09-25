@@ -1,0 +1,44 @@
+
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucune expédition trouvée</p>
+</div>
+<div *ngIf="list&&list.length!=0" class="table-responsive ">
+    <table class="table table-sm table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Store code</th>
+                <th>Invoice number</th>
+                <th>Shipment date</th>
+                <th>Updated at</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="col-md-4" *ngFor="let item of list | paginate : {
+                itemsPerPage: pageSize,
+                currentPage: page,
+                totalItems: count
+                };
+            let i = index"
+            >
+                <td>{{item.storeCode}}</td>
+                <td>{{item.invoiceNumber}}</td>
+                <td>{{item.shipmentDate | date: 'dd-MM-yyyy HH:mm'}}</td>
+                <td>{{item.updatedAt | date: 'dd-MM-yyyy HH:mm'}}</td>
+                <td class="text-center">
+                    <span class="badge" [ngClass]="getClassStatus(item)">
+                        {{item.statusLabel}}
+                    </span>
+                </td>
+                <td class="text-center">
+                    <button class="btn btn-info btn-sm" routerLink="/shipments/details/{{item.id}}">
+                        <i class="fa fa-eye"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+

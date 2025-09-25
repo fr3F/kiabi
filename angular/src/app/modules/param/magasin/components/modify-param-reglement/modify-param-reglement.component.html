@@ -1,0 +1,35 @@
+    <div class="mt-2">
+        <label>Code journal</label>
+        <input type="text" [(ngModel)]="data.codejournal" class="form-control form-control-sm"
+            [ngClass]="{'is-invalid': isInvalid('codejournal')}"
+        >
+        <div class="invalid-feedback" *ngIf="isInvalid('codejournal')">
+            Veuillez renseigner le code journal
+        </div>
+    </div>
+
+    <div class="mt-2">
+        <label>N° règlement SAGE</label>
+        <input type="text" [(ngModel)]="data.noreglement" class="form-control form-control-sm"
+            [ngClass]="{'is-invalid': isInvalid('noreglement')}"
+        >
+        <div class="invalid-feedback" *ngIf="isInvalid('noreglement')">
+            Veuillez renseigner un numéro valide
+        </div>
+    </div>
+
+    <div class="mt-2">
+        <label>Type de financement</label>
+        <input type="text" [(ngModel)]="data.financingType" class="form-control form-control-sm"
+            [ngClass]="{'is-invalid': isInvalid('financingType')}"
+        >
+        <div class="invalid-feedback" *ngIf="isInvalid('financingType')">
+            Veuillez renseigner le type de financement
+        </div>
+    </div>
+
+    <div class="mt-2 mb-2 text-center">
+        <button class="btn btn-sm btn-success" (click)="validate()">
+            Enregistrer
+        </button>
+    </div>

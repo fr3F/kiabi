@@ -1,0 +1,10 @@
+<ul>
+    <li *ngFor="let item of list" class="align-middle">
+        {{item.barcode}}
+            <img *ngIf="item.gifi" src="assets/images/gifi-mini.png" alt="" >
+            <span class="badge bg-info" *ngIf="item.conditionnement > 1 ">
+                {{item.conditionnement | number}}
+            </span>
+        <span *ngIf="item.gammeObj">({{item.gammeObj.EG_Enumere}})</span>
+    </li>
+</ul>

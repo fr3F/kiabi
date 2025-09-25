@@ -1,0 +1,24 @@
+<div class="table-responsive" *ngIf="articles.length">
+    <table class="table table-sm table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Article</th>
+                <th>Gamme</th>
+                <th>Qté offerte</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of articles; let i = index;" 
+                [ngClass]="{'table-danger': item.duplique}"
+            >
+                <td>{{item.designationCode}}</td>
+                <td>{{item.gamme}}</td>
+                <td class="text-right">{{item.quantiteOffert | number}}</td>
+                <td class="text-center">
+                    <i class="text-danger fa fa-trash-alt" (click)="delete(i)"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

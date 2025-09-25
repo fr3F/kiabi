@@ -1,0 +1,29 @@
+<div class="card">
+    <div class="card-body">
+        <h4 *ngIf="product">
+            {{product.eanCode}} - {{product.productTypeDescription || product.theme}}
+            ({{magasin.nommagasin}})
+        </h4>
+        <p *ngIf="list">
+            <b>Quantité vendue: </b> {{qteVendu | number}}
+        </p>
+
+        <p *ngIf="list && !list.length" class="text-center mt-4 mb-4">
+            Aucune vente trouvée
+        </p>
+
+        <app-table-article-ticket-caisse *ngIf="list&&list.length" [list]="list"
+            [specificCode]="true"
+        >
+        </app-table-article-ticket-caisse>
+
+        <div class="mt-2 text-danger" *ngIf="unavailableCaisses.length">
+            <p class="m-0">
+                Caisse(s) non connectée(s)
+            </p>
+            <ul class="text-danger" >
+                <li *ngFor="let item of unavailableCaisses">N°  {{item.nocaisse}}</li>
+            </ul>
+        </div>
+    </div>
+</div>

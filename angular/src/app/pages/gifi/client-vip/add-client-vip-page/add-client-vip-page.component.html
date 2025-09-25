@@ -1,0 +1,21 @@
+
+<div class="container-fluid">
+    <!-- start page title -->
+    <app-page-title [title]="titre">
+    </app-page-title>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12 mx-auto">  
+            <app-form-client-vip [data]="data"></app-form-client-vip>
+          </div>
+        </div>
+      </div>
+    </div>          
+</div>
+
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+  <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>

@@ -1,0 +1,80 @@
+
+
+<div class="text-right" *ngIf="acces.gerer">
+    <button class="btn btn-success btn-sm" (click)="showAdd(modal)">
+        Ajouter
+    </button>
+</div>
+
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucun article</p>
+</div>
+
+
+<div class="table-responsive mt-2" *ngIf="list&&list.length!=0" >
+    <table class="table table-centered table-sm table-bordered mb-0">
+        <thead class="table-dark">
+            <tr>
+                <th>Code</th>
+                <th>Désignation</th>
+                <th>Gamme</th>
+                <th>Magasin</th>
+                <th>Date</th>
+                <th>Montant</th>
+                <th *ngIf="acces.gerer">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let item of list | paginate : {
+                itemsPerPage: pageSize,
+                currentPage: page,
+                totalItems: count
+                };
+            let i = index">
+                <tr [ngClass]="{'table-danger': expired(item)}">
+                    <td>
+                        {{ item.code }}
+                    </td>
+                    <td>
+                        <span *ngIf="item.produit">
+                            {{ item.produit.fulldesignation }}
+                        </span>
+                    </td>
+                    <td>{{item.gamme}}</td>
+                    <td>{{item.magasin}}</td>
+                    <td>{{item.debut | date: 'dd-MM-yyyy HH:mm'}} à {{item.fin | date: 'dd-MM-yyyy HH:mm'}}</td>
+                    <td>
+                        <span *ngIf="item.montantmax">
+                            Entre {{item.montantmin | appcurrency }} à
+                            {{item.montantmax | appcurrency }}
+                        </span>
+                        <span *ngIf="!item.montantmax">
+                            Plus de {{item.montantmin | appcurrency }}
+                        </span>
+                    </td>
+                    <td  *ngIf="acces.gerer" class="text-center">
+                        <i class="text-danger fa fa-trash" (click)="deleteArticleOffert(i)"
+                            ngbTooltip="Supprimer"
+                        >
+                        </i>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+
+
+
+<ng-template #modal role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Ajouter article(s) offert(s) (montant)</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-form-montant-article-offert
+            (onValidate)="onAdd()" (onCancel)="onCancelAdd()"
+        >
+        </app-form-montant-article-offert>
+    </div>
+</ng-template>

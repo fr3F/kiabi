@@ -1,0 +1,5 @@
+<input [(ngModel)]="model" (input)="search()" (change)="onChange()" [placeholder]="placeholder" class="form-control" [ngClass]="ngClass">
+<ul *ngIf="results$" class="table-responsive" style="max-height: 150px;">
+  <li *ngFor="let result of results$ | async" (click)="select(result)">{{ result }}</li>
+</ul>
+

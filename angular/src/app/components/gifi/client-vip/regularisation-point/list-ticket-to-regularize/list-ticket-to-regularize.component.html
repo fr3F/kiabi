@@ -1,0 +1,42 @@
+<!-- <h2 class="text-center">Historiques de consommation</h2> -->
+
+<div class="table-responsive" *ngIf="tickets">
+    <p class="text-center mt-4 mb-4" *ngIf="!tickets.length">
+        Aucun ticket
+    </p>
+
+    <table class="table table-sm table-bordered table-striped"
+        *ngIf="tickets.length"
+    >   
+        <thead class="table-dark">
+            <tr>
+                <th>Ticket</th>
+                <th>Magasin</th>
+                <th>Caisse</th>
+                <th>Montant</th>
+                <th>Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of tickets; let i = index" 
+                class="align-middle"
+            >
+                <td>{{item.numticket}}</td>
+                <td>{{item.magasin}}</td>
+                <td>{{item.nocaisse}}</td>
+                <td class="text-right">{{item.montanttotal | appcurrency}}</td>
+                <td>{{item.datecreation | date: 'dd-MM-yyyy HH:mm'}}</td>
+                <td class="text-center">
+                    <button class="btn btn-sm btn-outline-success" 
+                        ngbTooltip="Régulariser" (click)="regularize(item, i)"
+                    >
+                        <i class="fa fa-check">
+                        </i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

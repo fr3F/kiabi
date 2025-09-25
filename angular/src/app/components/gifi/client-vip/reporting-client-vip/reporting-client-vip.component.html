@@ -1,0 +1,41 @@
+<!-- <p>liste-service-mode works!</p> -->
+
+
+<div class="col-sm-12 mt-1 mb-1 text-right">
+    <button class="btn btn-success btn-sm" (click)="export()">
+        Exporter <i class="fa fa-file-excel"></i>
+    </button>
+</div>
+
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucun ticket trouvé</p>
+</div>
+
+<div *ngIf="list&&list.length!=0" class="table-responsive">
+    <table class="table table-centered table-nowrap table-sm table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th scope="col" class="align-middle" >N° Client</th>
+                <th scope="col" class="align-middle" >Nom</th>
+                <th scope="col" class="align-middle" >Prénom</th>
+                <th scope="col" class="align-middle" >Ville</th>
+                <th scope="col" class="align-middle" >Nombre ticket</th>
+                <th scope="col" class="align-middle" >Montant</th>
+                <th scope="col" class="align-middle" >Magasin</th>
+                <th scope="col" class="align-middle" >Date</th>
+            </tr>
+        </thead>
+        <tbody class=" align-middle">
+            <tr *ngFor="let item of list">
+                <td>{{item.clientvip.numClient}}</td>
+                <td>{{item.clientvip.nom}}</td>
+                <td>{{item.clientvip.prenom}}</td>
+                <td>{{item.clientvip.ville}}</td>
+                <td class="text-right">{{item.nbTicket | number}}</td>
+                <td class="text-right">{{item.montant | appcurrency}}</td>
+                <td>{{item.magasin.nommagasin}}</td>
+                <td>{{item.date | date: 'dd-MM-yyyy'}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

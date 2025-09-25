@@ -1,0 +1,90 @@
+<div class="table-responsive mt-2">
+    <p class="text-center" style="margin: 30px 0;" *ngIf="!list.length">
+        Aucune caisse
+    </p>
+    <table *ngIf="list&&list.length!=0" class="table table-centered table-nowrap table-sm table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th scope="col" class="align-middle" >Numéro</th>
+                <th scope="col" class="align-middle" >Adresse IP</th>
+                <!-- <th scope="col" class="align-middle" >Port</th>
+                <th scope="col" class="align-middle" >Base de données</th> -->
+                <th scope="col" class="align-middle" >Statut</th>
+                <th scope="col" class="align-middle" *ngIf="afficherAction()">Action</th>
+            </tr>
+        </thead>
+        <tbody class=" align-middle">
+            <tr *ngFor="let item of list; let i = index;"
+            >
+                <td>
+                    {{item.nocaisse}}
+                    <i class="mdi mdi-circle me-1 text-danger" *ngIf="!item.connected && item.verified" ngbTooltip="Non connecté"></i>
+                    <i class="mdi mdi-circle me-1 text-success" *ngIf="item.connected && item.verified" ngbTooltip="Connecté"></i>
+                </td>
+                <td>{{item.adresseIp}}</td>
+                <!-- <td>{{item.port}}</td>
+                <td>
+                    <p class="m-0"><b>Nom: </b> {{item.nomBdd}}</p>
+                    <p class="m-0"><b>Utilisateur: </b> {{item.usernameBdd}}</p>
+                </td> -->
+                <td class="text-center">
+                    <span class="badge" [ngClass]="caisseService.getClassStatus(item)">
+                        {{item.nomStatus}}
+                    </span>
+                </td>
+                <td class="text-center" *ngIf="afficherAction()">
+                    <button class="btn btn-success btn-sm me-1" *ngIf="acces.installerCaisse&&item.status==1"
+                        ngbTooltip="Installer" (click)="install(item)"
+                    >
+                        <i class="fa fa-play"></i>
+                    </button>
+                    <button class="btn btn-info btn-sm me-1" *ngIf="acces.syncCaisse&&item.status==2"
+                        ngbTooltip="Synchroniser" (click)="synchronize(item)"
+                    >
+                        <i class="fa fa-sync"></i>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm me-1" *ngIf="acces.reinstallCaisse&&item.status==2"
+                        ngbTooltip="Réinstaller" (click)="reinstall(item)"
+                    >
+                        <i class="fa fa-tools"></i>
+                    </button>
+
+                    <!-- <button class="btn btn-dark btn-sm me-1" *ngIf="acces.jsonCaisse"
+                        ngbTooltip="Exporter JSON" (click)="exportJson(item)"
+                    >
+                        <i class="fa fa-download"></i>
+                    </button>
+                     -->
+                    <button class="btn btn-warning btn-sm me-1" *ngIf="acces.modifierCaisse"
+                        ngbTooltip="Modifier" (click)="modifier(i)"
+                    >
+                        <i class="fa fa-pencil-alt"></i>
+                    </button>
+
+                    <button class="btn btn-info btn-sm me-1" *ngIf="acces.chargerEncaissement"
+                        ngbTooltip="Encaissements" (click)="openModalEncaissement(item.id, modal)"
+                    >
+                        <i class="fas fa-donate"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p>
+</ngx-spinner>
+
+
+<ng-template #modal role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Encaissements</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-list-encaissement-caisse [acces]="acces" [idCaisse]="idCaisseSelected"></app-list-encaissement-caisse>
+    </div>
+</ng-template>

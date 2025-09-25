@@ -1,0 +1,62 @@
+<form [formGroup]="formGroup">
+    <div class="mt-2">
+        <label>Désignation</label>
+        <input type="text" [(ngModel)]="data.designation" formControlName="data.designation" class="form-control form-control-sm"
+            [ngClass]="{'is-invalid': isInvalid('data.designation')}"
+        >
+        <div class="invalid-feedback" *ngIf="isInvalid('data.designation')">
+            Veuillez renseigner la désignation
+        </div>
+    </div>
+    
+    <div class="mt-2">
+        <label>Type</label>
+        <select [(ngModel)]="data.type" formControlName="data.type" class="form-control form-control-sm"
+            [ngClass]="{'is-invalid': isInvalid('data.type')}"
+        >
+            <option *ngFor="let type of types" [value]="type">{{premiereLettreMajuscule(type)}}</option>
+        </select>
+        <div class="invalid-feedback" *ngIf="isInvalid('data.type')">
+            Veuillez renseigner le type
+        </div>
+    </div>
+    
+    <div class="mt-2">
+        <label style="font-size: 12pt;">Informations SAGE</label>
+    </div>
+    <div class="mt-2">
+        <label>Code journal</label>
+        <input type="text" [(ngModel)]="data.codejournal" formControlName="data.codejournal" class="form-control form-control-sm"
+            [ngClass]="{'is-invalid': isInvalid('data.codejournal')}"
+        >
+        <div class="invalid-feedback" *ngIf="isInvalid('data.codejournal')">
+            Veuillez renseigner le code journal
+        </div>
+    </div>
+
+    <div class="mt-2">
+        <label>N° règlement SAGE</label>
+        <input type="text" [(ngModel)]="data.noreglement" formControlName="data.noreglement" class="form-control form-control-sm"
+            [ngClass]="{'is-invalid': isInvalid('data.noreglement')}"
+        >
+        <div class="invalid-feedback" *ngIf="isInvalid('data.noreglement')">
+            Veuillez renseigner un numéro valide
+        </div>
+    </div>
+
+    <div class="mt-2">
+        <label>Type de financement</label>
+        <input type="text" [(ngModel)]="data.financingType" formControlName="data.financingType" class="form-control form-control-sm"
+            [ngClass]="{'is-invalid': isInvalid('data.financingType')}"
+        >
+        <div class="invalid-feedback" *ngIf="isInvalid('data.financingType')">
+            Veuillez renseigner le type de financement(3 caractères maximum)
+        </div>
+    </div>
+
+    <div class="mt-2 mb-2 text-center">
+        <button class="btn btn-sm btn-success" (click)="valider()">
+            Enregistrer
+        </button>
+    </div>
+</form>

@@ -1,0 +1,40 @@
+<div class="mt-2">
+    <label>Désignation</label>
+    <input type="text" [(ngModel)]="data.designation" class="form-control form-control-sm"
+        [ngClass]="{'is-invalid': invalid()}"
+    >
+    <div class="invalid-feedback" *ngIf="invalid()">
+        Veuillez renseigner la désignation
+    </div>
+</div>
+
+
+<div class="mt-2 row" style="padding: 0;">
+    <label>Magasins</label>
+    <div class="col-10">
+        <select [(ngModel)]="idMagasin" class="form-control form-control-sm">
+            <option *ngFor="let item of magasins" [value]="item.id">{{item.nommagasin}}</option>
+        </select>
+    </div>
+    <div class="col-2 text-right">
+        <button class="btn btn-primary btn-sm" (click)="addMagasin()" type="button" [disabled]="!canAddMagasin()">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>                    
+    <div class="col-12 mt-2" *ngIf="data.magasins.length">
+        <table class="table table-sm">
+            <tr *ngFor="let item of data.magasins; let i = index">
+                <td>{{item.nommagasin}}</td>
+                <td style="width: 50px; text-align: center;">
+                    <i class="text-danger fa fa-trash" (click)="deleteMagasin(i)"></i>
+                </td>
+            </tr>
+        </table>    
+    </div>
+</div>
+
+<div class="mt-2 mb-2 text-center">
+    <button class="btn btn-sm btn-success" (click)="valider()">
+        Enregistrer
+    </button>
+</div>

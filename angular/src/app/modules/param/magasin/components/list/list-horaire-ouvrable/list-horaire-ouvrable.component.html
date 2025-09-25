@@ -1,0 +1,18 @@
+<h4 style="font-weight: bold;">Horaire ouvrable</h4>
+
+<p class="text-center" style="margin: 30px 0;" *ngIf="!horaireouvrable || !horaireouvrable.horaire.length">
+    Aucun horaire configuré
+</p>
+
+
+<div class="table-responsive mt-2">
+    <table *ngIf="horaireouvrable&&horaireouvrable.horaire.length!=0" class="table table-centered table-nowrap table-sm table-bordered">
+        <tbody>
+            <tr *ngFor="let item of horaireouvrable.horaire; let i = index;"
+            >
+                <td>{{item.libelle}}</td>             
+                <td>{{item.valeur}}</td>             
+            </tr>
+        </tbody>
+    </table>
+</div>

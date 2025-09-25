@@ -1,0 +1,32 @@
+
+<h5 >
+    Règlement
+</h5>
+<div class="table-responsive mt-2">
+    <table class="table table-sm table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Mode de paiement</th>
+                <th>Montant</th>
+                <th>Financing type</th>
+                <th>Currency</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of list; let i = index;">
+                <td>{{item.modepaiement}}</td>
+                <td class="text-right">
+                    {{item.montant | appcurrency}}
+                </td>
+                <td>{{item.financingType}}</td>
+                <td>{{item.currency}}</td>
+                <td class="text-right">
+                    {{item.amount | appcurrency}}
+                </td>
+            </tr>
+           
+        </tbody>
+    </table>    
+</div>
+

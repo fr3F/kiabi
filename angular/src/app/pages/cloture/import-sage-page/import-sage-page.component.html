@@ -1,0 +1,33 @@
+
+<div class="container-fluid">
+    <!-- start page title -->
+    <app-page-title title="Transfert vers SAGE">
+    </app-page-title>
+    <div class="row">
+        <div class="col-md-5 mx-auto">
+            <app-form-transfert-sage (onChange)="change($event)"></app-form-transfert-sage>
+        </div>
+        <div class="col-md-11 mx-auto" *ngIf="data || resume || sommaireReglement">
+            <div class="card">
+                <div class="card-body">
+                    <app-resume-jour (refresh)="initStock()" [acces]='acces' [idParametrage]="idParametrage" [date]="date" [data]="resume" [showButton]="true"></app-resume-jour>
+                    <div class="mt-3 mb-3">
+                        <hr>
+                    </div>
+                    <div class="mt-4">
+                        <app-list-aregulariser [data]="data" *ngIf="data">
+                        </app-list-aregulariser >     
+                    </div>
+
+                    <app-sommaire-reglement [data]="sommaireReglement" [total]="totalReglement" *ngIf="sommaireReglement"></app-sommaire-reglement>
+                </div>
+             </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>

@@ -1,0 +1,33 @@
+<div class="card">
+    <div class="card-body" >
+        <div class="mx-auto" style="max-width: 250px;">
+            <div class="mt-2">
+                <label>Séléctionner le magasin</label>
+                <select class="form-control form-control-sm" [(ngModel)]="idMagasin"
+                    [ngClass]="{'is-invalid': submit&&!idMagasin}"
+                >
+                    <option *ngFor="let magasin of magasins" [value]="magasin.id">{{magasin.nommagasin}}</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="submit&&!idMagasin">
+                    Veuillez séléctionner le magasin
+                </div>
+            </div>
+            <div class="mt-2">
+                <label>Saisir le code</label>
+
+                <app-autocomplete [model]="code" [selectOnly]="true" (change)="changeCode($event)"
+                    url="/devis/util/search-produits" [ngClass]="'form-control-sm'"
+                ></app-autocomplete>
+                <!-- <input class="form-control form-control-sm" [(ngModel)]="code"
+                    [ngClass]="{'is-invalid': submit&&!code}"
+                /> -->
+                <div class="invalid" *ngIf="submit&&!code">
+                    Veuillez saisir le code
+                </div>
+            </div>
+            <div class="mt-2 text-right">
+                <button class="btn btn-success" (click)="valider()">Valider</button>
+            </div>
+        </div>
+    </div>
+</div>

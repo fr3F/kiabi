@@ -1,0 +1,32 @@
+<div class="card" *ngIf="data">
+    <div class="card-body">
+        <h3>Promotion/Prix VIP</h3>
+        <p class="text-center mt-4 mb-4" *ngIf="!data.length">Aucune promotion/prix VIP</p>
+        <div  class="table-responsive" style="max-height: 250px;">
+            <table class="table table-bordered table-sm" *ngIf="data.length">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Magasin</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Valeur</th>
+                        <th>Début</th>
+                        <th>Fin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of data" [ngClass]="{'table-danger': item.expire}">
+                        <td>{{item.promotion.magasin}}</td>
+                        <td>{{item.promotion.nomType}}</td>
+                        <td>{{item.promotion.description}}</td>
+                        <td class="text-right">{{item.taux | number: '.2-2'}} {{item.currency}}</td>
+                        <td>{{item.promotion.datedebut | date: 'dd-MM-yyyy HH:mm'}}</td>
+                        <td>{{item.promotion.datefin | date: 'dd-MM-yyyy HH:mm'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <ngx-loading [show]="loading"></ngx-loading>
+</div>

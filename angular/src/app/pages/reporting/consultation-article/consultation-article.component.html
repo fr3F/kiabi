@@ -1,0 +1,50 @@
+
+<div class="container-fluid">
+    <app-page-title title="Consultation article">
+    </app-page-title>
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <app-form-consultation-article (onValidate)="setData($event)"
+                (onValidateStock)="setDataStock($event)" (onValidateAllStock)="setAllStocks($event)"
+                (onValidateStockMagasin)="setDataStockMagasin($event)"
+                (onChangeCode)="setCode($event)"
+            >
+            </app-form-consultation-article>
+        </div>
+
+        <div class="col-12"> </div>
+        <!-- <div class="col-md-5" *ngIf="dataStock">
+            <app-consultation-stock [data]="dataStock" [magasin]="true">
+            </app-consultation-stock>
+        </div> -->
+        
+        <div class="col-md-5" *ngIf="dataStockMagasin">
+            <app-consultation-stock [data]="dataStockMagasin" [magasin]="true"></app-consultation-stock>
+        </div>
+
+        <!-- <div class="col-md-7" *ngIf="allStocks">
+            <app-consultation-stocks [data]="allStocks"></app-consultation-stocks>
+        </div>
+         -->
+        <!-- <div class="col-md-7" *ngIf="allStocks">
+            <app-stock-produit [code]="code" titleClass="h5" tableClass="table-dark"></app-stock-produit>
+        </div> -->
+
+        <div class="col-md-7" *ngIf="allStocks">
+            <app-stock-produit [code]="code" titleClass="h5" tableClass="table-dark"
+                [magasin]="true"
+            >
+            </app-stock-produit>
+        </div>
+
+        <div class="col-md-12" *ngIf="data">
+            <app-detail-consultation-article [data]="data"></app-detail-consultation-article>
+        </div>
+    </div>
+</div>
+
+
+
+<ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white; text-align: center;">Veuillez patienter s'il vous plaît...</p> 
+</ngx-spinner>

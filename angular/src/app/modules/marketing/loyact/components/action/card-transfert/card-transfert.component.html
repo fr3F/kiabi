@@ -1,0 +1,36 @@
+<form [formGroup]="formGroup" (ngSubmit)="validate()"
+    class="align-middle col-md-8 mt-4 mx-auto"
+>
+    <h2 class="font-size-18 text-center">Card transfert</h2>
+   
+    <div class="mt-3">
+        <label for="newNoCarte">New n° card</label>
+        <input class="form-control form-control-sm"
+            name="newNoCarte" formControlName="newNoCarte"
+            [ngClass]="{'is-invalid': attributeError('newNoCarte')}"    
+        >
+        <div class="invalid-feedback" *ngIf="attributeError('newNoCarte')">
+            Veuillez renseigner un numéro valide(12 caractères)
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <label for="newNoCarte">Cause</label>
+        <select class="form-control form-control-sm"
+            name="cause" formControlName="cause"
+            [ngClass]="{'is-invalid': attributeError('cause')}"    
+        >
+            <option *ngFor="let cause of causes$ | async" [value]="cause.value">
+                {{cause.label}}
+            </option>
+        </select>
+        <div class="invalid-feedback" *ngIf="attributeError('cause')">
+            Veuillez renseigner la cause
+        </div>
+    </div>
+    <div class="mt-3 text-center">
+        <button class="btn btn-primary">
+            Valider
+        </button>
+    </div>
+</form>

@@ -1,0 +1,37 @@
+<div class="card">
+    <div class="card-body table-responsive">
+        <table class="table table-sm table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Table</th>
+                    <th>Central</th>
+                    <th *ngFor="let item of magasin.caisses">
+                        Caisse n° {{item.nocaisse}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class=" align-middle" *ngFor="let tableSynchro of tableSynchros; let i = index;">
+                    <th>{{tableSynchro.nom}}</th>
+                    <td class="text-center">
+                        {{tableSynchro.central.dateModification | date: 'dd-MM-yyyy HH:mm:ss'}}
+                        <br *ngIf="tableSynchro.central.dateModification"/>
+                        <p>{{tableSynchro.central.nombre | number}}</p>
+                    </td>
+                    <td class="text-center" *ngFor="let caisse of magasin.caisses"   [ngClass]="{'table-danger': different(caisse.data[i], tableSynchro)}">
+                        {{caisse.data[i].dateModification | date: 'dd-MM-yyyy HH:mm:ss'}}
+                        <br *ngIf="caisse.data[i].dateModification"/>
+                        <p>{{caisse.data[i].nombre | number}}
+                            <button class="btn btn-primary btn-sm me-1" *ngIf="reinstallable(caisse.data[i], tableSynchro)"
+                                ngbTooltip="Réinstaller" (click)="reinstallTable(caisse.id, tableSynchro.id)"
+                            >
+                                <i class="fa fa-tools"></i>
+                            </button>
+                        </p>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

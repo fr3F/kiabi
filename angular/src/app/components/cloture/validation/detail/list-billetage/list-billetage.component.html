@@ -1,0 +1,16 @@
+
+<h5>Billetage</h5>
+<table class="table table-sm table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Monnaie</th>
+            <th>Quantité</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of list">
+            <td>{{item.monnaie | appcurrency}}</td>
+            <td class="text-right">{{item.qte | number }}</td>
+        </tr>
+    </tbody>
+</table>

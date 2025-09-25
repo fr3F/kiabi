@@ -1,0 +1,26 @@
+<form [formGroup]="formGroup" (ngSubmit)="validate()"
+    class="align-middle col-md-8 mt-4 mx-auto"
+>
+    <h2 class="font-size-18 text-center">Allocation of welcome pack</h2>
+    <div class="mt-3">
+        <label for="nbPoints">Nombre de points</label>
+        <input
+          class="form-control form-control-sm text-right"
+          name="nbPoints"
+          formControlName="nbPoints"
+          type="number"
+          [ngClass]="{'is-invalid': attributeError('nbPoints')}"
+          readonly
+        />
+
+        <div class="invalid-feedback" *ngIf="attributeError('nbPoints')">
+            Veuillez renseigner un point valide
+        </div>
+    </div>
+
+    <div class="mt-3 text-center">
+        <button class="btn btn-primary">
+            Valider
+        </button>
+    </div>
+</form>

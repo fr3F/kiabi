@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html style="zoom: {{zoomPdf}};">
+    <head>
+        <meta charset="utf-8" />
+        <title>Règlements</title>
+        <!-- <link rel="stylesheet" href="http://localhost:8088/assets/bootstrap/css/bootstrap.min.css"> -->
+        <link rel="stylesheet" href="{{urlBackLocal}}assets/bootstrap/css/bootstrap.min.css">
+        <style>
+            h1{
+                font-size: 21pt;
+            }
+            p, th, td{
+                font-size: 9pt;
+            }
+            body{
+                font-family: ;
+            }
+            .font-small{
+                font-size: 9pt;
+            }
+            p{
+                margin: 0;
+            }
+            th{
+                text-align: center;
+                vertical-align: middle;
+            }
+            .ml-5{
+                margin-left: 15px;
+            }
+            .ml-2{
+                margin-left: 7px;
+            }
+            .signature{
+                margin-top: 2px;
+                width: 80%;
+                height: 100px;
+                border: 1px solid black;
+                border-radius: 11px;
+                /* border-bottom-left-radius: 22px 11px;
+                border-top-left-radius: 22px 11px;
+                border-top-right-radius: 22px 11px; */
+            }
+            .mycol-3 p{
+                margin: 5px;
+            }
+            .client{
+                width: 50%;
+            }
+            /* td, th{
+                width: 25%;
+            } */
+            .myTable, .myTable tr, .myTable tr td{
+                border-top: none;
+            }
+            
+            .mycol-4{
+                width: 33%;
+                float: left;
+            }
+            .mycol-3{
+                width: 20%;
+                float: left;
+            }
+            .mycol-12{
+                width: 100%;
+                float: left;
+            }
+            .mycol-9{
+                width: 70%;
+                float: left;
+
+            }
+            img{
+                max-width: 100%;
+            }
+            .table-secondary, .table-secondary th{
+                background-color: #ddd;
+
+            }
+        </style>
+    </head>
+    <body>
+        <div class="row">
+            <div class="mycol-3">
+                <img class="mx-auto" src="{{urlBackLocal}}assets/images/logo-transparent.png" />
+                <!-- <img class="mx-auto" src="http://localhost:8088/assets/images/logo-transparent.png" /> -->
+            </div>
+            <div class="mycol-9" style="margin-left: 45px;">
+                <h1 class="text-center">Liste des règlements
+                    <br/>({{encaissement.createdAt}})
+                </h1>
+                <p style="text-align: right;">Edité 
+                    {{#if user}}
+                        par {{user.prenom}} {{user.nom}}
+                    {{else}}
+                        automatiquement
+                    {{/if}}
+                le {{date}}</p>
+            </div>
+            <div class="mycol-12" style="margin-top: 10px;">
+                <p><b>Magasin:</b> {{encaissement.magasin}}</p>
+                <p><b>Caisse n°:</b> {{encaissement.nocaisse}}</p>
+                <p><b>Caissier:</b> {{encaissement.caissier.nom}} {{encaissement.caissier.prenom}}</p>
+                <p><b>Total règlement:</b> {{encaissement.total}} {{DEVISE}}</p>
+                <p><b>Total ticket:</b> {{encaissement.totalTicket}} {{DEVISE}}</p>
+                <p><b>Ouverture:</b> {{encaissement.createdAt2}}</p>
+                <p><b>Fermeture:</b> {{encaissement.endAt}}</p>
+            </div>
+            
+            {{#each reglements}}
+            <div class="mycol-12 mt-3">
+                <div style="page-break-inside:avoid !important;">
+                    <h6 style="font-size: 12pt; margin: 0;"><b>{{modepaiement}}: </b></h6>
+                    <p><b>Total règlement:</b> {{total}} {{../DEVISE}}</p>
+                    <p><b>Total ticket:</b> {{totalTicket}} {{../DEVISE}}</p>
+                </div>
+                {{#each items}}
+                    <div class="mt-2 mb-3">
+                        <div style="page-break-inside:avoid !important;">
+                            <h6 style="font-size: 11pt; margin: 0;">{{codeclient}}: </h6>
+                            <p><b>Total règlement:</b> {{total}} {{../../DEVISE}}</p>
+                            <p><b>Total ticket:</b> {{totalTicket}} {{../../DEVISE}}</p>
+                        </div>
+                        <table class="table table-bordered table-sm mb-0">
+                                <tr class="table-secondary" >
+                                    <th style="width: 20%;">Ticket</th>
+                                    <th style="width: 20%;">Code journal</th>
+                                    <!-- <th style="width: 10%;">Client</th> -->
+                                    <th style="width: 30%;">Montant ticket</th>
+                                    <!-- <th style="width: 13%;">Réçu</th>
+                                    <th style="width: 13%;">A rendre</th>
+                                    <th style="width: 15%;">Montant paiement</th> -->
+                                    <th style="width: 30%;">Montant</th>
+                                </tr>
+                            {{#each items}}
+                                <tr>
+                                    <td style="width: 20%;">{{this.numticket}}</td>
+                                    <td style="width: 20%;">{{this.codejournal}}</td>
+                                    <!-- <td style="width: 13%;">{{this.codeclient}}</td> -->
+                                    <td style="width: 30%; text-align: right;">{{this.montanttotal}} {{../../../DEVISE}}</td>
+                                    <!-- <td style="width: 13%; text-align: right;">{{this.recu}} Ar</td>
+                                    <td style="width: 13%; text-align: right;">{{this.arendre}} Ar</td>
+                                    <td style="width: 15%; text-align: right;">{{this.montantpaiement}} Ar</td> -->
+                                    <td style="width: 30%; text-align: right;">{{this.montantreglement}} {{../../../DEVISE}}</td>
+                                </tr>
+                            {{/each}}
+                        </table>
+    
+                    </div>
+                {{/each}}
+            </div>
+            {{/each}}
+
+            <div class="mycol-12 row mt-4" style="padding: 0;page-break-inside:avoid !important;">
+                <div class="mycol-4" style="margin-right: 230px;">
+                    <p style="font-size: 10pt;"><b class="ml-5">Le caissier</b></p>
+                    <div class="signature">
+                    </div>
+                </div>
+                <div class="mycol-4">
+                    <p style="font-size: 10pt;"><b class="ml-5">Le responsable</b></p>
+                    <div class="signature">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>

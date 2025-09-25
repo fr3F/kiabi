@@ -1,0 +1,11 @@
+<div class="card">
+    <div class="card-body">
+        <label>Magasin</label>
+        <select class="form-control form-control-sm" [(ngModel)]="idMagasin" *ngIf="magasins" (change)="change()">
+            <option *ngFor="let item of magasins" [value]="item.id">{{item.nommagasin}}</option>
+        </select>  
+        <div class="text-center mt-4">
+            <app-form-periode type="button" (onChange)="changePeriode($event)"></app-form-periode>
+        </div>
+    </div>    
+</div>

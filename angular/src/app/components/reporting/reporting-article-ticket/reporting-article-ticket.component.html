@@ -1,0 +1,68 @@
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <p class="text-center" style="margin: 30px 0px;" *ngIf="!data.length">Aucun ticket trouvé</p>
+            <div class="col-md-5">
+                <h5><b>Récaputilatif</b></h5>
+                <app-recap-reporting-ticket [data]="recap"></app-recap-reporting-ticket>
+            </div>
+            <div class="text-right mb-2" *ngIf="data.length && acces.exporter">
+                <button class="btn btn-success" (click)="export()">
+                    Exporter en excel <i class="fa fa-file-excel"></i>
+                </button>
+            </div>
+            <table class="table table-sm table-bordered table-nowrap" *ngIf="data.length">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Facture</th>
+                        <th>Caisse</th>
+                        <th>N° Ticket</th>
+                        <th>Date</th>
+                        <th>Heure</th>
+                        <th>Client</th>
+                        <th>Code Article</th>
+                        <th>Code EAN</th>
+                        <th>Désignation</th>
+                        <th>Variant</th>
+                        <th>Qté</th>
+                        <th>PU HT</th>
+                        <th>Remise</th>
+                        <th>TVA</th>
+                        <th>Magasin</th>
+                        <th>Dépôt</th>
+                        <th>Carte VIP</th>
+                        <th>Prix total HT</th>
+                        <th>Prix total TTC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of data">
+                        <td>{{item.ticket.numeroFacture}}</td>
+                        <td>{{item.ticket.nocaisse}}</td>
+                        <td>{{item.ticket.numticket}}</td>
+                        <td>{{item.ticket.datecreation | date: 'dd-MM-yyyy'}}</td>
+                        <td>{{item.ticket.datecreation | date: 'HH:mm:ss'}}</td>
+                        <td>{{item.ticket.codeclient}}</td>
+                        <td>{{item.code}}</td>
+                        <td>{{item.codeean}}</td>
+                        <td>{{item.designation}}</td>
+                        <td>{{item.gamme}}</td>
+                        <td class="text-right">{{item.quantite | number}}</td>
+                        <td class="text-right">{{item.puHT | appcurrency}}</td>
+                        <td class="text-right">
+                            <span *ngIf="item.remise!=null">{{item.remise | number}} %</span>
+                        </td>
+                        <td class="text-right">
+                            {{item.tauxtva | number}} %
+                        </td>
+                        <td>{{item.ticket.magasin}}</td>
+                        <td>{{item.ticket.depot}}</td>
+                        <td>{{item.ticket.clientvip}}</td>
+                        <td class="text-right">{{item.prixTotalHT | appcurrency}}</td>
+                        <td class="text-right">{{item.prixTotalTTC | appcurrency}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

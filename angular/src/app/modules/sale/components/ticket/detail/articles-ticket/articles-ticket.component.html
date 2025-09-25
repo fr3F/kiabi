@@ -1,0 +1,48 @@
+<h3 class="mt-3 text-center">Articles</h3>
+<div class="table-responsive" style="max-height: 300px;">
+    <table  class="table table-sm table-bordered table-nowrap">
+        <thead class="table-dark">
+            <tr>
+                <th>Code</th>
+                <th>Code EAN</th>
+                <th>Désignation</th>
+                <th>Gamme</th>
+                <th>Quantité</th>
+                <th>PU HT</th>
+                <th>Remise</th>
+                <th>Return reason</th>
+                <th>Montant HT</th>
+                <th>Montant TTC</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of list">
+                <td>{{item.code}}</td>
+                <td>{{item.codeean}}</td>
+                <td>{{item.designation}}</td>
+                <td>{{item.gamme}}</td>
+                <td class="text-right">
+                    <span *ngIf="item.quantite">{{item.quantite | number}}</span>
+                </td>
+                <td class="text-right">
+                    <span *ngIf="item.prixdevente">{{item.prixdevente | appcurrency}}
+                    </span>
+                </td>
+                <td class="text-right">
+                    <span *ngIf="item.prixtotal">
+                        {{item.remise | number : '.2-2'}} %
+                    </span>
+                </td>
+                <td>{{item.returnReason}}</td>
+                <td class="text-right">
+                    <span *ngIf="item.prixtotal">{{item.prixtotal | appcurrency}}
+                    </span>
+                </td>
+                <td class="text-right">
+                    <span *ngIf="item.prixtotal">{{getMontantTTC(item) | appcurrency}}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

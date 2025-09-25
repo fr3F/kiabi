@@ -1,0 +1,80 @@
+<!-- <p>liste-service-mode works!</p> -->
+<div *ngIf="list&&list.length==0" class="mx-auto" style="margin-top: 40px;">
+    <p class="alert text-center alert-info">Aucun magasin</p>
+</div>
+<div *ngIf="list&&list.length!=0" class="table-responsive">
+    <table class="table table-centered table-nowrap table-sm table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th scope="col" class="align-middle" >Nom</th>
+                <th scope="col" class="align-middle" >Code</th>
+                <th scope="col" class="align-middle" >Identifiant</th>
+                <th scope="col" class="align-middle" >Minicentrale</th>
+                <th scope="col" class="align-middle" >N° magasin</th>
+                <th scope="col" class="align-middle" >Dépôt stockage</th>
+                <th scope="col" class="align-middle" >Dépôt livraison</th>
+                <th scope="col" class="align-middle" >Souche</th>
+                <th scope="col" class="align-middle" >Dernier n° facture</th>
+                <th scope="col" class="align-middle" >N° dépôt</th>
+                <th scope="col" class="align-middle" >Devise</th>
+                <th scope="col" class="align-middle" >Dernier n° règlement</th>
+                <th scope="col" class="align-middle" >Dernier appro</th>
+                <th scope="col" class="align-middle" >Store code</th>
+                <!-- <th scope="col" class="align-middle" >Compte par défaut</th>
+                <th scope="col" class="align-middle" >Dépôt par défaut</th>
+                <th scope="col" class="align-middle" >Identifiant</th>
+                <th scope="col" class="align-middle" >Facebook</th>
+                <th scope="col" class="align-middle" >Site web</th> -->
+                <th scope="col" class="align-middle" *ngIf="acces.modifier||acces.detail">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody class="align-middle">
+            <tr *ngFor="let item of list | paginate : {
+                itemsPerPage: pageSize,
+                currentPage: page,
+                totalItems: count
+                };
+            let i = index"
+            >
+                <td>{{item.nommagasin}}
+                    <img *ngIf="item.gifi" src="assets/images/gifi-mini.png" alt="" >
+                </td>
+                <td>{{item.code}}</td>
+                <td>{{item.identifiant}}</td>
+                <td>{{item.minicentrale}}</td>
+                <td>{{item.nummagasin}}</td>
+                <td>{{item.depotstockage}}</td>
+                <td>{{item.depotlivraison}}</td>
+                <td>{{item.souche}}</td>
+                <td>{{item.lastnumfact}}</td>
+                <td>{{item.numdepot}}</td>
+                <td>{{item.devise}}</td>
+                <td>{{item.lastnumreglement}}</td>
+                <td>{{item.dateDernierAppro | date: 'dd-MM-yyyy HH:mm:ss'}}</td>
+                <td>{{item.storeCode}}</td>
+
+                <!-- <td>{{item.defaultcompte}}</td>
+                <td>{{item.defaultdepot}}</td>
+                <td>{{item.identifiant}}</td>
+                <td>{{item.facebook}}</td>
+                <td>{{item.siteweb}}</td> -->
+                <td *ngIf="acces.modifier||acces.detail" class="text-center">
+                    <button mat-button class="btn btn-sm btn-outline-info me-1"
+                        routerLink="/magasin/detail/{{item.id}}" *ngIf="acces.detail"
+                    >
+                        <i class="fa fa-eye"></i>
+                    </button>
+                    <button mat-button class="btn btn-sm btn-outline-warning me-1"
+                        routerLink="/magasin/modifier/{{item.id}}" *ngIf="acces.modifier"
+                    >
+                        <i class="fa fa-pencil-alt"></i>
+                    </button>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <ngx-loading [show]="loading"></ngx-loading>
+</div>
