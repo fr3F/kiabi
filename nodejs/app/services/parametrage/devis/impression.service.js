@@ -1,15 +1,15 @@
 const bwipjs = require('bwip-js');
-const { setHeaderResponseAttachementPdf, formatDate, dataToJson } = require('../../../../../../gestion-caisse/nodejs/app/helpers/helpers.helper');
-const db = require("../../../../../../gestion-caisse/nodejs/app/models");
+const db = require('../../../models/index');
 
 // Utilisés pour le pdf
 const pdf = require("html-pdf");
 let fs = require("fs");
 let Handlebars = require("handlebars");
-const { urlBackLocal, zoomPdf } = require('../../../../../../gestion-caisse/nodejs/app/config/environment');
-const { OPTION_PDF_PORTRAIT } = require('../../../../../../gestion-caisse/nodejs/app/helpers/pdf-helper');
 const { Op } = require('sequelize');
-
+const { urlBackLocal, zoomPdf } = require('../../../config/environments/mysql/mada/environment');
+const { dataToJson, setHeaderResponseAttachementPdf } = require('../../../helpers/helpers.helper');
+const { formatDate } = require('date-fns/format');
+const {OPTION_PDF_PORTRAIT} =require('../../../helpers/pdf-helper')
 const TYPE_IMPRESSION = {
     numero: "numero",
     designation: "designation"

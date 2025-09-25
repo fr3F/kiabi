@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 export interface SurplusArticle {
   idinventaire: number;
@@ -15,6 +16,7 @@ export interface SurplusArticle {
   counted_qty: number;
   datemodification?: string | null;
   surplus: number;
+  date_modif?: string
 }
 
 export interface IntrouvableArticle {
@@ -29,7 +31,8 @@ export interface IntrouvableArticle {
   introuvable?: number;    // Quantité introuvable
   datasnapshot?: string | null;
   datemodification?: string | null;
-  counted_qty:number
+  counted_qty: number,
+  date_modif?: string
 }
 
 
@@ -44,10 +47,11 @@ export interface SurplusResponse {
   providedIn: 'root',
 })
 export class InventaireSurplusService {
-  // ⚡ Indiquer le protocole http:// devant l’IP
-  private apiUrl = 'http://192.168.2.41:8104/api/inventaire';
 
-  constructor(private http: HttpClient) {}
+  apiBaseUrl = environment.apiUrl
+  private apiUrl = `${this.apiBaseUrl}/inventaire`;
+
+  constructor(private http: HttpClient) { }
 
   // Articles absents
   getAbsentSnapshot(idinventaire: number): Observable<SurplusResponse> {
@@ -67,18 +71,18 @@ export class InventaireSurplusService {
       map(res => res.data || [])
     );
   }
-getIntrouvables(idinventaire: number): Observable<IntrouvableArticle[]> {
-  if (!idinventaire) throw new Error("⚠️ idinventaire est obligatoire");
+  getIntrouvables(idinventaire: number): Observable<IntrouvableArticle[]> {
+    if (!idinventaire) throw new Error("⚠️ idinventaire est obligatoire");
 
-  return this.http.get<{ success: boolean; data: IntrouvableArticle | IntrouvableArticle[] }>(
-    `${this.apiUrl}/introuvables/${idinventaire}`
-  ).pipe(
-    map(res => {
-      if (!res.success || !res.data) return [];
-      // Si data est un objet unique, le transformer en tableau
-      return Array.isArray(res.data) ? res.data : [res.data];
-    })
-  );
-}
+    return this.http.get<{ success: boolean; data: IntrouvableArticle | IntrouvableArticle[] }>(
+      `${this.apiUrl}/introuvables/${idinventaire}`
+    ).pipe(
+      map(res => {
+        if (!res.success || !res.data) return [];
+        // Si data est un objet unique, le transformer en tableau
+        return Array.isArray(res.data) ? res.data : [res.data];
+      })
+    );
+  }
 
 }

@@ -2,7 +2,7 @@
 function getLineToMerge(worksheet, columnToMerge = 1){
     const columnValues = {};
     worksheet.eachRow(function(row, rowNumber) {
-        const cellValue = row.getCell(columnToMerge).value;
+        const cellValue = row.getCell(columnToMerge).value ?? "__EMPTY__"; // gérer cellules vides
         if (columnValues.hasOwnProperty(cellValue)) {
             columnValues[cellValue].push(rowNumber);
         } else {
@@ -11,7 +11,6 @@ function getLineToMerge(worksheet, columnToMerge = 1){
     });
     return columnValues;
 }
-
 
 // fusionner les lignes
 function fusionnerLigneExcel(worksheet, columnNum = 1, columnName = "A"){
@@ -26,43 +25,46 @@ function fusionnerLigneExcel(worksheet, columnNum = 1, columnName = "A"){
       });      
 }
 
-
-// Ajouter des bordures au excel
-function addBorder(row, borderStyle){
-    row.eachCell(function(cell) {
-        cell.border = {
+// Ajouter des bordures à une cellule
+function addBorderToCell(cell, borderStyle){
+    cell.border = {
         top: borderStyle,
         left: borderStyle,
         bottom: borderStyle,
         right: borderStyle
-        };
-    });
+    };
+    cell.alignment = { vertical: 'middle', horizontal: 'center' }; // centrage complet
 }
 
-// Aligner verticalement au milieu de chaque cellule et ajouter bordure
-// const columnToAlign = 1; // numéro de colonne à aligner 
-function alignColumnAndAddBorder(worksheet, columnToAlign = 1){
-    // Définir les propriétés de la bordure
+// Ajouter bordures à toutes les cellules d’une ligne
+function addBorder(row, borderStyle){
+    // Si certaines cellules sont vides, parcourir jusqu'à la dernière colonne utilisée
+    const lastCol = row.worksheet.columnCount; 
+    for(let i=1; i<=lastCol; i++){
+        const cell = row.getCell(i);
+        addBorderToCell(cell, borderStyle);
+    }
+}
+
+// Aligner et ajouter bordure à toutes les cellules du tableau
+function alignColumnAndAddBorder(worksheet){
     const borderStyle = {
         style: 'thin',
         color: { argb: 'FF000000' }
     };
     worksheet.eachRow(function(row) {
-      const cell = row.getCell(columnToAlign);
-      cell.alignment = { vertical: 'middle' };
-      addBorder(row, borderStyle);
-    });    
-} 
-// Modifier header reponse attachement excel
+        addBorder(row, borderStyle);
+    });
+}
+
+// Définir le header pour l’export Excel
 function setHeaderResponseAttachementExcel(res, filename){
-    res.setHeader("Content-Type", "application/xhtml+xml .xls");
+    res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     res.setHeader(
         "Content-Disposition",
         "attachment; filename=" + filename + ";"
     );
 }
-
-
 
 module.exports = {
     fusionnerLigneExcel,

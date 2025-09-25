@@ -32,7 +32,7 @@ export class DetailsInventaireComponent implements OnInit, OnDestroy {
     private notif: NotificationService,
     private spinner: NgxSpinnerService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.spinner.show();
@@ -59,7 +59,9 @@ export class DetailsInventaireComponent implements OnInit, OnDestroy {
 
       this.subscriptions.push(
         this.service.onInventaireData().subscribe((data) => this.setDetails(data)),
-        this.service.onInventaireCountUpdate().subscribe((data) => this.updateCounts(data)),
+        // this.service.onInventaireCountUpdate().subscribe((data) => {
+        //   console.log("data", data, this.updateCounts(data));
+        // }),
         this.service.onInventaireProgressUpdate().subscribe((progress) => this.setProgress(progress))
       );
 
@@ -84,10 +86,10 @@ export class DetailsInventaireComponent implements OnInit, OnDestroy {
 
         this.details = res.data.map(d => ({
           ...d,
-          stock: Number(d.stock ?? 0),
-
-          count: Number(d.counted_qty ?? 0),
-          introuvable: Number(d.introuvable ?? 0)
+          stock: Number(d.stock),
+          count: Number(d.counted_qty),
+          introuvable: Number(d.introuvable ?? 0),
+          date_modif: d.date_modif ? new Date(d.date_modif).toISOString() : null
         }));
         this.spinner.hide();
       },
@@ -102,17 +104,31 @@ export class DetailsInventaireComponent implements OnInit, OnDestroy {
     this.details = data.map(d => ({
       ...d,
       stock: Number(d.stock ?? 0),
-      count: Number(d.count ?? 0),
+      count: Number(d.counted_qty ?? 0),
       introuvable: Number(d.introuvable ?? 0)
     }));
   }
 
-  private updateCounts(data: InventaireDetail[]) {
-    this.details = this.details.map(d => {
-      const updated = data.find(r => r.eanCode === d.eanCode);
-      return updated ? { ...d, ...updated, stock: Number(updated.stock ?? 0), count: Number(updated.count ?? 0) } : d;
-    });
-  }
+  // private updateCounts(data: any) {
+  //   const rows = Array.isArray(data.rows) ? data.rows : [];
+
+  //   this.details = this.details.map(d => {
+  //     const updated = rows.find(r => r.eanCode === d.eanCode);
+  //     return updated
+  //       ? {
+  //         ...d,
+  //         ...updated,
+  //         stock: Number(updated.stock ?? 0),
+  //         count: Number(updated.count ?? 0)
+  //       }
+  //       : d;
+  //   });
+
+  //   // si tu veux récupérer le total d'introuvables
+  //   this.totalIntrouvable = data.total_introuvable ?? 0;
+  // }
+
+
 
   private setProgress(progress: { totalStock: number; totalCount: number; totalSurplus: number; progress: number }) {
     this.progressData = progress;
@@ -160,14 +176,18 @@ export class DetailsInventaireComponent implements OnInit, OnDestroy {
       size: d.size,
       styleCode: d.styleCode,
       designation: d.designation,
-      datasnapshot: d.datasnapshot,
+      datasnapshot: d.datasnapshot ?? null,
       stock: Number(d.snapshot_stock ?? 0),
       count: Number(d.counted_qty ?? 0),
-      datemodif: d.datemodification,
+      date_modif: d.date_modif
+        ? new Date(d.date_modif).toISOString()
+        : null,
       introuvable: 0
     }));
     this.currentPage = 1;
   }
+
+
 
   onIntrouvablesClick(data: IntrouvableArticle[]) {
     if (!data || !data.length) {
@@ -183,10 +203,12 @@ export class DetailsInventaireComponent implements OnInit, OnDestroy {
       styleCode: d.styleCode,
       designation: d.designation,
       stock: Number(d.stock ?? 0),
-      count: Number(d.counted_qty ?? 0), // copier counted_qty ici
+      count: Number(d.counted_qty), // copier counted_qty ici
       introuvable: Number(d.introuvable ?? 0),
       datasnapshot: d.datasnapshot,
-      datemodif: d.datemodification
+      date_modif: d.date_modif
+        ? new Date(d.date_modif).toISOString()
+        : null,
     }));
     this.currentPage = 1;
   }

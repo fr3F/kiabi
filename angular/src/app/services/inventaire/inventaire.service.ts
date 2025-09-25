@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, Subject } from "rxjs";
 import { io, Socket } from "socket.io-client";
 import { IntrouvableArticle, SurplusArticle } from "./inventaire-surplus.service";
+import { environment } from "src/environments/environment";
 
 
 export interface InventaireDetail {
@@ -18,7 +19,8 @@ export interface InventaireDetail {
   introuvable?: number;       // ⚡ nouveau champ
   datesnapshot?: string | null;
   datemodif?: string | null;
-  counted_qty?:number
+  counted_qty?: number,
+  date_modif?: string | null; // 🔹 accepte ISO string ou null
 }
 
 
@@ -41,8 +43,9 @@ export interface IntrouvableData {
 
 @Injectable({ providedIn: "root" })
 export class InventaireService {
-  private baseUrl = "http://192.168.2.41:8104/api";
-  private socketUrl = "http://192.168.2.41:8104";
+  api = environment.apiUrl
+  private baseUrl = environment.apiUrl;
+  private socketUrl = "http://192.168.88.250:8104";
   private socket: Socket;
 
   private progressSubject = new Subject<any>();
@@ -69,7 +72,7 @@ export class InventaireService {
     });
     this.socket.on("inventraireIntrouvable", (data) => this.countSubject.next(data));
 
-    
+
   }
 
   // --- Sockets ---

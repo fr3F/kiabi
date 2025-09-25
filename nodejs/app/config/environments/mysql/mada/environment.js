@@ -2,7 +2,7 @@
 
 const zoomPdf = 1;
 const urlBackLocal = "http://192.168.2.108/kiabi/"
-const URL_API = "http://192.168.2.108:8104/api/"
+const URL_API = "http://192.168.88.250:8104/api/"
  
 
 const FTP_CONFIG = {
@@ -33,8 +33,8 @@ const DEVISE = "Ar";
 const sourceDBConfig = {
     host: '192.168.2.41',
     user: 'root',
-    password: 'Admin*25',
-    database: 'kiabi',
+    password: '',
+    database: 'kiabi1',
     port: 3306
 };
 

@@ -12,7 +12,7 @@ class InventaireAnomalieService {
   const query = `
     select  sum(introuvable) AS total_introuvable from (
     SELECT 
-    (snap.stock - (SELECT count(epc) as inventaire FROM kiabi.inventaire_comptage where idinventaire=i.idinventaire and eanCode=snap.eanCode)) 	as introuvable
+    ((SELECT count(epc) as inventaire FROM kiabi.inventaire_comptage where idinventaire=i.idinventaire and eanCode=snap.eanCode) - snap.stock ) 	as introuvable
     FROM kiabi.inventaire_snapshot snap 
     left join kiabi.inventaire i on i.idinventaire = snap.idinventaire
     WHERE i.idinventaire=:idinventaire AND 
@@ -28,8 +28,6 @@ class InventaireAnomalieService {
   // Retourne le total ou 0 si null
   return Number(result[0]?.total_introuvable || 0);
 }
-
-
 
   // ---------------------- getSurplusNonExistant ----------------------
   async  getSurplusNonExistant(idinventaire) {

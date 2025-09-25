@@ -23,7 +23,7 @@ export class SurplusComponent implements OnInit, OnDestroy, OnChanges {
   constructor(
     private surplusService: InventaireSurplusService,
     private inventaireService: InventaireService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (this.idinventaire) this.initInventaire();
@@ -64,36 +64,34 @@ export class SurplusComponent implements OnInit, OnDestroy, OnChanges {
   showOverStock(): void {
     this.surplusService.getSurplusNegatif(this.idinventaire).subscribe({
       next: (data: SurplusArticle[]) => {
-        console.log("data", data);
-        
-        this.overStock = data || [];
-        this.totalOverStock = this.overStock.length;
+        this.overStock = (data || []).map(d => ({
+          ...d,
+          date_modif: d.date_modif ? new Date(d.date_modif).toISOString() : null
+        }));
         this.surplusClick.emit(this.overStock);
       },
       error: err => console.error("Erreur Surplus :", err)
     });
   }
 
-showIntrouvables(): void {
-  console.log("showIntrouvables idinventaire:", this.idinventaire);
-  if (!this.idinventaire) return;
 
-  this.surplusService.getIntrouvables(this.idinventaire).subscribe({
-    next: (data: IntrouvableArticle[]) => {
-      console.log("data idinventaire", data);
+  showIntrouvables(): void {
+    if (!this.idinventaire) return;
 
-      // Copier counted_qty vers count pour affichage correct
-      this.absentSnapshot = (data || []).map(d => ({
-        ...d,
-        count: Number(d.counted_qty ?? 0)
-      }));
+    this.surplusService.getIntrouvables(this.idinventaire).subscribe({
+      next: (data: IntrouvableArticle[]) => {
+        console.log("data idinventaire", data);
+        this.absentSnapshot = (data || []).map(d => ({
+          ...d,
+          count: Number(d.counted_qty ?? 0),
+          date_modif: d.date_modif ? new Date(d.date_modif).toISOString() : null
 
-      this.totalAbsent = this.absentSnapshot.length;
-      this.introuvablesClick.emit(this.absentSnapshot);
-    },
-    error: err => console.error("Erreur Introuvables :", err)
-  });
-}
+        }));
+        this.introuvablesClick.emit(this.absentSnapshot);
+      },
+      error: err => console.error("Erreur Introuvables :", err)
+    });
+  }
 
 
 

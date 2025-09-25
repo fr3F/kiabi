@@ -51,64 +51,52 @@ async calculerProgressInventaire(idinventaire) {
 ,
 async getSurplusNegatif(idinventaire ) {
   const query = `
-
- (
+SELECT
+    snap.eanCode,
+    snap.color,
+    snap.designation,
+    snap.styleCode,
+    snap.size,
+    snap.stock,
+    c.count_epc AS counted_qty,
+    (c.count_epc - snap.stock) AS difference,
+    c.last_modif AS date_modif,
+    'introuvable' AS type
+FROM kiabi.inventaire_snapshot snap
+JOIN (
     SELECT 
-        snap.idinventaire,
-        snap.eanCode,
-        snap.stock AS theorique,
-        COUNT(ic.epc) AS counted_qty,       
-        (COUNT(ic.epc) - snap.stock) AS surplus,
-        snap.designation,
-        snap.color,
-        snap.size,
-        snap.styleCode,
-        MAX(ic.datemodification) AS dateinventaire
-    FROM kiabi.inventaire_snapshot snap
-    LEFT JOIN kiabi.inventaire i 
-        ON i.idinventaire = snap.idinventaire
-    LEFT JOIN kiabi.inventaire_comptage ic
-        ON ic.idinventaire = i.idinventaire
-       AND ic.eanCode = snap.eanCode
-    WHERE snap.idinventaire = :idinventaire
-    GROUP BY 
-        snap.idinventaire,
-        snap.eanCode,
-        snap.stock,
-        snap.designation,
-        snap.color,
-        snap.size,
-        snap.styleCode
-    HAVING (COUNT(ic.epc) - snap.stock) > 0
-)
+        eanCode,
+        idinventaire,
+        COUNT(*) AS count_epc,
+        MAX(datemodification) AS last_modif
+    FROM kiabi.inventaire_comptage
+    WHERE idinventaire = :idinventaire
+    GROUP BY eanCode, idinventaire
+) c ON c.eanCode = snap.eanCode AND c.idinventaire = snap.idinventaire
+WHERE snap.idinventaire = :idinventaire
+  AND (c.count_epc - snap.stock) > 0
 
 UNION ALL
 
-(
-    SELECT 
-        :idinventaire AS idinventaire,
-        ic.eanCode,
-        0 AS theorique,
-        ic.inventaire AS counted_qty,       -- Ajouté ici
-        ic.inventaire AS surplus,
-        NULL AS designation,
-        NULL AS color,
-        NULL AS size,
-        NULL AS styleCode,
-        NULL AS dateinventaire
-    FROM (
-        SELECT eanCode, COUNT(epc) AS inventaire
-        FROM kiabi.inventaire_comptage
-        WHERE idinventaire = :idinventaire
-        GROUP BY eanCode
-    ) ic
-    LEFT JOIN kiabi.inventaire_snapshot snap 
-        ON snap.eanCode = ic.eanCode 
-       AND snap.idinventaire = :idinventaire
-    WHERE snap.eanCode IS NULL
-)
-
-ORDER BY eanCode;
+SELECT 
+    ic.eanCode,
+    NULL AS color,
+    s.designation,
+    s.styleCode,
+    s.size,
+    s.stock,
+    COUNT(ic.epc) AS counted_qty,
+    COUNT(ic.epc) AS difference,
+    MAX(ic.datemodification) AS date_modif,
+    'nonexistant' AS type
+FROM inventaire_comptage ic
+LEFT JOIN inventaire_snapshot s
+    ON ic.eanCode = s.eanCode AND s.idinventaire = :idinventaire
+WHERE ic.idinventaire = :idinventaire
+  AND s.eanCode IS NULL
+GROUP BY ic.eanCode, s.styleCode, s.designation, s.size, s.stock
+ORDER BY eanCode
+LIMIT 0, 1000;
 
     `;
 
@@ -120,35 +108,72 @@ ORDER BY eanCode;
   return result;
 },
 
+// async getIntrouvables(idinventaire) {
+//   if (!idinventaire) throw new Error("⚠️ idinventaire est obligatoire");
+
+//   const query = `
+
+//     SELECT 
+//     ic.eanCode, 
+//     s.styleCode,
+//     s.stock,
+//     s.size,
+//     s.designation,
+//     max(ic.datemodification) as date_modif,
+//         COUNT(ic.epc)  as counted_qty,
+//     COUNT(ic.epc) AS surplusnonexistant
+// FROM inventaire_comptage ic
+// LEFT JOIN inventaire_snapshot s
+//     ON ic.eanCode = s.eanCode AND s.idinventaire = :idinventaire
+// WHERE ic.idinventaire = :idinventaire
+//   AND s.eanCode IS NULL  
+// GROUP BY ic.eanCode, s.styleCode
+// LIMIT 0, 1000;
+
+//   `;
+
+//   const rows = await sequelize.query(query, {
+//     replacements: { idinventaire },
+//     type: sequelize.QueryTypes.SELECT
+//   });
+
+//   return rows;
+// },
+
 
 async getIntrouvables(idinventaire) {
   if (!idinventaire) throw new Error("⚠️ idinventaire est obligatoire");
 
   const query = `
-
-SELECT
-    c.eanCode,
-    c.idinventaire,
-    'N/A' AS styleCode,
-    'N/A' AS size,
-    'N/A' AS color,
-    'N/A' AS designation,
-    0 AS stock,
-    COUNT(c.epc) AS counted_qty,
-    NULL AS date_modif,
-    1 AS introuvable,
-    0 AS inventaire,
-    0 AS surplus
-FROM kiabi.inventaire_comptage c
-LEFT JOIN kiabi.inventaire_snapshot s
-    ON c.eanCode = s.eanCode
-    AND c.idinventaire = s.idinventaire
-WHERE c.idinventaire = :idinventaire
-  AND s.styleCode IS NULL
-GROUP BY
-    c.eanCode,
-    c.idinventaire
-ORDER BY counted_qty DESC
+    SELECT *
+    FROM (
+        SELECT 
+            (c.count_epc - snap.stock) AS introuvable,
+            snap.eanCode,
+            snap.color,
+            snap.size,
+            snap.styleCode,
+            snap.designation,
+            snap.stock,
+            c.count_epc AS counted_qty,
+            c.last_modif AS date_modif
+        FROM kiabi.inventaire_snapshot snap
+        LEFT JOIN kiabi.inventaire i 
+            ON i.idinventaire = snap.idinventaire
+        LEFT JOIN (
+            SELECT 
+                eanCode,
+                idinventaire,
+                COUNT(*) AS count_epc,
+                MAX(datemodification) AS last_modif
+            FROM kiabi.inventaire_comptage
+            WHERE idinventaire = :idinventaire
+            GROUP BY eanCode, idinventaire
+        ) c ON c.eanCode = snap.eanCode AND c.idinventaire = snap.idinventaire
+        WHERE i.idinventaire = :idinventaire
+          AND c.count_epc > 0
+    ) AS b
+    WHERE introuvable > 0;
 
   `;
 
@@ -369,74 +394,74 @@ async getInventaireDetail({ idinventaire, page = 1, limit = 20, search = "" }) {
 },
 
   // Export Excel
+
   async exportInventaireDetail(idinventaire, search = "") {
-    const query = `
-      SELECT *
-      FROM (
-        SELECT 
-          s.eanCode, 
-          s.color, 
-          s.size, 
-          s.styleCode, 
-          s.designation, 
-          s.datesnapshot, 
-          s.stock,
-          c.count, 
-          c.datemodif,
-          ROW_NUMBER() OVER (PARTITION BY s.eanCode ORDER BY s.datesnapshot DESC) AS rn
-        FROM inventaire_snapshot s
-        LEFT JOIN (
-          SELECT eanCode, COUNT(id) AS count, MAX(datemodification) AS datemodif
-          FROM inventaire_comptage
-          GROUP BY eanCode
-        ) c ON c.eanCode = s.eanCode
-        WHERE s.idinventaire = :idinventaire
-        ${
-          search
-            ? "AND (s.eanCode LIKE :search OR s.styleCode LIKE :search)"
-            : ""
-        }
-      ) t
-      WHERE t.rn = 1
-      ORDER BY t.datesnapshot DESC
-    `;
+  const query = `
+    SELECT 
+      s.eanCode, 
+      s.color, 
+      s.size, 
+      s.styleCode, 
+      s.designation, 
+      s.datesnapshot, 
+      s.stock,
+      c.count, 
+      c.datemodif
+    FROM inventaire_snapshot s
+    LEFT JOIN (
+      SELECT eanCode, COUNT(id) AS count, MAX(datemodification) AS datemodif
+      FROM inventaire_comptage
+      GROUP BY eanCode
+    ) c ON c.eanCode = s.eanCode
+    WHERE s.idinventaire = :idinventaire
+      AND s.datesnapshot = (
+        SELECT MAX(datesnapshot)
+        FROM inventaire_snapshot
+        WHERE eanCode = s.eanCode
+          AND idinventaire = :idinventaire
+      )
+      ${search ? "AND (s.eanCode LIKE :search OR s.styleCode LIKE :search)" : ""}
+    ORDER BY s.datesnapshot DESC
+  `;
 
-    const [result] = await sequelize.query(query, {
-      replacements: { idinventaire, search: `%${search}%` },
-    });
+  const [result] = await sequelize.query(query, {
+    replacements: { idinventaire, search: `%${search}%` },
+  });
 
-    return result;
-  },
+  return result;
+},
 
 
 
-  async getInventaireCountOnly({ idinventaire }) {
-    const query = `
-      SELECT *
-      FROM (
-        SELECT 
-          s.eanCode, 
-          s.stock, 
-          c.count, 
-          c.datemodif,
-          ROW_NUMBER() OVER (PARTITION BY s.eanCode ORDER BY s.datesnapshot DESC) as rn
-        FROM inventaire_snapshot s
-        LEFT JOIN (
-          SELECT eanCode, COUNT(id) AS count, MAX(datemodification) AS datemodif
-          FROM inventaire_comptage
-          GROUP BY eanCode
-        ) c ON c.eanCode = s.eanCode
-        WHERE s.idinventaire = :idinventaire
-      ) t
-      WHERE t.rn = 1
-    `;
+async getInventaireCountOnly({ idinventaire }) {
+  const query = `
+    SELECT 
+      s.eanCode, 
+      s.stock, 
+      c.count, 
+      c.datemodif
+    FROM inventaire_snapshot s
+    LEFT JOIN (
+      SELECT eanCode, COUNT(id) AS count, MAX(datemodification) AS datemodif
+      FROM inventaire_comptage
+      GROUP BY eanCode
+    ) c ON c.eanCode = s.eanCode
+    WHERE s.idinventaire = :idinventaire
+      AND s.datesnapshot = (
+        SELECT MAX(datesnapshot)
+        FROM inventaire_snapshot
+        WHERE eanCode = s.eanCode
+          AND idinventaire = :idinventaire
+      )
+  `;
 
-    const [result] = await sequelize.query(query, {
-      replacements: { idinventaire },
-    });
+  const [result] = await sequelize.query(query, {
+    replacements: { idinventaire },
+  });
 
-    return result;
-  },
+  return result;
+},
+
 
   async deleteInventaire(idinventaire) {
     const query = `DELETE FROM inventaire WHERE idinventaire = :idinventaire`;

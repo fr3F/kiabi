@@ -2,7 +2,7 @@
 
 const zoomPdf = 1;
 const urlBackLocal = "http://localhost:8096/"
-const URL_API = "http://192.168.2.41:8096/api/"
+const URL_API = "http://192.168.88.250:8096/api/"
 
 const FTP_CONFIG = {
     user: "ftpmadagascar",
@@ -38,8 +38,8 @@ const sourceDBConfig = {
     // host: "127.0.0.1",
     host: "localhost",
     user: 'root',
-    password: 'Admin*25',
-    database: 'kiabi',
+    password: '',
+    database: 'kiabi1',
     port: 3306,
     connectTimeout: 10000,
 };

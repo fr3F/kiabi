@@ -1,5 +1,5 @@
 const { findById, generateKey } = require("./devis.service");
-const db = require('../../../../../../gestion-caisse/nodejs/app/models');
+const db = require('../../../models/index');
 const sequelize = db.sequelize;
 const ItemDevis = db.itemDevis;
 const Devis = db.devis;
