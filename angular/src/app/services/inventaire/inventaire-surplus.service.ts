@@ -4,43 +4,12 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
-export interface SurplusArticle {
-  idinventaire: number;
-  eanCode: string;
-  color: string;
-  size: string;
-  styleCode: string;
-  designation: string;
-  datasnapshot: string | null;
-  snapshot_stock: number;
-  counted_qty: number;
-  datemodification?: string | null;
-  surplus: number;
-  date_modif?: string
-}
-
-export interface IntrouvableArticle {
-  idinventaire?: number;
-  eanCode: string;
-  color: string;
-  size: string;
-  styleCode: string;
-  designation: string;
-  stock: number;           // Stock théorique
-  inventaire: number;      // Compté
-  introuvable?: number;    // Quantité introuvable
-  datasnapshot?: string | null;
-  datemodification?: string | null;
-  counted_qty: number,
-  date_modif?: string
-}
 
 
 export interface SurplusResponse {
   totalAbsent?: number;
   totalOverstock?: number;
   totalStatus?: number;
-  rows: SurplusArticle[];
 }
 
 @Injectable({
@@ -53,28 +22,20 @@ export class InventaireSurplusService {
 
   constructor(private http: HttpClient) { }
 
-  // Articles absents
-  getAbsentSnapshot(idinventaire: number): Observable<SurplusResponse> {
-    return this.http.get<SurplusResponse>(`${this.apiUrl}/absent-snapshot/${idinventaire}`);
+  // Articles avec surplus négatif
+  getSurplus(idinventaire: number, page: number = 1, limit: number = 20) {
+    return this.http
+      .get<{ success: boolean; data: any[]; total: number }>(
+        `${this.apiUrl}/surplus/${idinventaire}?page=${page}&limit=${limit}`
+      )
+      .pipe(map(res => res || { data: [], total: 0 }));
   }
 
-  // Articles comptés supérieurs au stock snapshot
-  getOverStock(idinventaire: number): Observable<SurplusArticle[]> {
-    return this.http.get<SurplusArticle[]>(`${this.apiUrl}/overstock/${idinventaire}`);
-  }
 
-  // ⚡ Articles avec surplus négatif
-  getSurplusNegatif(idinventaire: number): Observable<SurplusArticle[]> {
-    return this.http.get<{ success: boolean; data: SurplusArticle[] }>(
-      `${this.apiUrl}/surplus-negatif/${idinventaire}`
-    ).pipe(
-      map(res => res.data || [])
-    );
-  }
-  getIntrouvables(idinventaire: number): Observable<IntrouvableArticle[]> {
-    if (!idinventaire) throw new Error("⚠️ idinventaire est obligatoire");
+  getIntrouvables(idinventaire){
+    if (!idinventaire) throw new Error("idinventaire est obligatoire");
 
-    return this.http.get<{ success: boolean; data: IntrouvableArticle | IntrouvableArticle[] }>(
+    return this.http.get<{ success: boolean; data }>(
       `${this.apiUrl}/introuvables/${idinventaire}`
     ).pipe(
       map(res => {

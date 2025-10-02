@@ -7,24 +7,16 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
-  declarations: [
-    // ListeInventaireComponent,
-    // ListesInventairesPageComponent // si ce composant appartient à ce module
-    
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     FormsModule,
     NgxPaginationModule,
     NgbPaginationModule,
     NgxSpinnerModule,
-    NgApexchartsModule 
-    // ✅
-
+    NgApexchartsModule ,
   ],
-  exports: [
-    // ListeInventaireComponent // <- pour que d'autres modules puissent l'utiliser
-  ]
+  exports: []
 })
 export class InventaireComponentModule { }
 

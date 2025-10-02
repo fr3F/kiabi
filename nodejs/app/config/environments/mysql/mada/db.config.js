@@ -1,9 +1,9 @@
 ﻿module.exports = {
-    HOST: "192.168.88.250",
+    HOST: "192.168.2.114",
     USER: "root",
-    PASSWORD: "",
+    PASSWORD: "Admin*25",
     // DB: "gestion_caisse_dev",
-    DB: "kiabi1",
+    DB: "kiabi",
     dialect: "mysql",
     PORT: 3306,
     pool: {

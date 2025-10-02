@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from "@angul
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import {
-  Inventaire,
+  
   InventaireService,
 } from "src/app/services/inventaire/inventaire.service";
 import { NotificationService } from "src/app/services/notification/notification.service";
@@ -14,15 +14,17 @@ declare var bootstrap: any;
   styleUrls: ["./listes-inventaires-page.component.scss"],
 })
 export class ListesInventairesPageComponent implements OnInit, AfterViewInit{
-  inventaires: Inventaire[] = [];
+  inventaires;
   loading = false;
   error = "";
   selectedInventaireId: number | null = null;
 
   @ViewChild("updateModal") updateModal!: TemplateRef<any>;
-  
+  @ViewChild("createModal") createModal!: TemplateRef<any>;
+
+  createInventaireForm!: FormGroup;
   selectedInventaireForm!: FormGroup;
-  currentInventaire!: Inventaire;
+  currentInventaire;
 
   constructor(
     private inventaireService: InventaireService,
@@ -51,9 +53,7 @@ export class ListesInventairesPageComponent implements OnInit, AfterViewInit{
   loadInventaires() {
     this.loading = true;
     this.inventaireService.getInventaires().subscribe({
-      next: (data) => {
-        console.log("data", data);
-        
+      next: (data) => {      
         this.inventaires = data;
         this.loading = false;
       },
@@ -65,12 +65,12 @@ export class ListesInventairesPageComponent implements OnInit, AfterViewInit{
   }
 
   // Sélection d'un inventaire
-  selectInventaire(id: number) {
+  selectInventaire(id) {
     this.selectedInventaireId = id;
   }
 
   // Supprimer un inventaire
-  deleteInventaire(inv: Inventaire) {
+  deleteInventaire(inv) {
     if (!confirm(`Voulez-vous supprimer l'inventaire ${inv.idinventaire} ?`))
       return;
 
@@ -92,7 +92,7 @@ export class ListesInventairesPageComponent implements OnInit, AfterViewInit{
   }
 
   // Ouvrir modal update
-  updateInventaire(inv: Inventaire) {
+  updateInventaire(inv) {
     this.currentInventaire = inv;
 
     this.selectedInventaireForm = this.fb.group({
@@ -101,21 +101,19 @@ export class ListesInventairesPageComponent implements OnInit, AfterViewInit{
       status: [inv.status],
     });
 
-    const modalRef = this.modalService.open(this.updateModal, {
-      centered: true,
-    });
+    const modalRef = this.modalService.open(this.updateModal, {centered: true});
     modalRef.result.then(
       (result) => {
         if (result === "save") {
           this.saveUpdate();
         }
       },
-      () => {} // dismiss
+      () => {} 
     );
   }
 
   // Formater la date en YYYY-MM-DD pour input type="date"
-  formatDateToInput(date: any): string {
+  formatDateToInput(date) {
     if (!date) return "";
     const d = new Date(date);
     const month = ("0" + (d.getMonth() + 1)).slice(-2);
@@ -130,7 +128,7 @@ export class ListesInventairesPageComponent implements OnInit, AfterViewInit{
     this.inventaireService
       .updateInventaire(this.currentInventaire.idinventaire, updatedData)
       .subscribe({
-        next: (updated: Inventaire) => {
+        next: (updated) => {
           const index = this.inventaires.findIndex(
             (i) => i.idinventaire === this.currentInventaire.idinventaire
           );
@@ -141,17 +139,13 @@ export class ListesInventairesPageComponent implements OnInit, AfterViewInit{
             };
           }
           this.currentInventaire = { ...this.currentInventaire, ...updated };
-          this.notif.success("Inventaire mis à jour avec succès"); // ← notification
+          this.notif.success("Inventaire mis à jour avec succès"); 
         },
         error: () => this.notif.error("Erreur lors de la mise à jour"),
       });
   }
 
-  @ViewChild("createModal") createModal!: TemplateRef<any>;
-  createInventaireForm!: FormGroup;
-
   openCreateModal() {
-    // Initialiser le formulaire vide
     this.createInventaireForm = this.fb.group({
       datedebut: [""],
       datefin: [""],
@@ -167,25 +161,21 @@ export class ListesInventairesPageComponent implements OnInit, AfterViewInit{
           this.saveCreate();
         }
       },
-      () => {} // dismiss
+      () => {} 
     );
   }
 
-  saveCreate() {
-
-    console.log("SAVE");
-    
+  saveCreate() {   
     if (this.createInventaireForm.invalid) return;
-
     const newData = this.createInventaireForm.value;
 
     this.inventaireService.createInventaire(newData).subscribe({
-      next: (created: Inventaire) => {
+      next: (created) => {
         this.inventaires.unshift(created);
         this.createInventaireForm.reset();
         this.loadInventaires();
 
-        this.notif.success("Inventaire créé avec succès"); // ← notification
+        this.notif.success("Inventaire créé avec succès");
 
       },
       error: () => this.notif.error("Erreur lors de la création"),

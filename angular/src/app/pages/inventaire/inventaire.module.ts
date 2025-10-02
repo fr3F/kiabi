@@ -37,9 +37,8 @@ import { InventaireProgressComponent } from 'src/app/components/inventaire/inven
     ReactiveFormsModule
   ],
   exports: [
-      DetailsInventaireComponent,
-
-    ListeInventaireComponent, // permet d’utiliser <app-liste-inventaire> dans d’autres modules si nécessaire
+    DetailsInventaireComponent,
+    ListeInventaireComponent, 
     ListesInventairesPageComponent
   ],
   providers: [DatePipe]

@@ -26,9 +26,9 @@ db.userMagasin = require("./users/usermagasin.model")(sequelize, Sequelize);
 
 db.param_num_clients = require("./gifi/paramNumClient.model")(sequelize, Sequelize)
 // Inventaire
-db.Inventaire = require("../components/inventaire/models/Inventaire")(sequelize, Sequelize);
-db.InventaireSnapshot = require("../components/inventaire/models/inventaireSnapshot.model")(sequelize, Sequelize);
-db.InventaireComptage = require("../components/inventaire/models/inventaireComptage.model")(sequelize, Sequelize);
+db.Inventaire = require("./inventaire/Inventaire")(sequelize, Sequelize);
+db.InventaireSnapshot = require("./inventaire/inventaireSnapshot.model")(sequelize, Sequelize);
+db.InventaireComptage = require("./inventaire/inventaireComptage.model")(sequelize, Sequelize);
 
 
 // Inventaire

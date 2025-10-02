@@ -1,18 +1,14 @@
 <div
   class="d-flex flex-column flex-md-row justify-content-center gap-3 flex-wrap"
 >
-  <!-- Articles introuvables -->
-
   <div
     class="row align-items-center p-3 bg-light shadow-sm rounded"
     style="width: 88%"
   >
-    <!-- Colonne 1 : icône -->
     <div class="col-2 d-flex justify-content-center">
       <i class="bi bi-exclamation-triangle-fill fs-3 text-danger"></i>
     </div>
 
-    <!-- Colonne 2 : texte et bouton -->
     <div class="col-6 text-start">
       <h6 class="card-title mb-2" style="font-size: 0.9rem">
         Total introuvables
@@ -23,23 +19,19 @@
       </button>
     </div>
 
-    <!-- Colonne 3 : comptage -->
     <div class="col-4 d-flex justify-content-center">
       <p class="fw-bold mb-0 fs-3">{{ totalAbsent }}</p>
     </div>
   </div>
 
-  <!-- Articles Surplus -->
   <div
     class="row align-items-center p-3 bg-light shadow-sm rounded"
     style="width: 88%"
   >
-    <!-- Colonne 1 : icône -->
     <div class="col-2 d-flex justify-content-center">
       <i class="bi bi-arrow-up-square-fill fs-3 text-warning"></i>
     </div>
 
-    <!-- Colonne 2 : texte et bouton -->
     <div class="col-6 text-start">
       <h6 class="card-title mb-2" style="font-size: 0.9rem">Total surplus</h6>
       <button class="btn btn-warning btn-sm" (click)="showOverStock()">
@@ -47,9 +39,8 @@
       </button>
     </div>
 
-    <!-- Colonne 3 : comptage -->
     <div class="col-4 d-flex justify-content-center">
-      <p class="fw-bold mb-0 fs-3">{{ totalOverStock }}</p>
+      <p class="fw-bold mb-0 fs-3">{{ totalSurplusTotal }}</p>
     </div>
   </div>
 </div>

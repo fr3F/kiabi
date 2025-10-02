@@ -14,9 +14,7 @@ const routes = (app)=>{
     require("./parametrage/devis.routes")(app);
 
     require("./util/produit.routes")(app);
-    require("../components/inventaire/routes/inventaire.routes")(app);
-    require("../components/inventaire/routes/InventaireSnapshot.routes")(app);
-    require("../components/inventaire/routes/inventaireSurplus.routes")(app);
+    require("../components/inventaire/inventaire.routes")(app);
     
     // require("./dashboard/dashboard.routes")(app);
 

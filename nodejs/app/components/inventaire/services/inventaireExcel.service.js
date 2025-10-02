@@ -33,8 +33,8 @@ class InventaireExcelService {
     worksheet.addRows(rows);
 
     // Appliquer helpers
-    fusionnerLigneExcel(worksheet, 1, "A"); // fusionner col A
-    alignColumnAndAddBorder(worksheet, 1); // alignement + bordure
+    fusionnerLigneExcel(worksheet, 1, "A"); 
+    alignColumnAndAddBorder(worksheet);
 
     return workbook;
   }

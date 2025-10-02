@@ -1,26 +1,22 @@
 <div class="container-fluid">
-  <!-- Titre -->
   <h3 class="mb-3">Détails de l’inventaire #{{ idinventaire }}</h3>
 
   <div class="row g-3">
-    <!-- Colonne gauche : Progress -->
+    <!-- Progress -->
     <div class="col-12 col-lg-4">
       <app-inventaire-progress
         [idinventaire]="idinventaire"
         (surplusClick)="onSurplusClick($event)"
         (introuvablesClick)="onIntrouvablesClick($event)"
-      >
-      </app-inventaire-progress>
+      ></app-inventaire-progress>
     </div>
 
-    <!-- Colonne droite : Actions + Tableau -->
-
+    <!-- Actions + Tableau -->
     <div class="col-12 col-lg-8">
       <div class="card bg-white shadow-sm rounded-3">
         <!-- Barre d’actions -->
         <div class="card-body pb-2">
           <div class="row g-2 align-items-center">
-            <!-- Recherche -->
             <div class="col-12 col-md-6">
               <div class="input-group shadow-sm rounded">
                 <span class="input-group-text bg-white border-0">
@@ -38,17 +34,11 @@
             </div>
 
             <div class="col-12 col-md-6 text-md-end text-center">
-              <button
-                class="btn btn-primary btn-sm shadow-sm"
-                (click)="showAll()"
-              >
-                Afficher tous
-              </button>
-              <button
-                class="btn btn-success btn-sm shadow-sm ms-2"
-                (click)="exportExcel()"
-              >
+              <button *ngIf="isShow" class="btn btn-success btn-sm shadow-sm" (click)="exportExcel()">
                 <i class="bi bi-file-earmark-excel"></i> Exporter
+              </button>
+              <button  class="btn btn-primary btn-sm shadow-sm ms-2" (click)="showAll()">
+                Afficher tous
               </button>
             </div>
           </div>
@@ -70,15 +60,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr
-                *ngFor="
-                  let d of details
-                    | slice
-                      : (currentPage - 1) * itemsPerPage
-                      : currentPage * itemsPerPage
-                "
-                [class.text-warning]="d.stock < (d.count || 0)"
-              >
+              <tr *ngFor="let d of details" [class.text-warning]="d.stock < (d.count || 0)">
                 <td>{{ d.eanCode }}</td>
                 <td>{{ d.color }}</td>
                 <td>{{ d.size }}</td>
@@ -86,20 +68,10 @@
                 <td>{{ d.designation }}</td>
                 <td>{{ d.stock }}</td>
                 <td>{{ d.count }}</td>
-                <!-- <td>{{ d.datemodif | date : "short" }}</td> -->
-                <td>
-                  {{
-                    d.date_modif
-                      ? (d.date_modif | date : "dd/MM/yyyy HH:mm")
-                      : "—"
-                  }}
-                </td>
+                <td>{{ d.date_modif ? (d.date_modif | date : 'dd/MM/yyyy HH:mm') : '—' }}</td>
               </tr>
-
               <tr *ngIf="!details.length">
-                <td colspan="9" class="text-center text-muted py-3">
-                  Aucun détail disponible
-                </td>
+                <td colspan="8" class="text-center text-muted py-3">Aucun détail disponible</td>
               </tr>
             </tbody>
           </table>
@@ -110,20 +82,20 @@
           class="card-footer bg-white border-0 d-flex flex-column flex-md-row justify-content-between align-items-center mt-2 gap-2"
         >
           <div class="text-muted">
-            Page {{ currentPage }} / {{ getTotalPages() }}
+            Page {{ page }} / {{ getTotalPages() }}
           </div>
           <div>
             <button
               class="btn btn-outline-primary btn-sm me-1"
-              (click)="currentPage = currentPage - 1"
-              [disabled]="currentPage === 1"
+              (click)="changePage(page - 1)"
+              [disabled]="page === 1"
             >
               ◀ Précédent
             </button>
             <button
               class="btn btn-outline-primary btn-sm"
-              (click)="currentPage = currentPage + 1"
-              [disabled]="currentPage >= getTotalPages()"
+              (click)="changePage(page + 1)"
+              [disabled]="page >= getTotalPages()"
             >
               Suivant ▶
             </button>
@@ -135,7 +107,5 @@
 </div>
 
 <ngx-spinner type="ball-scale-multiple" [fullScreen]="true">
-  <p style="color: white; text-align: center">
-    Veuillez patienter s'il vous plaît...
-  </p>
+  <p style="color: white; text-align: center">Veuillez patienter s'il vous plaît...</p>
 </ngx-spinner>

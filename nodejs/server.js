@@ -14,8 +14,8 @@ global.__basedir = __dirname;
 const corsOptions = {
   origin: [
     "http://localhost:8105",
-    "http://192.168.88.250:8105",
-    "http://192.168.88.250:4200",
+    "http://192.168.2.41:8105",
+    "http://192.168.2.41:4200",
     "http://localhost:4200",
     "http://192.168.2.108"
   ],

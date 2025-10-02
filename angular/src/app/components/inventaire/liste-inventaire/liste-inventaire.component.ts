@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, OnDestroy } from "@angular/core";
+import { InventaireService } from "src/app/services/inventaire/inventaire.service";
 
 interface Inventaire {
   idinventaire: number;
@@ -8,26 +9,14 @@ interface Inventaire {
   status: string;
 }
 
-interface InventaireDetail {
-  eanCode: string;
-  color: string;
-  size: string;
-  styleCode: string;
-  designation: string;
-  datesnapshot: string;
-  stock: number;
-  count: number | null;
-  datemodif: string | null;
-}
-
 @Component({
   selector: "app-liste-inventaire",
   templateUrl: "./liste-inventaire.component.html",
   styleUrls: ["./liste-inventaire.component.scss"],
 })
 export class ListeInventaireComponent implements OnInit, OnDestroy {
-  inventaires: Inventaire[] = [];
-  selectedInventaireDetails: InventaireDetail[] = [];
+  inventaires;
+  selectedInventaireDetails;
   loading = false;
   error = "";
   refreshInterval: any;
@@ -40,7 +29,10 @@ export class ListeInventaireComponent implements OnInit, OnDestroy {
   totalDetails = 0;
   searchDetails = "";
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,  
+    private inventaireService: InventaireService
+  ) {}
 
   ngOnInit(): void {
     this.loadInventaires();
@@ -52,29 +44,27 @@ export class ListeInventaireComponent implements OnInit, OnDestroy {
 
   loadInventaires() {
     this.loading = true;
-    this.http.get<Inventaire[]>("http://192.168.2.41:8104/api/inventaire")
-      .subscribe({
-        next: (data) => {
-          this.inventaires = data;
-          this.loading = false;
-        },
-        error: () => {
+      this.inventaireService.getInventaires()
+        .subscribe({
+          next: (data) => {
+            this.inventaires = data;
+            this.loading = false;
+          },
+           error: () => {
           this.error = "Erreur lors du chargement des inventaires";
           this.loading = false;
         }
       });
   }
 
-  createSnapshot(idinventaire: number) {
+createSnapshot(idinventaire: number) {
   if (!idinventaire) return;
 
   this.loading = true;
-  this.http.post("http://192.168.2.41:8104/api/inventaire-snapshot", { idinventaire })
+  this.inventaireService.createSnapshot(idinventaire)
     .subscribe({
       next: () => {
         this.loading = false;
-        alert("Snapshot créé avec succès !");
-        // Optionnel : recharger les détails après création
         if (this.selectedInventaireId === idinventaire) {
           this.loadDetails();
         }
@@ -85,7 +75,7 @@ export class ListeInventaireComponent implements OnInit, OnDestroy {
         console.error(err);
       }
     });
-}
+  }
 
   viewDetails(idinventaire: number) {
     this.selectedInventaireId = idinventaire;
@@ -99,27 +89,22 @@ export class ListeInventaireComponent implements OnInit, OnDestroy {
 
   private loadDetails() {
     if (!this.selectedInventaireId) return;
+    this.loading = true;
+    this.error = null;
 
-    const params = {
-      page: this.detailsPage,
-      limit: this.detailsLimit,
-      search: this.searchDetails
-    };
-
-    this.http.get<{ data: InventaireDetail[], total: number }>(
-      `http://192.168.2.41:8104/api/inventaire/${this.selectedInventaireId}/detail`,
-      { params }
-    ).subscribe({
-      next: (res: any) => {
-        this.selectedInventaireDetails = res.data || res;
-        this.totalDetails = res.total || this.selectedInventaireDetails.length;
-        this.loading = false;
-      },
-      error: () => {
-        this.error = "Erreur lors du chargement des détails";
-        this.loading = false;
-      }
-    });
+    this.inventaireService
+      .getInventaireDetails(this.selectedInventaireId, this.detailsPage, this.detailsLimit, this.searchDetails)
+      .subscribe({
+        next: (res) => {
+          this.selectedInventaireDetails = res.data;
+          this.totalDetails = res.total;
+          this.loading = false;
+        },
+        error: () => {
+          this.error = "Erreur lors du chargement des détails";
+          this.loading = false;
+        }
+      });
   }
 
   get totalPages(): number {
@@ -140,19 +125,19 @@ export class ListeInventaireComponent implements OnInit, OnDestroy {
   exportExcelDetails() {
     if (!this.selectedInventaireId) return;
 
-    const url = `http://192.168.2.41:8104/api/inventaire/${this.selectedInventaireId}/export-excel`;
-    this.http.get(url, { responseType: "blob" }).subscribe({
-      next: (blob) => {
-        const a = document.createElement("a");
-        const objectUrl = URL.createObjectURL(blob);
-        a.href = objectUrl;
-        a.download = `inventaire_${this.selectedInventaireId}.xlsx`;
-        a.click();
-        URL.revokeObjectURL(objectUrl);
-      },
-      error: () => {
-        this.error = "Erreur lors de l’export Excel";
-      }
-    });
+    this.inventaireService.exportInventaireExcel(this.selectedInventaireId)
+      .subscribe({
+        next: (blob) => {
+          const a = document.createElement("a");
+          const objectUrl = URL.createObjectURL(blob);
+          a.href = objectUrl;
+          a.download = `inventaire_${this.selectedInventaireId}.xlsx`;
+          a.click();
+          URL.revokeObjectURL(objectUrl);
+        },
+        error: () => {
+          this.error = "Erreur lors de l’export Excel";
+        }
+      })
   }
 }

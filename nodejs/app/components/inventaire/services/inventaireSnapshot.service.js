@@ -2,10 +2,8 @@ const { sequelize } = require("../../../models");
 
 const InventaireSnapshotService = {
 
-
-
     /** Lister tous les snapshots d’un inventaire */
-    listSnapshotsByInventaire: async (idinventaire) => {
+    async listSnapshotsByInventaire (idinventaire) {
         const query = `
             SELECT * FROM inventaire_snapshot
             WHERE idinventaire = :idinventaire
@@ -16,7 +14,7 @@ const InventaireSnapshotService = {
     },
 
     /** Détail d’un snapshot */
-    getSnapshotById: async (id) => {
+    async getSnapshotById (id) {
         const query = `
             SELECT * FROM inventaire_snapshot
             WHERE id = :id
@@ -26,7 +24,7 @@ const InventaireSnapshotService = {
     },
 
     /** Mettre à jour un snapshot */
-    updateSnapshot: async (id, data) => {
+    async updateSnapshot (id, data)  {
         const query = `
             UPDATE inventaire_snapshot
             SET eanCode = :eanCode,
@@ -39,8 +37,6 @@ const InventaireSnapshotService = {
         `;
         return sequelize.query(query, { replacements: { ...data, id } });
     },
-
-
 };
 
 module.exports = InventaireSnapshotService;
